@@ -1,0 +1,789 @@
+"use client";
+
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
+
+// Interfaces
+export interface Client {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  city: string;
+  notes: string;
+  avatar_url?: string;
+  created_at?: string;
+}
+
+export interface Lead {
+  id: number;
+  name: string;
+  phone: string;
+  email?: string;
+  status: "Novo" | "Qualificando" | "Interessado" | "Visita Agendada" | "Em Negociação" | "Vendido" | "Perdido";
+  origin: string;
+  data_qualificado: {
+    service_type?: string;
+    puppy_gender?: string;
+    puppy_purpose?: string;
+    dog_experience?: string;
+    lead_city?: string;
+    [key: string]: any;
+  };
+  current_step: string;
+  auto_respond: boolean;
+  tags: string[];
+  notes?: string;
+  created_at: string;
+}
+
+export interface Animal {
+  id: number;
+  name: string;
+  gender: "macho" | "fêmea";
+  birthdate?: string;
+  pedigree_url?: string;
+  registry?: string;
+  status: "disponível" | "em_repouso" | "inativo";
+  breed_price?: number;
+  avatar_url?: string;
+  notes?: string;
+  created_at?: string;
+}
+
+export interface Ninhada {
+  id: number;
+  mother_id?: number;
+  father_id?: number;
+  birth_date?: string;
+  puppy_count_male: number;
+  puppy_count_female: number;
+  status: "Planejada" | "Nascida" | "Desmamada";
+  notes?: string;
+  created_at?: string;
+}
+
+export interface Filhote {
+  id: number;
+  litter_id?: number;
+  name: string;
+  gender: "macho" | "fêmea";
+  status: "Disponível" | "Reservado" | "Vendido" | "Canil";
+  price: number;
+  health_records: { type: "vacina" | "vermífugo" | "exame"; name: string; date: string; status: "Pendente" | "Aplicado" }[];
+  weight_history: { date: string; weight: number }[];
+  avatar_url?: string;
+  photos: string[];
+  notes?: string;
+  created_at?: string;
+}
+
+export interface Service {
+  id: number;
+  name: string;
+  category: "cobertura" | "adestramento" | "hospedagem";
+  price: number;
+  description?: string;
+}
+
+export interface AgendaEvent {
+  id: number;
+  type: "visita" | "cobertura" | "adestramento" | "hospedagem" | "vacina" | "vermifugacao";
+  title: string;
+  description?: string;
+  datetime: string;
+  lead_id?: number;
+  client_id?: number;
+  assigned_to?: string;
+  status: "Agendado" | "Confirmado" | "Concluído" | "Cancelado";
+  reminder_sent: boolean;
+  created_at?: string;
+}
+
+export interface Hospedagem {
+  id: number;
+  client_id: number;
+  dog_name: string;
+  entry_date: string;
+  exit_date: string;
+  daily_rate: number;
+  total_amount: number;
+  status: "Reservado" | "Hospedado" | "Finalizado";
+  notes?: string;
+  created_at?: string;
+}
+
+export interface Adestramento {
+  id: number;
+  client_id: number;
+  dog_name: string;
+  plan_name: string;
+  sessions_total: number;
+  sessions_completed: number;
+  status: "Ativo" | "Concluído" | "Pausado";
+  notes?: string;
+  created_at?: string;
+}
+
+export interface FinancialEntry {
+  id: number;
+  type: "Entrada" | "Saída";
+  category: "Venda Filhote" | "Cobertura" | "Hospedagem" | "Adestramento" | "Ração" | "Veterinário" | "Vacinas" | "Manutenção" | "Marketing" | "Outro";
+  amount: number;
+  description: string;
+  date: string;
+  payment_method?: "Dinheiro" | "Pix" | "Crédito" | "Débito";
+  reference_id?: number;
+  created_at?: string;
+}
+
+export interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  content: string;
+  tags: string[];
+  excerpt?: string;
+  image_url?: string;
+  published: boolean;
+  created_at?: string;
+}
+
+export interface Notification {
+  id: number;
+  type: "agendamento" | "estoque" | "aniversario" | "comissao" | "sistema";
+  message: string;
+  read: boolean;
+  created_at: string;
+}
+
+export interface WhatsAppConfig {
+  id: number;
+  status: string;
+  qr_code?: string;
+  phone?: string;
+  reminder_hours: number;
+  enable_reminders: boolean;
+  enable_confirmations: boolean;
+  enable_responses: boolean;
+  qualification_questions: { id: string; question: string }[];
+  updated_at?: string;
+}
+
+interface AuraContextProps {
+  clients: Client[];
+  leads: Lead[];
+  animals: Animal[];
+  ninhadas: Ninhada[];
+  filhotes: Filhote[];
+  services: Service[];
+  agendaEvents: AgendaEvent[];
+  hospedagens: Hospedagem[];
+  adestramentos: Adestramento[];
+  financialEntries: FinancialEntry[];
+  blogPosts: BlogPost[];
+  notifications: Notification[];
+  whatsappConfig: WhatsAppConfig | null;
+
+  // Actions
+  addClient: (client: Omit<Client, "id">) => Promise<number>;
+  updateClient: (id: number, data: Partial<Client>) => Promise<void>;
+  addLead: (lead: Omit<Lead, "id" | "created_at">) => Promise<number>;
+  updateLeadStatus: (id: number, status: Lead["status"]) => Promise<void>;
+  updateLeadAutoRespond: (id: number, auto_respond: boolean) => Promise<void>;
+  updateLeadNotes: (id: number, notes: string, tags?: string[]) => Promise<void>;
+  addAnimal: (animal: Omit<Animal, "id">) => Promise<void>;
+  updateAnimal: (id: number, data: Partial<Animal>) => Promise<void>;
+  addNinhada: (ninhada: Omit<Ninhada, "id">) => Promise<void>;
+  updateNinhada: (id: number, data: Partial<Ninhada>) => Promise<void>;
+  addFilhote: (filhote: Omit<Filhote, "id">) => Promise<void>;
+  updateFilhote: (id: number, data: Partial<Filhote>) => Promise<void>;
+  addService: (service: Omit<Service, "id">) => Promise<void>;
+  updateService: (id: number, service: Partial<Service>) => Promise<void>;
+  addAgendaEvent: (event: Omit<AgendaEvent, "id" | "reminder_sent">) => Promise<void>;
+  updateAgendaEventStatus: (id: number, status: AgendaEvent["status"]) => Promise<void>;
+  addHospedagem: (hospedagem: Omit<Hospedagem, "id">) => Promise<void>;
+  updateHospedagemStatus: (id: number, status: Hospedagem["status"]) => Promise<void>;
+  addAdestramento: (adestramento: Omit<Adestramento, "id">) => Promise<void>;
+  incrementAdestramentoSession: (id: number) => Promise<void>;
+  addTransaction: (entry: Omit<FinancialEntry, "id">) => Promise<void>;
+  addBlogPost: (post: Omit<BlogPost, "id">) => Promise<void>;
+  updateBlogPost: (id: number, post: Partial<BlogPost>) => Promise<void>;
+  updateWhatsappConfig: (data: Partial<WhatsAppConfig>) => Promise<void>;
+  markNotificationRead: (id: number) => Promise<void>;
+  refreshAllData: () => Promise<void>;
+}
+
+const AuraContext = createContext<AuraContextProps | undefined>(undefined);
+
+export function AuraProvider({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
+
+  // States
+  const [clients, setClients] = useState<Client[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [ninhadas, setNinhadas] = useState<Ninhada[]>([]);
+  const [filhotes, setFilhotes] = useState<Filhote[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [agendaEvents, setAgendaEvents] = useState<AgendaEvent[]>([]);
+  const [hospedagens, setHospedagens] = useState<Hospedagem[]>([]);
+  const [adestramentos, setAdestramentos] = useState<Adestramento[]>([]);
+  const [financialEntries, setFinancialEntries] = useState<FinancialEntry[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [whatsappConfig, setWhatsappConfig] = useState<WhatsAppConfig | null>(null);
+
+  const isSupabaseConfigured = () => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    return !!(
+      url &&
+      url !== "https://your-project.supabase.co" &&
+      !url.includes("your-project") &&
+      key &&
+      !key.includes("placeholder")
+    );
+  };
+
+  const loadLocalMockData = () => {
+    // 1. Clients
+    setClients([
+      { id: 1, name: "Bruno Souza", phone: "(11) 98765-4321", email: "bruno.souza@gmail.com", city: "São Paulo - SP", notes: "Comprador do filhote Thor. Já teve Pastor Alemão." },
+      { id: 2, name: "Carlos Eduardo Santos", phone: "(11) 97654-3210", email: "cadu.santos@outlook.com", city: "Campinas - SP", notes: "Utiliza hospedagem mensalmente para creche." }
+    ]);
+
+    // 2. Leads
+    setLeads([
+      { id: 1, name: "Guilherme Mota", phone: "(11) 99999-8888", email: "gui@mota.com", status: "Visita Agendada", origin: "Instagram", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Macho", puppy_purpose: "Guarda", dog_experience: "Sim, de porte grande", lead_city: "São Roque - SP" }, current_step: "MENU", auto_respond: true, tags: ["cliente sério"], notes: "Quer visitar no sábado às 14h para ver o filhote cinza.", created_at: new Date().toISOString() },
+      { id: 2, name: "Aline Silva", phone: "(21) 98888-7777", status: "Novo", origin: "WhatsApp", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Fêmea", puppy_purpose: "Companhia", dog_experience: "Não", lead_city: "Niterói - RJ" }, current_step: "MENU", auto_respond: true, tags: ["pesquisando"], notes: "Preocupada com temperamento com crianças.", created_at: new Date().toISOString() }
+    ]);
+
+    // 3. Animals
+    setAnimals([
+      { id: 1, name: "Kahn da Aura", gender: "macho", birthdate: "2021-04-12", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Excelente porte, importado da Rússia, pelagem cinza carvão.", avatar_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400" },
+      { id: 2, name: "Sasha da Aura", gender: "fêmea", birthdate: "2022-01-20", pedigree_url: "#", registry: "CBKC-54321", status: "disponível", notes: "Fêmea dócil com a família, guarda territorial implacável.", avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" }
+    ]);
+
+    // 4. Ninhadas
+    setNinhadas([
+      { id: 1, mother_id: 2, father_id: 1, birth_date: "2026-04-15", puppy_count_male: 3, puppy_count_female: 4, status: "Nascida", notes: "Ninhada excelente. Todos os filhotes fortes e amamentando." }
+    ]);
+
+    // 5. Filhotes
+    setFilhotes([
+      { id: 1, litter_id: 1, name: "Thor", gender: "macho", status: "Disponível", price: 6000.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }, { type: "vacina", name: "2ª Dose V10", date: "2026-06-20", status: "Aplicado" }, { type: "vermífugo", name: "Drontal Puppy", date: "2026-05-15", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.8 }, { date: "2026-05-15", weight: 4.2 }, { date: "2026-06-15", weight: 9.5 }], notes: "Filhote mais ativo da ninhada, pelagem escura.", avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", photos: ["https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"] },
+      { id: 2, litter_id: 1, name: "Athena", gender: "fêmea", status: "Disponível", price: 6500.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.7 }, { date: "2026-05-15", weight: 3.9 }], notes: "Excelente estrutura óssea, muito atenta.", avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", photos: ["https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"] }
+    ]);
+
+    // 6. Services
+    setServices([
+      { id: 1, name: "Serviço de Monta (Kahn)", category: "cobertura", price: 3500.00, description: "Serviço de monta com contrato e garantia de gestação." },
+      { id: 2, name: "Hospedagem Canina Diária", category: "hospedagem", price: 80.00, description: "Hospedagem com recreação, alimentação inclusa ou trazida pelo tutor." },
+      { id: 3, name: "Pacote de Adestramento Básico", category: "adestramento", price: 1200.00, description: "Treinamento de obediência urbana (10 sessões)." }
+    ]);
+
+    // 7. AgendaEvents
+    const today = new Date();
+    setAgendaEvents([
+      { id: 1, type: "visita", title: "Visita de Guilherme Mota", description: "Ver filhotes cinzas machos", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 14, 0).toISOString(), lead_id: 1, status: "Agendado", reminder_sent: false },
+      { id: 2, type: "adestramento", title: "Treino do cão Marley (Carlos)", description: "Treino de obediência e socialização", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 16, 0).toISOString(), client_id: 2, assigned_to: "Tratador Fábio", status: "Confirmado", reminder_sent: false }
+    ]);
+
+    // 8. Hospedagens
+    setHospedagens([
+      { id: 1, client_id: 2, dog_name: "Marley", entry_date: new Date(today.setDate(today.getDate() - 2)).toISOString(), exit_date: new Date(today.setDate(today.getDate() + 5)).toISOString(), daily_rate: 80, total_amount: 560, status: "Hospedado", notes: "Alimentação especial 2x ao dia. Muito brincalhão." }
+    ]);
+
+    // 9. Adestramentos
+    setAdestramentos([
+      { id: 1, client_id: 2, dog_name: "Marley", plan_name: "Adestramento Básico", sessions_total: 10, sessions_completed: 4, status: "Ativo", notes: "Já aprendeu os comandos senta e deita. Evoluindo bem." }
+    ]);
+
+    // 10. Financial Entries
+    setFinancialEntries([
+      { id: 1, type: "Entrada", category: "Venda Filhote", amount: 6000.00, description: "Venda Filhote Thor - Bruno Souza", date: new Date().toISOString(), payment_method: "Pix" },
+      { id: 2, type: "Saída", category: "Ração", amount: 450.00, description: "Compra de Ração Premier Filhotes 15kg", date: new Date().toISOString() }
+    ]);
+
+    // 11. Blog Posts
+    setBlogPosts([
+      { id: 1, title: "Quanto custa um Pastor do Cáucaso?", slug: "quanto-custa-um-pastor-do-caucaso", excerpt: "Saiba tudo sobre o preço e custos de manutenção da raça.", content: "Conteúdo substancial de mais de 800 palavras sobre custos de alimentação, vacinação, veterinário e pedigree CBKC para Pastor do Cáucaso.", tags: ["preço", "custos", "filhote"], published: true, image_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400" },
+      { id: 2, title: "Pastor do Cáucaso é bom para apartamento?", slug: "pastor-do-caucaso-apartamento", excerpt: "Entenda por que essa raça gigante precisa de espaço.", content: "Explicação extensa sobre o porte físico, temperamento territorial, e necessidade de pátio grande para cães de guarda como o Pastor do Cáucaso.", tags: ["guia", "raça", "temperamento"], published: true, image_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" }
+    ]);
+
+    // 12. WhatsApp Config
+    setWhatsappConfig({
+      id: 1,
+      status: "connected",
+      phone: "+5511999998888",
+      reminder_hours: 24,
+      enable_reminders: true,
+      enable_confirmations: true,
+      enable_responses: true,
+      qualification_questions: [
+        { id: "service_type", question: "Olá! Como posso ajudar você hoje?" }
+      ]
+    });
+
+    setNotifications([
+      { id: 1, type: "sistema", message: "Sistema do Canil Aura iniciado em modo local.", read: false, created_at: new Date().toISOString() }
+    ]);
+  };
+
+  const fetchAllData = async () => {
+    if (!isSupabaseConfigured()) {
+      loadLocalMockData();
+      return;
+    }
+
+    try {
+      // Fetch data from Supabase
+      const { data: dbClients } = await supabase.from("clients").select("*").order("name", { ascending: true });
+      if (dbClients) setClients(dbClients);
+
+      const { data: dbLeads } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
+      if (dbLeads) setLeads(dbLeads);
+
+      const { data: dbAnimals } = await supabase.from("matrizes_machos").select("*").order("name", { ascending: true });
+      if (dbAnimals) setAnimals(dbAnimals);
+
+      const { data: dbLitters } = await supabase.from("ninhadas").select("*").order("birth_date", { ascending: false });
+      if (dbLitters) setNinhadas(dbLitters);
+
+      const { data: dbPuppies } = await supabase.from("filhotes").select("*").order("name", { ascending: true });
+      if (dbPuppies) setFilhotes(dbPuppies);
+
+      const { data: dbServices } = await supabase.from("services").select("*").order("id", { ascending: true });
+      if (dbServices) setServices(dbServices);
+
+      const { data: dbEvents } = await supabase.from("agenda").select("*").order("datetime", { ascending: false });
+      if (dbEvents) setAgendaEvents(dbEvents);
+
+      const { data: dbHospedagens } = await supabase.from("hospedagens").select("*").order("entry_date", { ascending: false });
+      if (dbHospedagens) setHospedagens(dbHospedagens);
+
+      const { data: dbAdestramentos } = await supabase.from("adestramentos").select("*").order("id", { ascending: true });
+      if (dbAdestramentos) setAdestramentos(dbAdestramentos);
+
+      const { data: dbFin } = await supabase.from("financial_entries").select("*").order("date", { ascending: false });
+      if (dbFin) setFinancialEntries(dbFin);
+
+      const { data: dbPosts } = await supabase.from("blog_posts").select("*").order("created_at", { ascending: false });
+      if (dbPosts) setBlogPosts(dbPosts);
+
+      const { data: dbWpp } = await supabase.from("whatsapp_config").select("*").eq("id", 1).maybeSingle();
+      if (dbWpp) setWhatsappConfig(dbWpp);
+
+      const { data: dbNotifications } = await supabase.from("notifications").select("*").order("created_at", { ascending: false });
+      if (dbNotifications) setNotifications(dbNotifications);
+
+    } catch (e) {
+      console.error("Error loading data from Supabase:", e);
+      loadLocalMockData();
+    }
+  };
+
+  useEffect(() => {
+    fetchAllData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const addClient = async (client: Omit<Client, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = clients.length > 0 ? Math.max(...clients.map(c => c.id)) + 1 : 1;
+      const newClient = { id: newId, ...client };
+      setClients(prev => [...prev, newClient]);
+      return newId;
+    }
+    const { data, error } = await supabase.from("clients").insert(client).select();
+    if (data && data[0]) {
+      setClients(prev => [...prev, data[0]]);
+      return data[0].id;
+    }
+    return 0;
+  };
+
+  const updateClient = async (id: number, data: Partial<Client>) => {
+    if (!isSupabaseConfigured()) {
+      setClients(prev => prev.map(c => (c.id === id ? { ...c, ...data } : c)));
+      return;
+    }
+    const { data: dbCl, error } = await supabase.from("clients").update(data).eq("id", id).select();
+    if (dbCl && dbCl[0]) {
+      setClients(prev => prev.map(c => (c.id === id ? dbCl[0] : c)));
+    }
+  };
+
+  const addLead = async (lead: Omit<Lead, "id" | "created_at">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = leads.length > 0 ? Math.max(...leads.map(l => l.id)) + 1 : 1;
+      const newLead = { id: newId, ...lead, created_at: new Date().toISOString() } as Lead;
+      setLeads(prev => [newLead, ...prev]);
+      return newId;
+    }
+    const { data, error } = await supabase.from("leads").insert(lead).select();
+    if (data && data[0]) {
+      setLeads(prev => [data[0], ...prev]);
+      return data[0].id;
+    }
+    return 0;
+  };
+
+  const updateLeadStatus = async (id: number, status: Lead["status"]) => {
+    if (!isSupabaseConfigured()) {
+      setLeads(prev => prev.map(l => (l.id === id ? { ...l, status } : l)));
+      return;
+    }
+    const { data, error } = await supabase.from("leads").update({ status }).eq("id", id).select();
+    if (data && data[0]) {
+      setLeads(prev => prev.map(l => (l.id === id ? data[0] : l)));
+    }
+  };
+
+  const updateLeadAutoRespond = async (id: number, auto_respond: boolean) => {
+    if (!isSupabaseConfigured()) {
+      setLeads(prev => prev.map(l => (l.id === id ? { ...l, auto_respond } : l)));
+      return;
+    }
+    const { data, error } = await supabase.from("leads").update({ auto_respond }).eq("id", id).select();
+    if (data && data[0]) {
+      setLeads(prev => prev.map(l => (l.id === id ? data[0] : l)));
+    }
+  };
+
+  const updateLeadNotes = async (id: number, notes: string, tags?: string[]) => {
+    const updateObj: any = { notes };
+    if (tags !== undefined) updateObj.tags = tags;
+
+    if (!isSupabaseConfigured()) {
+      setLeads(prev => prev.map(l => (l.id === id ? { ...l, ...updateObj } : l)));
+      return;
+    }
+    const { data, error } = await supabase.from("leads").update(updateObj).eq("id", id).select();
+    if (data && data[0]) {
+      setLeads(prev => prev.map(l => (l.id === id ? data[0] : l)));
+    }
+  };
+
+  const addAnimal = async (animal: Omit<Animal, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = animals.length > 0 ? Math.max(...animals.map(a => a.id)) + 1 : 1;
+      setAnimals(prev => [...prev, { id: newId, ...animal }]);
+      return;
+    }
+    const { data, error } = await supabase.from("matrizes_machos").insert(animal).select();
+    if (data && data[0]) {
+      setAnimals(prev => [...prev, data[0]]);
+    }
+  };
+
+  const updateAnimal = async (id: number, data: Partial<Animal>) => {
+    if (!isSupabaseConfigured()) {
+      setAnimals(prev => prev.map(a => (a.id === id ? { ...a, ...data } : a)));
+      return;
+    }
+    const { data: dbAn, error } = await supabase.from("matrizes_machos").update(data).eq("id", id).select();
+    if (dbAn && dbAn[0]) {
+      setAnimals(prev => prev.map(a => (a.id === id ? dbAn[0] : a)));
+    }
+  };
+
+  const addNinhada = async (ninhada: Omit<Ninhada, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = ninhadas.length > 0 ? Math.max(...ninhadas.map(n => n.id)) + 1 : 1;
+      setNinhadas(prev => [...prev, { id: newId, ...ninhada }]);
+      return;
+    }
+    const { data, error } = await supabase.from("ninhadas").insert(ninhada).select();
+    if (data && data[0]) {
+      setNinhadas(prev => [...prev, data[0]]);
+    }
+  };
+
+  const updateNinhada = async (id: number, data: Partial<Ninhada>) => {
+    if (!isSupabaseConfigured()) {
+      setNinhadas(prev => prev.map(n => (n.id === id ? { ...n, ...data } : n)));
+      return;
+    }
+    const { data: dbN, error } = await supabase.from("ninhadas").update(data).eq("id", id).select();
+    if (dbN && dbN[0]) {
+      setNinhadas(prev => prev.map(n => (n.id === id ? dbN[0] : n)));
+    }
+  };
+
+  const addFilhote = async (filhote: Omit<Filhote, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = filhotes.length > 0 ? Math.max(...filhotes.map(f => f.id)) + 1 : 1;
+      setFilhotes(prev => [...prev, { id: newId, ...filhote }]);
+      return;
+    }
+    const { data, error } = await supabase.from("filhotes").insert(filhote).select();
+    if (data && data[0]) {
+      setFilhotes(prev => [...prev, data[0]]);
+    }
+  };
+
+  const updateFilhote = async (id: number, data: Partial<Filhote>) => {
+    if (!isSupabaseConfigured()) {
+      setFilhotes(prev => prev.map(f => (f.id === id ? { ...f, ...data } : f)));
+      return;
+    }
+    const { data: dbF, error } = await supabase.from("filhotes").update(data).eq("id", id).select();
+    if (dbF && dbF[0]) {
+      setFilhotes(prev => prev.map(f => (f.id === id ? dbF[0] : f)));
+    }
+  };
+
+  const addService = async (service: Omit<Service, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = services.length > 0 ? Math.max(...services.map(s => s.id)) + 1 : 1;
+      setServices(prev => [...prev, { id: newId, ...service }]);
+      return;
+    }
+    const { data, error } = await supabase.from("services").insert(service).select();
+    if (data && data[0]) {
+      setServices(prev => [...prev, data[0]]);
+    }
+  };
+
+  const updateService = async (id: number, service: Partial<Service>) => {
+    if (!isSupabaseConfigured()) {
+      setServices(prev => prev.map(s => (s.id === id ? { ...s, ...service } : s)));
+      return;
+    }
+    const { data, error } = await supabase.from("services").update(service).eq("id", id).select();
+    if (data && data[0]) {
+      setServices(prev => prev.map(s => (s.id === id ? data[0] : s)));
+    }
+  };
+
+  const addAgendaEvent = async (event: Omit<AgendaEvent, "id" | "reminder_sent">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = agendaEvents.length > 0 ? Math.max(...agendaEvents.map(e => e.id)) + 1 : 1;
+      setAgendaEvents(prev => [...prev, { id: newId, ...event, reminder_sent: false }]);
+      return;
+    }
+    const { data, error } = await supabase.from("agenda").insert(event).select();
+    if (data && data[0]) {
+      setAgendaEvents(prev => [...prev, data[0]]);
+    }
+  };
+
+  const updateAgendaEventStatus = async (id: number, status: AgendaEvent["status"]) => {
+    if (!isSupabaseConfigured()) {
+      setAgendaEvents(prev => prev.map(e => (e.id === id ? { ...e, status } : e)));
+      return;
+    }
+    const { data, error } = await supabase.from("agenda").update({ status }).eq("id", id).select();
+    if (data && data[0]) {
+      setAgendaEvents(prev => prev.map(e => (e.id === id ? data[0] : e)));
+    }
+  };
+
+  const addHospedagem = async (hospedagem: Omit<Hospedagem, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = hospedagens.length > 0 ? Math.max(...hospedagens.map(h => h.id)) + 1 : 1;
+      setHospedagens(prev => [...prev, { id: newId, ...hospedagem }]);
+      
+      // Auto register to financial
+      addTransaction({
+        type: "Entrada",
+        category: "Hospedagem",
+        amount: hospedagem.total_amount,
+        description: `Hospedagem de ${hospedagem.dog_name}`,
+        date: new Date().toISOString()
+      });
+      return;
+    }
+    const { data, error } = await supabase.from("hospedagens").insert(hospedagem).select();
+    if (data && data[0]) {
+      setHospedagens(prev => [...prev, data[0]]);
+      addTransaction({
+        type: "Entrada",
+        category: "Hospedagem",
+        amount: hospedagem.total_amount,
+        description: `Hospedagem de ${hospedagem.dog_name}`,
+        date: new Date().toISOString(),
+        reference_id: data[0].id
+      });
+    }
+  };
+
+  const updateHospedagemStatus = async (id: number, status: Hospedagem["status"]) => {
+    if (!isSupabaseConfigured()) {
+      setHospedagens(prev => prev.map(h => (h.id === id ? { ...h, status } : h)));
+      return;
+    }
+    const { data, error } = await supabase.from("hospedagens").update({ status }).eq("id", id).select();
+    if (data && data[0]) {
+      setHospedagens(prev => prev.map(h => (h.id === id ? data[0] : h)));
+    }
+  };
+
+  const addAdestramento = async (adestramento: Omit<Adestramento, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = adestramentos.length > 0 ? Math.max(...adestramentos.map(a => a.id)) + 1 : 1;
+      setAdestramentos(prev => [...prev, { id: newId, ...adestramento }]);
+      
+      addTransaction({
+        type: "Entrada",
+        category: "Adestramento",
+        amount: 1200.00, // custom package price standard
+        description: `Plano ${adestramento.plan_name} contratado para ${adestramento.dog_name}`,
+        date: new Date().toISOString()
+      });
+      return;
+    }
+    const { data, error } = await supabase.from("adestramentos").insert(adestramento).select();
+    if (data && data[0]) {
+      setAdestramentos(prev => [...prev, data[0]]);
+      addTransaction({
+        type: "Entrada",
+        category: "Adestramento",
+        amount: 1200.00,
+        description: `Plano ${adestramento.plan_name} contratado para ${adestramento.dog_name}`,
+        date: new Date().toISOString(),
+        reference_id: data[0].id
+      });
+    }
+  };
+
+  const incrementAdestramentoSession = async (id: number) => {
+    const item = adestramentos.find(a => a.id === id);
+    if (!item) return;
+    const nextCompleted = Math.min(item.sessions_total, item.sessions_completed + 1);
+    const nextStatus = nextCompleted === item.sessions_total ? "Concluído" : item.status;
+
+    if (!isSupabaseConfigured()) {
+      setAdestramentos(prev => prev.map(a => (a.id === id ? { ...a, sessions_completed: nextCompleted, status: nextStatus } : a)));
+      return;
+    }
+    const { data, error } = await supabase
+      .from("adestramentos")
+      .update({ sessions_completed: nextCompleted, status: nextStatus })
+      .eq("id", id)
+      .select();
+
+    if (data && data[0]) {
+      setAdestramentos(prev => prev.map(a => (a.id === id ? data[0] : a)));
+    }
+  };
+
+  const addTransaction = async (entry: Omit<FinancialEntry, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = financialEntries.length > 0 ? Math.max(...financialEntries.map(f => f.id)) + 1 : 1;
+      setFinancialEntries(prev => [{ id: newId, ...entry }, ...prev]);
+      return;
+    }
+    const { data, error } = await supabase.from("financial_entries").insert(entry).select();
+    if (data && data[0]) {
+      setFinancialEntries(prev => [data[0], ...prev]);
+    }
+  };
+
+  const addBlogPost = async (post: Omit<BlogPost, "id">) => {
+    if (!isSupabaseConfigured()) {
+      const newId = blogPosts.length > 0 ? Math.max(...blogPosts.map(b => b.id)) + 1 : 1;
+      setBlogPosts(prev => [{ id: newId, ...post }, ...prev]);
+      return;
+    }
+    const { data, error } = await supabase.from("blog_posts").insert(post).select();
+    if (data && data[0]) {
+      setBlogPosts(prev => [data[0], ...prev]);
+    }
+  };
+
+  const updateBlogPost = async (id: number, post: Partial<BlogPost>) => {
+    if (!isSupabaseConfigured()) {
+      setBlogPosts(prev => prev.map(b => (b.id === id ? { ...b, ...post } : b)));
+      return;
+    }
+    const { data, error } = await supabase.from("blog_posts").update(post).eq("id", id).select();
+    if (data && data[0]) {
+      setBlogPosts(prev => prev.map(b => (b.id === id ? data[0] : b)));
+    }
+  };
+
+  const updateWhatsappConfig = async (data: Partial<WhatsAppConfig>) => {
+    if (!isSupabaseConfigured()) {
+      setWhatsappConfig(prev => prev ? { ...prev, ...data } : null);
+      return;
+    }
+    const { data: dbWpp, error } = await supabase.from("whatsapp_config").update(data).eq("id", 1).select();
+    if (dbWpp && dbWpp[0]) {
+      setWhatsappConfig(dbWpp[0]);
+    }
+  };
+
+  const markNotificationRead = async (id: number) => {
+    if (!isSupabaseConfigured()) {
+      setNotifications(prev => prev.map(n => (n.id === id ? { ...n, read: true } : n)));
+      return;
+    }
+    const { data, error } = await supabase.from("notifications").update({ read: true }).eq("id", id).select();
+    if (data && data[0]) {
+      setNotifications(prev => prev.map(n => (n.id === id ? data[0] : n)));
+    }
+  };
+
+  const refreshAllData = async () => {
+    await fetchAllData();
+  };
+
+  return (
+    <AuraContext.Provider
+      value={{
+        clients,
+        leads,
+        animals,
+        ninhadas,
+        filhotes,
+        services,
+        agendaEvents,
+        hospedagens,
+        adestramentos,
+        financialEntries,
+        blogPosts,
+        notifications,
+        whatsappConfig,
+        addClient,
+        updateClient,
+        addLead,
+        updateLeadStatus,
+        updateLeadAutoRespond,
+        updateLeadNotes,
+        addAnimal,
+        updateAnimal,
+        addNinhada,
+        updateNinhada,
+        addFilhote,
+        updateFilhote,
+        addService,
+        updateService,
+        addAgendaEvent,
+        updateAgendaEventStatus,
+        addHospedagem,
+        updateHospedagemStatus,
+        addAdestramento,
+        incrementAdestramentoSession,
+        addTransaction,
+        addBlogPost,
+        updateBlogPost,
+        updateWhatsappConfig,
+        markNotificationRead,
+        refreshAllData
+      }}
+    >
+      {children}
+    </AuraContext.Provider>
+  );
+}
+
+export function useAura() {
+  const context = useContext(AuraContext);
+  if (context === undefined) {
+    throw new Error("useAura deve ser usado dentro de um AuraProvider");
+  }
+  return context;
+}
