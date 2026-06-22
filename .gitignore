@@ -38,3 +38,8 @@ next-env.d.ts
 # whatsapp-web.js session and cache
 .wwebjs_auth/
 .wwebjs_cache/
+
+# git portable
+.git-portable/
+mingit.zip
+

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { useAura } from "@/context/AuraContext";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
@@ -9,6 +10,122 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award } from 
 
 export default function LandingPageClient() {
   const { filhotes, services } = useAura();
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const heroSectionRef = useRef<HTMLDivElement>(null);
+  const heroWrapperRef = useRef<HTMLDivElement>(null);
+  const isHoveringRef = useRef(false);
+  const targetTimeRef = useRef(0);
+  const currentTimeRef = useRef(0);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const hero = heroSectionRef.current;
+    const wrapper = heroWrapperRef.current;
+    if (!video || !hero || !wrapper) return;
+
+    // Enable fast metadata and stream loading
+    video.preload = "auto";
+
+    let animationFrameId: number;
+
+    const updateVideo = () => {
+      const scrollY = window.scrollY;
+      const wrapperTop = wrapper.offsetTop || 0;
+      const wrapperHeight = wrapper.offsetHeight || 1200;
+      const windowHeight = window.innerHeight || 800;
+      
+      // Calculate scroll progress over the wrapper's scrollable height
+      const scrollRange = wrapperHeight - windowHeight;
+      const relativeScroll = scrollY - wrapperTop;
+      
+      const progress = scrollRange > 0 ? Math.min(Math.max(relativeScroll / scrollRange, 0), 1) : 0;
+      
+      // We only execute updates while the section is in or near the viewport
+      if (scrollY < wrapperTop + wrapperHeight + 100) {
+        // 1. Zoom, Parallax, Fade, and Blur Visual Transformations
+        const scale = 1 + progress * 0.12;   // Scale from 1 to 1.12
+        const translateY = relativeScroll * 0.25; // Parallax translateY
+        const blur = progress * 6;            // Blur up to 6px
+        
+        if (videoContainerRef.current) {
+          // Keep original design opacity levels (0.3 on mobile, 0.4 on desktop) and fade them down on scroll
+          const baseOpacity = window.innerWidth >= 768 ? 0.4 : 0.3;
+          const opacity = baseOpacity * (1 - progress * 0.8);
+          videoContainerRef.current.style.transform = `scale(${scale}) translateY(${translateY}px) translateZ(0)`;
+          videoContainerRef.current.style.opacity = `${opacity}`;
+          videoContainerRef.current.style.filter = `blur(${blur}px)`;
+        }
+
+        // 2. Playback / scrubbing controls based on scroll and hover
+        if (scrollY > wrapperTop) {
+          // Pause normal video playback to control frames via scroll
+          if (!video.paused) {
+            video.pause();
+          }
+
+          const duration = video.duration || 5;
+          // Scroll controls the target time of the video
+          targetTimeRef.current = progress * duration;
+
+          // Smoothly lerp to target time to avoid native seeking jumps
+          currentTimeRef.current += (targetTimeRef.current - currentTimeRef.current) * 0.15;
+          
+          if (Math.abs(currentTimeRef.current - video.currentTime) > 0.01) {
+            video.currentTime = currentTimeRef.current;
+          }
+        } else {
+          // When scrollY is 0 (at the top of the page), check hover state
+          if (isHoveringRef.current) {
+            if (video.paused) {
+              video.play().catch(() => {});
+            }
+            // Sync references with actual playback time
+            targetTimeRef.current = video.currentTime;
+            currentTimeRef.current = video.currentTime;
+          } else {
+            // Pause if not hovering
+            if (!video.paused) {
+              video.pause();
+            }
+            // Rewind smoothly back to the first frame
+            targetTimeRef.current = 0;
+            currentTimeRef.current += (0 - currentTimeRef.current) * 0.15;
+            
+            if (Math.abs(currentTimeRef.current - video.currentTime) > 0.01) {
+              video.currentTime = currentTimeRef.current;
+            }
+          }
+        }
+      } else {
+        // Pause if scrolled past to save GPU resources
+        if (!video.paused) {
+          video.pause();
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(updateVideo);
+    };
+
+    animationFrameId = requestAnimationFrame(updateVideo);
+
+    const handleMouseEnter = () => {
+      isHoveringRef.current = true;
+    };
+
+    const handleMouseLeave = () => {
+      isHoveringRef.current = false;
+    };
+
+    hero.addEventListener("mouseenter", handleMouseEnter);
+    hero.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      hero.removeEventListener("mouseenter", handleMouseEnter);
+      hero.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
 
   // Filter available puppies (limit to 3 for the home cards)
   const homePuppies = filhotes.filter((f) => f.status === "Disponível").slice(0, 3);
@@ -34,52 +151,69 @@ export default function LandingPageClient() {
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-20 font-sans">
       <PublicNavbar />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.08),transparent_70%)] overflow-hidden border-b border-[#2A2A2A]">
-        {/* Visual elements */}
-        <div className="absolute top-0 right-0 w-[50vw] h-full opacity-30 md:opacity-40 pointer-events-none">
-          <img
-            src="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
-            alt="Pastor do Cáucaso Guardião"
-            className="w-full h-full object-cover object-center mask-gradient-to-l"
-          />
-        </div>
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#C9A96E]/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Hero Section Wrapper for Scroll Pinning */}
+      <div ref={heroWrapperRef} className="relative h-[220vh] w-full">
+        {/* Hero Section - Sticky Container */}
+        <section 
+          ref={heroSectionRef}
+          className="sticky top-20 h-[calc(100vh-5rem)] min-h-[85vh] flex items-center bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.08),transparent_70%)] overflow-hidden border-b border-[#2A2A2A]"
+        >
+          {/* Background Video with Scroll-Responsive Effects (Original layout: right side 50vw) */}
+          <div 
+            ref={videoContainerRef}
+            className="absolute top-0 right-0 w-[50vw] h-full opacity-30 md:opacity-40 pointer-events-none will-change-transform origin-center"
+          >
+            <video
+              ref={videoRef}
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover object-center mask-gradient-to-l"
+              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+            >
+              <source src="/banner-hero.mp4" type="video/mp4" />
+            </video>
+          </div>
+          
+          {/* Decorative ambient light */}
+          <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#C9A96E]/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 md:py-24">
-          <div className="max-w-2xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
-              <Shield className="w-3.5 h-3.5" />
-              <span>Criação Selecionada CBKC/FCI</span>
-            </span>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12 md:py-24">
+            <div className="max-w-2xl space-y-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+                <Shield className="w-3.5 h-3.5" />
+                <span>Criação Selecionada CBKC/FCI</span>
+              </span>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none text-white">
-              Guardiões de Elite: <br />
-              <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
-            </h1>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none text-white">
+                Guardiões de Elite: <br />
+                <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
+              </h1>
 
-            <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
-              Criação responsável em Itatiba - SP. Reprodutores selecionados, importados da Rússia, Europa e Geórgia, com laudos negativos de displasia. Cães com robustez física e temperamento equilibrado de guarda.
-            </p>
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
+                Criação responsável em Itatiba - SP. Reprodutores selecionados, importados da Rússia, Europa e Geórgia, com laudos negativos de displasia. Cães com robustez física e temperamento equilibrado de guarda.
+              </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link
-                href="/filhotes"
-                className="bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-8 py-3.5 rounded-xl transition-all text-center text-sm shadow-[0_0_20px_rgba(201,169,110,0.25)] flex items-center justify-center gap-2"
-              >
-                <span>Ver Filhotes Disponíveis</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/sobre"
-                className="bg-[#1A1A1A] border border-[#2A2A2A] text-white hover:bg-gray-900 font-bold px-8 py-3.5 rounded-xl transition-all text-center text-sm"
-              >
-                Conheça Nosso Trabalho
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Link
+                  href="/filhotes"
+                  className="bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-8 py-3.5 rounded-xl transition-all text-center text-sm shadow-[0_0_20px_rgba(201,169,110,0.25)] flex items-center justify-center gap-2"
+                >
+                  <span>Ver Filhotes Disponíveis</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/sobre"
+                  className="bg-[#1A1A1A] border border-[#2A2A2A] text-white hover:bg-gray-900 font-bold px-8 py-3.5 rounded-xl transition-all text-center text-sm"
+                >
+                  Conheça Nosso Trabalho
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Available Puppies Section */}
       <section className="py-20 bg-[#121212]/50 border-b border-[#2A2A2A]">
