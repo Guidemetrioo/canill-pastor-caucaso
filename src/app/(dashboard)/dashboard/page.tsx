@@ -199,10 +199,10 @@ export default function DashboardPage() {
                   <Tooltip
                     contentStyle={{ backgroundColor: "#1A1A1A", border: "1px solid #2A2A2A", borderRadius: "12px" }}
                     labelStyle={{ color: "#F5F5F5", fontWeight: "bold", fontSize: 12 }}
-                    itemStyle={{ color: "#C9A96E", fontSize: 12 }}
+                    itemStyle={{ color: "#D97457", fontSize: 12 }}
                     formatter={(value: any) => [`R$ ${value}`, "Receita"]}
                   />
-                  <Bar dataKey="faturamento" fill="#C9A96E" radius={[4, 4, 0, 0]} barSize={36} />
+                  <Bar dataKey="faturamento" fill="#D97457" radius={[4, 4, 0, 0]} barSize={36} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (

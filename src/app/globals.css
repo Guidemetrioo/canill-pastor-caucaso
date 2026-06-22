@@ -22,12 +22,12 @@
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #C9A96E;
+    background: #D97457;
   }
 
   /* Selection color */
   ::selection {
-    background-color: rgba(201, 169, 110, 0.2);
-    color: #C9A96E;
+    background-color: rgba(217, 116, 87, 0.2);
+    color: #D97457;
   }
 }

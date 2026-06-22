@@ -75,7 +75,7 @@ export default function HospedagemPage() {
       <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-6">
         <div className="flex items-center justify-between pb-4 border-b border-salon-border/60">
           <h3 className="text-base font-bold flex items-center gap-2">
-            <Home className="w-5 h-5 text-[#C9A96E]" />
+            <Home className="w-5 h-5 text-[#D97457]" />
             <span>Lista de Hóspedes</span>
           </h3>
         </div>
@@ -108,11 +108,11 @@ export default function HospedagemPage() {
 
                     <div className="flex flex-wrap items-center gap-6 text-[10px] text-gray-400 pt-1">
                       <span className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4 text-[#C9A96E]" />
+                        <Calendar className="w-4 h-4 text-[#D97457]" />
                         <span>Entrada: {entry} &bull; Saída: {exit}</span>
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <DollarSign className="w-4 h-4 text-[#C9A96E]" />
+                        <DollarSign className="w-4 h-4 text-[#D97457]" />
                         <span>Valor: R$ {h.total_amount.toLocaleString("pt-BR")} (Diária: R$ {h.daily_rate})</span>
                       </span>
                     </div>
@@ -223,7 +223,7 @@ export default function HospedagemPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Salvar
                 </button>

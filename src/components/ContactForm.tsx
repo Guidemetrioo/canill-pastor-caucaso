@@ -27,7 +27,7 @@ export default function ContactForm() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#C9A96E]"
+          className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#D97457]"
           placeholder="Ex: Carlos Augusto..."
           required
         />
@@ -40,7 +40,7 @@ export default function ContactForm() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#C9A96E]"
+            className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#D97457]"
             placeholder="carlos@exemplo.com"
             required
           />
@@ -51,7 +51,7 @@ export default function ContactForm() {
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#C9A96E]"
+            className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#D97457]"
             placeholder="(11) 99876-5432"
             required
           />
@@ -63,7 +63,7 @@ export default function ContactForm() {
         <select
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#C9A96E]"
+          className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#D97457]"
         >
           <option value="filhote">Comprar Filhote</option>
           <option value="cobertura">Serviço de Cobertura / Monta</option>
@@ -79,7 +79,7 @@ export default function ContactForm() {
           rows={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#C9A96E] resize-none"
+          className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#D97457] resize-none"
           placeholder="Olá! Gostaria de saber mais sobre..."
           required
         />
@@ -87,7 +87,7 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="w-full bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold py-3 rounded-lg transition-all text-xs"
+        className="w-full bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold py-3 rounded-lg transition-all text-xs"
       >
         Enviar Mensagem
       </button>

@@ -71,7 +71,7 @@ function WhatsAppPreview({ title, templateText, type }: { title: string; templat
     <div className="bg-[#0b141a] rounded-xl border border-salon-border/90 overflow-hidden shadow-2xl max-w-sm w-full mx-auto font-sans flex flex-col h-[280px]">
       {/* Header bar */}
       <div className="bg-[#202c33] p-3 flex items-center gap-3 border-b border-salon-border/20 shrink-0">
-        <div className="w-8 h-8 rounded-full bg-[#C9A96E] flex items-center justify-center text-[#0F0F0F] font-bold text-xs shrink-0">
+        <div className="w-8 h-8 rounded-full bg-[#D97457] flex items-center justify-center text-[#0F0F0F] font-bold text-xs shrink-0">
           CA
         </div>
         <div className="leading-tight">
@@ -291,7 +291,7 @@ export default function ConfiguracoesPage() {
     <div className="space-y-6 animate-in fade-in duration-300">
       <div>
         <h2 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <Settings className="w-6 h-6 text-[#C9A96E]" />
+          <Settings className="w-6 h-6 text-[#D97457]" />
           <span>Configurações do Robô WhatsApp</span>
         </h2>
         <p className="text-salon-text-secondary text-xs mt-1">
@@ -307,7 +307,7 @@ export default function ConfiguracoesPage() {
             
             {/* Elegant header */}
             <div className="space-y-1">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#C9A96E] border-b border-[#2A2A2A] pb-2 flex items-center justify-between">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#D97457] border-b border-[#2A2A2A] pb-2 flex items-center justify-between">
                 <span>Painel de Conexão</span>
                 {step === "connected" && (
                   <span className="w-2.5 h-2.5 rounded-full bg-salon-success animate-pulse" />
@@ -335,7 +335,7 @@ export default function ConfiguracoesPage() {
                     type="button"
                     onClick={handleStartBot}
                     disabled={botLoading}
-                    className="w-full bg-[#C9A96E] hover:bg-[#B8965C] active:scale-[0.98] text-[#0F0F0F] text-xs font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(201,169,110,0.2)] disabled:opacity-50 mt-4"
+                    className="w-full bg-[#D97457] hover:bg-[#C25F43] active:scale-[0.98] text-[#0F0F0F] text-xs font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(201,169,110,0.2)] disabled:opacity-50 mt-4"
                   >
                     {botLoading ? (
                       <Loader className="w-4 h-4 animate-spin" />
@@ -349,8 +349,8 @@ export default function ConfiguracoesPage() {
               {/* STATE 2: CONNECTING */}
               {step === "connecting" && (
                 <div className="text-center space-y-5 animate-in fade-in duration-200">
-                  <div className="w-16 h-16 rounded-full bg-salon-border flex items-center justify-center mx-auto border border-[#C9A96E]/20 relative">
-                    <Loader className="w-8 h-8 text-[#C9A96E] animate-spin" />
+                  <div className="w-16 h-16 rounded-full bg-salon-border flex items-center justify-center mx-auto border border-[#D97457]/20 relative">
+                    <Loader className="w-8 h-8 text-[#D97457] animate-spin" />
                   </div>
                   <div className="space-y-1.5">
                     <h4 className="text-sm font-semibold text-white">Inicializando o Robô...</h4>
@@ -359,7 +359,7 @@ export default function ConfiguracoesPage() {
                     </p>
                   </div>
                   <div className="w-full bg-salon-border h-1 rounded-full overflow-hidden">
-                    <div className="bg-[#C9A96E] h-full w-2/3 rounded-full animate-[shimmer_1.5s_infinite]" />
+                    <div className="bg-[#D97457] h-full w-2/3 rounded-full animate-[shimmer_1.5s_infinite]" />
                   </div>
 
                   <button
@@ -376,7 +376,7 @@ export default function ConfiguracoesPage() {
               {/* STATE 3: QR READY */}
               {step === "qr_ready" && whatsappConfig?.qr_code && (
                 <div className="text-center space-y-4 animate-in zoom-in-95 duration-200">
-                  <div className="inline-block p-3 bg-white rounded-xl shadow-2xl border-2 border-[#C9A96E]">
+                  <div className="inline-block p-3 bg-white rounded-xl shadow-2xl border-2 border-[#D97457]">
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(whatsappConfig.qr_code)}`}
                       alt="WhatsApp Web QR Code"
@@ -384,7 +384,7 @@ export default function ConfiguracoesPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-xs font-bold text-[#C9A96E] uppercase tracking-wider">Escaneie o QR Code</h4>
+                    <h4 className="text-xs font-bold text-[#D97457] uppercase tracking-wider">Escaneie o QR Code</h4>
                     <p className="text-[9px] text-salon-text-secondary px-2 leading-relaxed">
                       Abra o WhatsApp no celular, vá em <strong className="text-white">Aparelhos Conectados</strong>, toque em <strong className="text-white">Conectar Aparelho</strong> e escaneie o código.
                     </p>
@@ -458,7 +458,7 @@ export default function ConfiguracoesPage() {
                   await refreshAllData();
                   setLoading(false);
                 }}
-                className="text-[#C9A96E] hover:underline flex items-center gap-1 font-semibold"
+                className="text-[#D97457] hover:underline flex items-center gap-1 font-semibold"
               >
                 <RefreshCw className={`w-3 h-3 ${loading ? "animate-spin" : ""}`} />
                 Atualizar Sincronização
@@ -473,7 +473,7 @@ export default function ConfiguracoesPage() {
           <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-6 shadow-lg">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2A2A2A] pb-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#C9A96E] flex items-center gap-2">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#D97457] flex items-center gap-2">
                 <MessageSquare className="w-4 h-4" />
                 <span>Customização de Mensagens &amp; Lembretes</span>
               </h3>
@@ -501,7 +501,7 @@ export default function ConfiguracoesPage() {
                         type="number"
                         value={form.reminder_hours}
                         onChange={(e) => setForm(prev => ({ ...prev, reminder_hours: parseInt(e.target.value) || 24 }))}
-                        className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white font-medium focus:outline-none focus:border-[#C9A96E]"
+                        className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white font-medium focus:outline-none focus:border-[#D97457]"
                       />
                       <span className="absolute right-3 top-2.5 text-salon-text-secondary text-[10px]">horas antes</span>
                     </div>
@@ -509,13 +509,13 @@ export default function ConfiguracoesPage() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                  <div className={`p-3 rounded-lg border ${form.enable_reminders ? 'border-[#C9A96E]/40 bg-[#C9A96E]/5' : 'border-salon-border bg-salon-bg/40'} transition-all`}>
+                  <div className={`p-3 rounded-lg border ${form.enable_reminders ? 'border-[#D97457]/40 bg-[#D97457]/5' : 'border-salon-border bg-salon-bg/40'} transition-all`}>
                     <label className="flex items-start gap-2.5 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={form.enable_reminders}
                         onChange={(e) => setForm(prev => ({ ...prev, enable_reminders: e.target.checked }))}
-                        className="mt-0.5 w-4.5 h-4.5 rounded bg-salon-bg border-salon-border focus:ring-0 text-[#C9A96E]"
+                        className="mt-0.5 w-4.5 h-4.5 rounded bg-salon-bg border-salon-border focus:ring-0 text-[#D97457]"
                       />
                       <div className="space-y-0.5 leading-tight">
                         <span className="text-white font-semibold text-[10px]">Enviar Lembretes</span>
@@ -524,13 +524,13 @@ export default function ConfiguracoesPage() {
                     </label>
                   </div>
 
-                  <div className={`p-3 rounded-lg border ${form.enable_confirmations ? 'border-[#C9A96E]/40 bg-[#C9A96E]/5' : 'border-salon-border bg-salon-bg/40'} transition-all`}>
+                  <div className={`p-3 rounded-lg border ${form.enable_confirmations ? 'border-[#D97457]/40 bg-[#D97457]/5' : 'border-salon-border bg-salon-bg/40'} transition-all`}>
                     <label className="flex items-start gap-2.5 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={form.enable_confirmations}
                         onChange={(e) => setForm(prev => ({ ...prev, enable_confirmations: e.target.checked }))}
-                        className="mt-0.5 w-4.5 h-4.5 rounded bg-salon-bg border-salon-border focus:ring-0 text-[#C9A96E]"
+                        className="mt-0.5 w-4.5 h-4.5 rounded bg-salon-bg border-salon-border focus:ring-0 text-[#D97457]"
                       />
                       <div className="space-y-0.5 leading-tight">
                         <span className="text-white font-semibold text-[10px]">Confirmação Direta</span>
@@ -539,13 +539,13 @@ export default function ConfiguracoesPage() {
                     </label>
                   </div>
 
-                  <div className={`p-3 rounded-lg border ${form.enable_responses ? 'border-[#C9A96E]/40 bg-[#C9A96E]/5' : 'border-salon-border bg-salon-bg/40'} transition-all`}>
+                  <div className={`p-3 rounded-lg border ${form.enable_responses ? 'border-[#D97457]/40 bg-[#D97457]/5' : 'border-salon-border bg-salon-bg/40'} transition-all`}>
                     <label className="flex items-start gap-2.5 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={form.enable_responses}
                         onChange={(e) => setForm(prev => ({ ...prev, enable_responses: e.target.checked }))}
-                        className="mt-0.5 w-4.5 h-4.5 rounded bg-salon-bg border-salon-border focus:ring-0 text-[#C9A96E]"
+                        className="mt-0.5 w-4.5 h-4.5 rounded bg-salon-bg border-salon-border focus:ring-0 text-[#D97457]"
                       />
                       <div className="space-y-0.5 leading-tight">
                         <span className="text-white font-semibold text-[10px]">Chatbot Qualificador</span>
@@ -559,7 +559,7 @@ export default function ConfiguracoesPage() {
               {/* Message Templates Section */}
               <div className="space-y-4 pt-4 border-t border-[#2A2A2A]">
                 <div>
-                  <h4 className="text-[10px] font-bold text-[#C9A96E] uppercase tracking-wider">Modelos de Lembretes &amp; Confirmações</h4>
+                  <h4 className="text-[10px] font-bold text-[#D97457] uppercase tracking-wider">Modelos de Lembretes &amp; Confirmações</h4>
                   <p className="text-[10px] text-salon-text-secondary mt-0.5">
                     Selecione o modelo desejado para editar e veja o resultado final no celular de demonstração.
                   </p>
@@ -570,28 +570,28 @@ export default function ConfiguracoesPage() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("visita")}
-                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "visita" ? "bg-[#C9A96E] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
+                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "visita" ? "bg-[#D97457] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
                   >
                     Lembrete Visita
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTab("confirmacao")}
-                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "confirmacao" ? "bg-[#C9A96E] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
+                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "confirmacao" ? "bg-[#D97457] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
                   >
                     Confirmação Imediata
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTab("adestramento")}
-                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "adestramento" ? "bg-[#C9A96E] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
+                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "adestramento" ? "bg-[#D97457] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
                   >
                     Lembrete Adestramento
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTab("hospedagem")}
-                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "hospedagem" ? "bg-[#C9A96E] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
+                    className={`flex-1 min-w-[90px] py-2 px-3 text-[10px] font-bold rounded-md transition-all text-center ${activeTab === "hospedagem" ? "bg-[#D97457] text-[#0F0F0F]" : "text-salon-text-secondary hover:text-white"}`}
                   >
                     Lembrete Hospedagem
                   </button>
@@ -610,7 +610,7 @@ export default function ConfiguracoesPage() {
                           {activeTab === "hospedagem" && "Mensagem de Lembrete de Hospedagem"}
                           {activeTab === "confirmacao" && "Mensagem de Confirmação Automática"}
                         </label>
-                        <span className="text-[9px] text-[#C9A96E] font-medium bg-[#C9A96E]/5 px-2 py-0.5 rounded border border-[#C9A96E]/20">
+                        <span className="text-[9px] text-[#D97457] font-medium bg-[#D97457]/5 px-2 py-0.5 rounded border border-[#D97457]/20">
                           {activeTab === "confirmacao" ? "No ato do agendamento" : `Enviado ${form.reminder_hours}h antes`}
                         </span>
                       </div>
@@ -621,7 +621,7 @@ export default function ConfiguracoesPage() {
                           value={form.template_visita}
                           onChange={(e) => setForm(prev => ({ ...prev, template_visita: e.target.value }))}
                           rows={6}
-                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#C9A96E] text-xs leading-relaxed transition-all resize-none"
+                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#D97457] text-xs leading-relaxed transition-all resize-none"
                           placeholder="Olá, {nome}... Escreva o template..."
                         />
                       )}
@@ -630,7 +630,7 @@ export default function ConfiguracoesPage() {
                           value={form.template_adestramento}
                           onChange={(e) => setForm(prev => ({ ...prev, template_adestramento: e.target.value }))}
                           rows={6}
-                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#C9A96E] text-xs leading-relaxed transition-all resize-none"
+                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#D97457] text-xs leading-relaxed transition-all resize-none"
                           placeholder="Olá, {nome}... Escreva o template..."
                         />
                       )}
@@ -639,7 +639,7 @@ export default function ConfiguracoesPage() {
                           value={form.template_hospedagem}
                           onChange={(e) => setForm(prev => ({ ...prev, template_hospedagem: e.target.value }))}
                           rows={6}
-                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#C9A96E] text-xs leading-relaxed transition-all resize-none"
+                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#D97457] text-xs leading-relaxed transition-all resize-none"
                           placeholder="Olá, {nome}... Escreva o template..."
                         />
                       )}
@@ -648,7 +648,7 @@ export default function ConfiguracoesPage() {
                           value={form.template_confirmacao}
                           onChange={(e) => setForm(prev => ({ ...prev, template_confirmacao: e.target.value }))}
                           rows={6}
-                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#C9A96E] text-xs leading-relaxed transition-all resize-none"
+                          className="w-full bg-[#0F0F0F] border border-salon-border text-white p-3 rounded-lg focus:outline-none focus:border-[#D97457] text-xs leading-relaxed transition-all resize-none"
                           placeholder="Olá, {nome}... Escreva o template..."
                         />
                       )}
@@ -670,7 +670,7 @@ export default function ConfiguracoesPage() {
                           )}
                           className="px-2 py-1 bg-salon-bg hover:bg-salon-border border border-salon-border hover:border-salon-text-secondary text-salon-text-primary rounded text-[9px] font-mono transition-all flex items-center gap-1"
                         >
-                          <Hash className="w-2.5 h-2.5 text-[#C9A96E]" />
+                          <Hash className="w-2.5 h-2.5 text-[#D97457]" />
                           <span>{"{nome}"}</span>
                         </button>
                         <button
@@ -683,7 +683,7 @@ export default function ConfiguracoesPage() {
                           )}
                           className="px-2 py-1 bg-salon-bg hover:bg-salon-border border border-salon-border hover:border-salon-text-secondary text-salon-text-primary rounded text-[9px] font-mono transition-all flex items-center gap-1"
                         >
-                          <Hash className="w-2.5 h-2.5 text-[#C9A96E]" />
+                          <Hash className="w-2.5 h-2.5 text-[#D97457]" />
                           <span>{"{data}"}</span>
                         </button>
                         <button
@@ -696,7 +696,7 @@ export default function ConfiguracoesPage() {
                           )}
                           className="px-2 py-1 bg-salon-bg hover:bg-salon-border border border-salon-border hover:border-salon-text-secondary text-salon-text-primary rounded text-[9px] font-mono transition-all flex items-center gap-1"
                         >
-                          <Hash className="w-2.5 h-2.5 text-[#C9A96E]" />
+                          <Hash className="w-2.5 h-2.5 text-[#D97457]" />
                           <span>{"{hora}"}</span>
                         </button>
                         <button
@@ -709,13 +709,13 @@ export default function ConfiguracoesPage() {
                           )}
                           className="px-2 py-1 bg-salon-bg hover:bg-salon-border border border-salon-border hover:border-salon-text-secondary text-salon-text-primary rounded text-[9px] font-mono transition-all flex items-center gap-1"
                         >
-                          <Hash className="w-2.5 h-2.5 text-[#C9A96E]" />
+                          <Hash className="w-2.5 h-2.5 text-[#D97457]" />
                           <span>{"{atividade}"}</span>
                         </button>
                       </div>
                       
                       <div className="bg-[#0F0F0F]/60 border border-salon-border/55 rounded-lg p-2.5 text-[9px] text-salon-text-secondary leading-relaxed flex gap-2">
-                        <Info className="w-4 h-4 text-[#C9A96E] shrink-0 mt-0.5" />
+                        <Info className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
                         <span>
                           Você pode usar formatações nativas do WhatsApp como <strong className="text-white">*texto em negrito*</strong>, <em className="text-white">_texto em itálico_</em> ou <del className="text-white">~tachado~</del>.
                         </span>
@@ -759,7 +759,7 @@ export default function ConfiguracoesPage() {
                   value={form.questions_json}
                   onChange={(e) => setForm(prev => ({ ...prev, questions_json: e.target.value }))}
                   rows={4}
-                  className="w-full bg-[#0F0F0F] border border-salon-border text-salon-text-primary font-mono text-[9px] p-3 rounded-lg focus:outline-none focus:border-[#C9A96E] resize-y"
+                  className="w-full bg-[#0F0F0F] border border-salon-border text-salon-text-primary font-mono text-[9px] p-3 rounded-lg focus:outline-none focus:border-[#D97457] resize-y"
                 />
               </div>
 
@@ -768,7 +768,7 @@ export default function ConfiguracoesPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-[#C9A96E] hover:bg-[#B8965C] active:scale-[0.98] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-salon flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)] disabled:opacity-50 text-xs"
+                  className="bg-[#D97457] hover:bg-[#C25F43] active:scale-[0.98] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-salon flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)] disabled:opacity-50 text-xs"
                 >
                   {loading ? (
                     <Loader className="w-4 h-4 animate-spin" />

@@ -24,12 +24,12 @@ export default function PublicNavbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#C9A96E]/10 border border-[#C9A96E]/20 rounded-full flex items-center justify-center text-[#C9A96E]">
+            <div className="w-10 h-10 bg-[#D97457]/10 border border-[#D97457]/20 rounded-full flex items-center justify-center text-[#D97457]">
               <Shield className="w-5 h-5" />
             </div>
             <div>
               <span className="font-bold tracking-wider text-xl block leading-none">VALE DA KUBERA</span>
-              <span className="text-[9px] tracking-widest text-[#C9A96E] font-semibold uppercase">Canil de Pastor do Cáucaso</span>
+              <span className="text-[9px] tracking-widest text-[#D97457] font-semibold uppercase">Canil de Pastor do Cáucaso</span>
             </div>
           </Link>
 
@@ -39,14 +39,14 @@ export default function PublicNavbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-gray-300 hover:text-[#C9A96E] transition-colors"
+                className="text-sm font-medium text-gray-300 hover:text-[#D97457] transition-colors"
               >
                 {item.label}
               </Link>
             ))}
             <Link
               href="/login"
-              className="bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"
+              className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-[0_0_15px_rgba(217,116,87,0.15)]"
             >
               Painel Admin
             </Link>
@@ -72,7 +72,7 @@ export default function PublicNavbar() {
               key={item.href}
               href={item.href}
               onClick={() => setIsOpen(false)}
-              className="block px-3 py-2.5 rounded-lg text-base font-medium text-gray-300 hover:text-[#C9A96E] hover:bg-[#0F0F0F] transition-all"
+              className="block px-3 py-2.5 rounded-lg text-base font-medium text-gray-300 hover:text-[#D97457] hover:bg-[#0F0F0F] transition-all"
             >
               {item.label}
             </Link>
@@ -80,7 +80,7 @@ export default function PublicNavbar() {
           <Link
             href="/login"
             onClick={() => setIsOpen(false)}
-            className="block text-center mt-4 bg-[#C9A96E] text-[#0F0F0F] px-3 py-2.5 rounded-lg text-base font-semibold transition-all"
+            className="block text-center mt-4 bg-[#D97457] text-[#0F0F0F] px-3 py-2.5 rounded-lg text-base font-semibold transition-all"
           >
             Painel Admin
           </Link>

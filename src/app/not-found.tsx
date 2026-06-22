@@ -10,7 +10,7 @@ export default function NotFound() {
       <PublicNavbar />
       
       <main className="max-w-xl mx-auto px-4 py-24 text-center space-y-6 flex-1 flex flex-col justify-center items-center">
-        <div className="w-16 h-16 bg-[#C9A96E]/10 border border-[#C9A96E]/20 rounded-full flex items-center justify-center text-[#C9A96E]">
+        <div className="w-16 h-16 bg-[#D97457]/10 border border-[#D97457]/20 rounded-full flex items-center justify-center text-[#D97457]">
           <AlertCircle className="w-8 h-8" />
         </div>
         <h1 className="text-4xl font-extrabold tracking-tight">404 - Página Não Encontrada</h1>
@@ -19,7 +19,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="inline-block bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-6 py-3 rounded-lg text-xs transition-all"
+          className="inline-block bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-3 rounded-lg text-xs transition-all"
         >
           Voltar para o Início
         </Link>

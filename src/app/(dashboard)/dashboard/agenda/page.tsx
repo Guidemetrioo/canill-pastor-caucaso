@@ -83,7 +83,7 @@ export default function AgendaPage() {
       <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-6">
         <div className="flex items-center justify-between pb-4 border-b border-salon-border/60">
           <h3 className="text-base font-bold flex items-center gap-2">
-            <CalendarDays className="w-5 h-5 text-[#C9A96E]" />
+            <CalendarDays className="w-5 h-5 text-[#D97457]" />
             <span>Lista de Compromissos</span>
           </h3>
         </div>
@@ -118,18 +118,18 @@ export default function AgendaPage() {
                       {evt.description && <p className="text-xs text-salon-text-secondary">{evt.description}</p>}
                       <div className="flex flex-wrap items-center gap-4 text-[10px] text-gray-400 pt-1.5">
                         <span className="flex items-center gap-1.5">
-                          <Clock className="w-3.5 h-3.5 text-[#C9A96E]" />
+                          <Clock className="w-3.5 h-3.5 text-[#D97457]" />
                           <span>{eventTime}</span>
                         </span>
                         {(client || lead) && (
                           <span className="flex items-center gap-1.5">
-                            <User className="w-3.5 h-3.5 text-[#C9A96E]" />
+                            <User className="w-3.5 h-3.5 text-[#D97457]" />
                             <span>Tutor: {client ? client.name : lead?.name}</span>
                           </span>
                         )}
                         {evt.assigned_to && (
                           <span className="flex items-center gap-1.5">
-                            <BookOpen className="w-3.5 h-3.5 text-[#C9A96E]" />
+                            <BookOpen className="w-3.5 h-3.5 text-[#D97457]" />
                             <span>Responsável: {evt.assigned_to}</span>
                           </span>
                         )}
@@ -259,7 +259,7 @@ export default function AgendaPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Agendar
                 </button>

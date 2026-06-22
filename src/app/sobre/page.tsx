@@ -27,13 +27,13 @@ export default function SobrePage() {
         {/* Intro */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
               <Shield className="w-3.5 h-3.5" />
               <span>Nossa História</span>
             </span>
             <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
               Dedicação Absoluta à Raça <br />
-              <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
+              <span className="text-[#D97457]">Pastor do Cáucaso</span>
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
               O Canil Vale da Kubera nasceu sob a liderança do criador Rafael Avellar, da admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso. Localizado em Itatiba - SP, nosso compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
@@ -55,7 +55,7 @@ export default function SobrePage() {
         <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((s, idx) => (
             <div key={idx} className="bg-[#1A1A1A] border border-[#2A2A2A] p-6 rounded-xl text-center space-y-2">
-              <span className="block text-2xl font-extrabold text-[#C9A96E]">{s.value}</span>
+              <span className="block text-2xl font-extrabold text-[#D97457]">{s.value}</span>
               <span className="block text-xs text-gray-400 font-medium uppercase tracking-wider">{s.label}</span>
             </div>
           ))}
@@ -72,7 +72,7 @@ export default function SobrePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
             <div className="flex gap-4">
-              <Award className="w-10 h-10 text-[#C9A96E] shrink-0" />
+              <Award className="w-10 h-10 text-[#D97457] shrink-0" />
               <div className="space-y-1.5">
                 <h4 className="text-sm font-bold">Laudos de Saúde</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
@@ -82,7 +82,7 @@ export default function SobrePage() {
             </div>
 
             <div className="flex gap-4">
-              <Shield className="w-10 h-10 text-[#C9A96E] shrink-0" />
+              <Shield className="w-10 h-10 text-[#D97457] shrink-0" />
               <div className="space-y-1.5">
                 <h4 className="text-sm font-bold">Temperamento Equilibrado</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
@@ -92,7 +92,7 @@ export default function SobrePage() {
             </div>
 
             <div className="flex gap-4">
-              <MapPin className="w-10 h-10 text-[#C9A96E] shrink-0" />
+              <MapPin className="w-10 h-10 text-[#D97457] shrink-0" />
               <div className="space-y-1.5">
                 <h4 className="text-sm font-bold">Instalações Premium</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
@@ -102,7 +102,7 @@ export default function SobrePage() {
             </div>
 
             <div className="flex gap-4">
-              <CheckCircle className="w-10 h-10 text-[#C9A96E] shrink-0" />
+              <CheckCircle className="w-10 h-10 text-[#D97457] shrink-0" />
               <div className="space-y-1.5">
                 <h4 className="text-sm font-bold">Suporte Vitalício</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">

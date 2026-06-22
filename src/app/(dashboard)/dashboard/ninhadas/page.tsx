@@ -115,7 +115,7 @@ export default function NinhadasPage() {
         
         {/* Left Column: Litters */}
         <div className="space-y-4 lg:col-span-1">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[#C9A96E]">Ninhadas Cadastradas</h3>
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#D97457]">Ninhadas Cadastradas</h3>
           
           <div className="space-y-2">
             {ninhadas.length === 0 ? (
@@ -336,7 +336,7 @@ export default function NinhadasPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Registrar
                 </button>
@@ -435,7 +435,7 @@ export default function NinhadasPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Adicionar
                 </button>

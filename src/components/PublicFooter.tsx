@@ -11,7 +11,7 @@ export default function PublicFooter() {
           {/* Col 1: Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#C9A96E]/10 border border-[#C9A96E]/20 rounded-full flex items-center justify-center text-[#C9A96E]">
+              <div className="w-8 h-8 bg-[#D97457]/10 border border-[#D97457]/20 rounded-full flex items-center justify-center text-[#D97457]">
                 <Shield className="w-4 h-4" />
               </div>
               <span className="font-bold tracking-wider text-white text-lg leading-none">VALE DA KUBERA</span>
@@ -25,11 +25,11 @@ export default function PublicFooter() {
           <div>
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Links Rápidos</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/sobre" className="hover:text-[#C9A96E] transition-colors">O Canil</Link></li>
-              <li><Link href="/filhotes" className="hover:text-[#C9A96E] transition-colors">Filhotes Disponíveis</Link></li>
-              <li><Link href="/a-raca-pastor-do-caucaso" className="hover:text-[#C9A96E] transition-colors">A Raça</Link></li>
-              <li><Link href="/galeria" className="hover:text-[#C9A96E] transition-colors">Galeria de Fotos</Link></li>
-              <li><Link href="/blog" className="hover:text-[#C9A96E] transition-colors">Blog &amp; Dicas</Link></li>
+              <li><Link href="/sobre" className="hover:text-[#D97457] transition-colors">O Canil</Link></li>
+              <li><Link href="/filhotes" className="hover:text-[#D97457] transition-colors">Filhotes Disponíveis</Link></li>
+              <li><Link href="/a-raca-pastor-do-caucaso" className="hover:text-[#D97457] transition-colors">A Raça</Link></li>
+              <li><Link href="/galeria" className="hover:text-[#D97457] transition-colors">Galeria de Fotos</Link></li>
+              <li><Link href="/blog" className="hover:text-[#D97457] transition-colors">Blog &amp; Dicas</Link></li>
             </ul>
           </div>
 
@@ -37,7 +37,7 @@ export default function PublicFooter() {
           <div>
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Serviços</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/servicos/cobertura" className="hover:text-[#C9A96E] transition-colors">Cobertura / Monta</Link></li>
+              <li><Link href="/servicos/cobertura" className="hover:text-[#D97457] transition-colors">Cobertura / Monta</Link></li>
             </ul>
           </div>
 
@@ -46,17 +46,17 @@ export default function PublicFooter() {
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Contato (NAP)</h4>
             <ul className="space-y-2.5 text-xs">
               <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 shrink-0 text-[#C9A96E] mt-0.5" />
+                <MapPin className="w-4 h-4 shrink-0 text-[#D97457] mt-0.5" />
                 <span>
                   <strong>Endereço:</strong> Itatiba - SP, CEP 13250-000
                 </span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#C9A96E]" />
+                <Phone className="w-4 h-4 text-[#D97457]" />
                 <span><strong>Telefone:</strong> +55 (11) 99876-5432</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#C9A96E]" />
+                <Mail className="w-4 h-4 text-[#D97457]" />
                 <span><strong>E-mail:</strong> canilvaledakubera@gmail.com</span>
               </li>
             </ul>
@@ -65,7 +65,7 @@ export default function PublicFooter() {
                 href="https://maps.google.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#C9A96E] hover:underline"
+                className="text-[#D97457] hover:underline"
               >
                 Ver no Google Maps (Google Business Profile)
               </a>

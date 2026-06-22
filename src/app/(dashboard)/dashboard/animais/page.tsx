@@ -79,7 +79,7 @@ export default function AnimaisPage() {
         
         {/* Left Column: List */}
         <div className="space-y-4 lg:col-span-1">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[#C9A96E]">Plantel de Reprodutores</h3>
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#D97457]">Plantel de Reprodutores</h3>
           
           <div className="space-y-2">
             {animals.map((a) => {
@@ -288,7 +288,7 @@ export default function AnimaisPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Salvar
                 </button>

@@ -10,9 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#C9A96E",
-          hover: "#B8965C",
-          light: "#DFCB9E",
+          DEFAULT: "#D97457",
+          hover: "#C25F43",
+          light: "#EC9B85",
         },
         salon: {
           bg: "#0F0F0F",

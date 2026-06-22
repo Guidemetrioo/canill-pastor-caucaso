@@ -56,13 +56,13 @@ export default function RacaPage() {
         
         {/* Intro */}
         <div className="space-y-4 text-center">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
             <BookOpen className="w-3.5 h-3.5" />
             <span>Guia Oficial da Raça</span>
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
             O Gigante Guardião: <br />
-            <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
+            <span className="text-[#D97457]">Pastor do Cáucaso</span>
           </h1>
           <p className="text-gray-400 text-xs italic">
             Publicado pelo Canil Vale da Kubera &bull; Tempo de leitura: ~6 min
@@ -82,7 +82,7 @@ export default function RacaPage() {
           
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-              <Shield className="w-5 h-5 text-[#C9A96E]" />
+              <Shield className="w-5 h-5 text-[#D97457]" />
               <span>Origem e História da Raça</span>
             </h2>
             <p>
@@ -95,15 +95,15 @@ export default function RacaPage() {
 
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-              <Activity className="w-5 h-5 text-[#C9A96E]" />
+              <Activity className="w-5 h-5 text-[#D97457]" />
               <span>Temperamento e Instinto de Proteção</span>
             </h2>
             <p>
               O temperamento do Pastor do Cáucaso é marcado por dois extremos muito bem definidos: lealdade incondicional com sua família e uma desconfiança natural de estranhos. Em casa, é um cão calmo, dócil, extremamente apegado aos seus tutores e surpreendentemente protetor com crianças. É um gigante gentil na presença das pessoas que ama.
             </p>
-            <div className="bg-[#1A1A1A] border-l-4 border-[#C9A96E] p-5 rounded-r-xl my-6">
+            <div className="bg-[#1A1A1A] border-l-4 border-[#D97457] p-5 rounded-r-xl my-6">
               <p className="font-semibold text-white text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <AlertTriangle className="w-4.5 h-4.5 text-[#C9A96E]" />
+                <AlertTriangle className="w-4.5 h-4.5 text-[#D97457]" />
                 <span>Nota Importante sobre a Guarda</span>
               </p>
               <p className="text-xs text-gray-400">
@@ -117,7 +117,7 @@ export default function RacaPage() {
 
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-              <Star className="w-5 h-5 text-[#C9A96E]" />
+              <Star className="w-5 h-5 text-[#D97457]" />
               <span>Porte Físico e Características</span>
             </h2>
             <p>
@@ -133,7 +133,7 @@ export default function RacaPage() {
 
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-[#C9A96E]" />
+              <AlertTriangle className="w-5 h-5 text-[#D97457]" />
               <span>Cuidados e Saúde Essenciais</span>
             </h2>
             <p>

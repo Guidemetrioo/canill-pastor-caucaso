@@ -20,12 +20,12 @@ export default function ContatoPage() {
         
         {/* Intro */}
         <section className="space-y-4 max-w-lg">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Fale Conosco</span>
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Contato &amp; <span className="text-[#C9A96E]">Visitas</span>
+            Contato &amp; <span className="text-[#D97457]">Visitas</span>
           </h1>
           <p className="text-gray-400 text-sm leading-relaxed">
             Estamos prontos para atender você e sua família. Utilize nossos canais de contato ou preencha o formulário abaixo.
@@ -42,7 +42,7 @@ export default function ContatoPage() {
               
               <div className="space-y-4 text-xs">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-white">Endereço</h5>
                     <p className="text-gray-400 mt-1">Itatiba - SP, CEP 13250-000</p>
@@ -50,7 +50,7 @@ export default function ContatoPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
+                  <Phone className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-white">Telefone / WhatsApp</h5>
                     <p className="text-gray-400 mt-1">+55 (11) 99876-5432</p>
@@ -58,7 +58,7 @@ export default function ContatoPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
+                  <Mail className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-white">E-mail de Contato</h5>
                     <p className="text-gray-400 mt-1">canilvaledakubera@gmail.com</p>

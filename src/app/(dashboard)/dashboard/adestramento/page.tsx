@@ -65,7 +65,7 @@ export default function AdestramentoPage() {
       <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-6">
         <div className="flex items-center justify-between pb-4 border-b border-salon-border/60">
           <h3 className="text-base font-bold flex items-center gap-2">
-            <Award className="w-5 h-5 text-[#C9A96E]" />
+            <Award className="w-5 h-5 text-[#D97457]" />
             <span>Alunos Ativos</span>
           </h3>
         </div>
@@ -123,7 +123,7 @@ export default function AdestramentoPage() {
                     {ad.status === "Ativo" && (
                       <button
                         onClick={() => handleIncrement(ad.id)}
-                        className="bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] hover:bg-[#C9A96E] hover:text-[#0F0F0F] px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1"
+                        className="bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] hover:bg-[#D97457] hover:text-[#0F0F0F] px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1"
                       >
                         <CheckCircle className="w-4 h-4" />
                         <span>Presença / Aula +1</span>
@@ -217,7 +217,7 @@ export default function AdestramentoPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Salvar
                 </button>

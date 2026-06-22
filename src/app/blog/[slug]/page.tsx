@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Back button */}
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-[#C9A96E] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-[#D97457] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Voltar para o blog</span>
@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
               {fallbackPost.tags.map((tag: string, i: number) => (
-                <span key={i} className="text-[10px] text-[#C9A96E] bg-[#C9A96E]/10 px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                <span key={i} className="text-[10px] text-[#D97457] bg-[#D97457]/10 px-3 py-1 rounded-full font-bold uppercase tracking-wider">
                   {tag}
                 </span>
               ))}

@@ -405,7 +405,7 @@ export default function LeadsPage() {
 
                 {/* Qualification properties */}
                 <div className="space-y-4">
-                  <h4 className="font-bold text-[#C9A96E] uppercase tracking-wider text-[9px] flex items-center gap-1.5">
+                  <h4 className="font-bold text-[#D97457] uppercase tracking-wider text-[9px] flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4" /> Respostas da Qualificação
                   </h4>
                   
@@ -485,7 +485,7 @@ export default function LeadsPage() {
                       onChange={(e) => setTagInput(e.target.value)}
                       className="bg-salon-bg border border-salon-border text-white text-[11px] p-2 rounded-lg flex-1 focus:outline-none"
                     />
-                    <button type="submit" className="bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-3 rounded-lg text-[10px]">Add</button>
+                    <button type="submit" className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-3 rounded-lg text-[10px]">Add</button>
                   </form>
                 </div>
 

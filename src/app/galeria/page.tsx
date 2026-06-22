@@ -27,12 +27,12 @@ export default function GaleriaPage() {
         
         {/* Header */}
         <div className="space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
             <ImageIcon className="w-3.5 h-3.5" />
             <span>Mídias &amp; Fotos</span>
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Galeria do <span className="text-[#C9A96E]">Canil Vale da Kubera</span>
+            Galeria do <span className="text-[#D97457]">Canil Vale da Kubera</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-xl leading-relaxed">
             Confira registros reais de nossos cães adultos, das instalações e do dia a dia dos filhotes.
@@ -44,7 +44,7 @@ export default function GaleriaPage() {
           <button
             onClick={() => setFilter("todos")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              filter === "todos" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              filter === "todos" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Ver Tudo
@@ -52,7 +52,7 @@ export default function GaleriaPage() {
           <button
             onClick={() => setFilter("caes")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              filter === "caes" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              filter === "caes" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Adultos / Reprodutores
@@ -60,7 +60,7 @@ export default function GaleriaPage() {
           <button
             onClick={() => setFilter("filhotes")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              filter === "filhotes" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              filter === "filhotes" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Filhotes
@@ -68,7 +68,7 @@ export default function GaleriaPage() {
           <button
             onClick={() => setFilter("canil")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              filter === "canil" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              filter === "canil" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Estrutura Canil
@@ -80,7 +80,7 @@ export default function GaleriaPage() {
           {filteredMedia.map((m, idx) => (
             <div
               key={idx}
-              className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden group shadow-xl hover:border-[#C9A96E]/50 transition-all flex flex-col justify-between"
+              className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden group shadow-xl hover:border-[#D97457]/50 transition-all flex flex-col justify-between"
             >
               <div className="relative h-64 bg-gray-900 overflow-hidden">
                 <img

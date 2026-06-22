@@ -24,12 +24,12 @@ export default function FilhotesPage() {
         
         {/* Header */}
         <div className="space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
             <Heart className="w-3.5 h-3.5" />
             <span>Ninhadas Recentes</span>
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Filhotes de <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
+            Filhotes de <span className="text-[#D97457]">Pastor do Cáucaso</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-xl leading-relaxed">
             Nossos filhotes são criados com acompanhamento profissional. Selecione abaixo para ver os detalhes, fotos e histórico de vacinação de cada filhote disponível.
@@ -41,7 +41,7 @@ export default function FilhotesPage() {
           <button
             onClick={() => setGenderFilter("todos")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              genderFilter === "todos" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              genderFilter === "todos" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Todos ({filhotes.filter((f) => f.status === "Disponível").length})
@@ -49,7 +49,7 @@ export default function FilhotesPage() {
           <button
             onClick={() => setGenderFilter("macho")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              genderFilter === "macho" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              genderFilter === "macho" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Machos ({filhotes.filter((f) => f.status === "Disponível" && f.gender === "macho").length})
@@ -57,7 +57,7 @@ export default function FilhotesPage() {
           <button
             onClick={() => setGenderFilter("fêmea")}
             className={`px-4 py-2 rounded-lg font-bold border transition-all ${
-              genderFilter === "fêmea" ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
+              genderFilter === "fêmea" ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457]" : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-300 hover:border-gray-500"
             }`}
           >
             Fêmeas ({filhotes.filter((f) => f.status === "Disponível" && f.gender === "fêmea").length})
@@ -78,7 +78,7 @@ export default function FilhotesPage() {
               return (
                 <div
                   key={puppy.id}
-                  className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#C9A96E]/50 transition-all flex flex-col justify-between group shadow-xl"
+                  className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#D97457]/50 transition-all flex flex-col justify-between group shadow-xl"
                 >
                   <div className="relative h-64 bg-gray-900 overflow-hidden">
                     <img
@@ -93,8 +93,8 @@ export default function FilhotesPage() {
 
                   <div className="p-6 space-y-4">
                     <div className="flex justify-between items-start">
-                      <h3 className="text-lg font-bold group-hover:text-[#C9A96E] transition-colors">{puppy.name}</h3>
-                      <span className="text-[#C9A96E] font-extrabold text-sm">
+                      <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{puppy.name}</h3>
+                      <span className="text-[#D97457] font-extrabold text-sm">
                         R$ {puppy.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                       </span>
                     </div>
@@ -104,18 +104,18 @@ export default function FilhotesPage() {
 
                     <div className="space-y-1.5 pt-2 border-t border-[#2A2A2A]/50">
                       <div className="flex items-center gap-2 text-[10px] text-gray-300">
-                        <Check className="w-3.5 h-3.5 text-[#C9A96E]" />
+                        <Check className="w-3.5 h-3.5 text-[#D97457]" />
                         <span>Pedigree CBKC Incluso</span>
                       </div>
                       <div className="flex items-center gap-2 text-[10px] text-gray-300">
-                        <Check className="w-3.5 h-3.5 text-[#C9A96E]" />
+                        <Check className="w-3.5 h-3.5 text-[#D97457]" />
                         <span>Contrato de Garantia de Saúde</span>
                       </div>
                     </div>
 
                     <Link
                       href={`/filhotes/${puppySlug}`}
-                      className="w-full mt-4 bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] hover:bg-[#C9A96E] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
+                      className="w-full mt-4 bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] hover:bg-[#D97457] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
                     >
                       Ver Detalhes do Filhote
                     </Link>

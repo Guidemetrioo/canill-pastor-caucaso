@@ -6,7 +6,7 @@ import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Link from "next/link";
-import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Youtube, MessageCircle, Instagram } from "lucide-react";
+import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, MessageCircle } from "lucide-react";
 
 export default function LandingPageClient() {
   const { filhotes, services } = useAura();
@@ -67,18 +67,18 @@ export default function LandingPageClient() {
         </div>
         
         {/* Decorative ambient light */}
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#C9A96E]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#D97457]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
           <div className="max-w-2xl space-y-5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] text-xs font-bold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
               <Shield className="w-3.5 h-3.5" />
               <span>Criação Selecionada CBKC/FCI</span>
             </span>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
               Guardiões de Elite: <br />
-              <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
+              <span className="text-[#D97457]">Pastor do Cáucaso</span>
             </h1>
 
             <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
@@ -88,7 +88,7 @@ export default function LandingPageClient() {
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/filhotes"
-                className="bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-6 py-3 rounded-xl transition-all text-center text-xs shadow-[0_0_20px_rgba(201,169,110,0.25)] flex items-center justify-center gap-2"
+                className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-3 rounded-xl transition-all text-center text-xs shadow-[0_0_20px_rgba(217,116,87,0.25)] flex items-center justify-center gap-2"
               >
                 <span>Ver Nossos Cães</span>
                 <ArrowRight className="w-4 h-4" />
@@ -109,7 +109,7 @@ export default function LandingPageClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-2">
-              <span className="text-xs text-[#C9A96E] font-bold uppercase tracking-wider">Cães &amp; Ninhadas</span>
+              <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Cães &amp; Ninhadas</span>
               <h2 className="text-3xl font-extrabold">Nossos Cães</h2>
               <p className="text-gray-400 text-xs max-w-lg leading-relaxed">
                 Conheça nossos reprodutores importados e ninhadas selecionadas de Pastor do Cáucaso.
@@ -117,7 +117,7 @@ export default function LandingPageClient() {
             </div>
             <Link
               href="/filhotes"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A96E] hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D97457] hover:underline"
             >
               <span>Ver todos ({filhotes.length})</span>
               <ArrowRight className="w-4 h-4" />
@@ -143,10 +143,10 @@ export default function LandingPageClient() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Text Content */}
           <div className="lg:col-span-7 space-y-6">
-            <span className="text-xs text-[#C9A96E] font-bold uppercase tracking-wider">A Raça &amp; Criação</span>
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">A Raça &amp; Criação</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
               O Legítimo Pastor do Cáucaso: <br />
-              <span className="text-[#C9A96E]">Segurança e Excelência de Pista</span>
+              <span className="text-[#D97457]">Segurança e Excelência de Pista</span>
             </h2>
             <div className="space-y-4 text-gray-400 text-xs sm:text-sm leading-relaxed font-sans">
               <p>
@@ -169,7 +169,9 @@ export default function LandingPageClient() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#FF0000] hover:bg-[#D90000] text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-lg hover:-translate-y-0.5"
               >
-                <Youtube className="w-4 h-4" />
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.524 3.545 12 3.545 12 3.545s-7.525 0-9.387.51A3.003 3.003 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108c1.862.51 9.387.51 9.387.51s7.524 0 9.387-.51a3.003 3.003 0 0 0 2.11-2.108c.502-1.907.502-5.837.502-5.837s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
                 <span>Vídeos no YouTube</span>
               </a>
 
@@ -180,19 +182,12 @@ export default function LandingPageClient() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-gradient-to-tr from-[#FD1D1D] via-[#F56040] to-[#C13584] hover:opacity-90 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-lg hover:-translate-y-0.5"
               >
-                <Instagram className="w-4 h-4" />
+                <svg className="w-4 h-4 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round" viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
                 <span>Nosso Instagram</span>
-              </a>
-
-              {/* WhatsApp Button */}
-              <a
-                href="https://wa.me/5511998765432"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-lg hover:-translate-y-0.5"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Contato WhatsApp</span>
               </a>
             </div>
           </div>
@@ -214,44 +209,43 @@ export default function LandingPageClient() {
       <section className="py-20 bg-[#121212]/50 border-t border-b border-[#2A2A2A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-2 max-w-lg mx-auto">
-            <span className="text-xs text-[#C9A96E] font-bold uppercase tracking-wider">Depoimentos</span>
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Depoimentos</span>
             <h2 className="text-3xl font-extrabold">O que dizem os tutores</h2>
             <p className="text-gray-400 text-xs leading-relaxed">
               Confiança e transparência que resultam em parcerias duradouras com nossos clientes.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((test, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {testimonials.map((test, index) => (
               <div
-                key={idx}
-                className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 space-y-4 shadow-xl relative overflow-hidden"
+                key={index}
+                className="bg-[#1A1A1A] border border-[#2A2A2A] p-6 rounded-2xl space-y-4 hover:border-gray-800 transition-colors shadow-lg relative flex flex-col justify-between"
               >
-                <div className="flex items-center gap-1">
-                  {[...Array(test.stars)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-[#C9A96E] fill-[#C9A96E]" />
-                  ))}
-                </div>
-                <p className="text-gray-300 text-xs leading-relaxed italic">
-                  {"“"}{test.text}{"”"}
-                </p>
-                <div className="pt-4 border-t border-[#2A2A2A]/50 flex items-center justify-between">
-                  <div>
-                    <h5 className="text-sm font-bold text-white leading-none">{test.name}</h5>
-                    <span className="text-[10px] text-gray-400">{test.location}</span>
+                <div className="space-y-3">
+                  <div className="flex gap-1 text-[#D97457]">
+                    {[...Array(test.stars)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-[#D97457] fill-[#D97457]" />
+                    ))}
                   </div>
-                  <span className="text-xs text-[#C9A96E] font-semibold">{test.dog}</span>
+                  <p className="text-gray-300 text-xs italic leading-relaxed font-sans">&ldquo;{test.text}&rdquo;</p>
+                </div>
+                <div className="flex justify-between items-center pt-3 border-t border-[#2A2A2A]/50">
+                  <div className="flex flex-col">
+                    <span className="text-white text-xs font-bold">{test.name}</span>
+                    <span className="text-gray-500 text-[10px]">{test.location}</span>
+                  </div>
+                  <span className="text-xs text-[#D97457] font-semibold">{test.dog}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-
       {/* Location / Map */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <span className="text-xs text-[#C9A96E] font-bold uppercase tracking-wider">Localização</span>
+          <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Localização</span>
           <h2 className="text-3xl font-extrabold">Venha nos visitar em Itatiba - SP</h2>
           <p className="text-gray-400 text-xs leading-relaxed">
             Nossas instalações ficam em uma chácara verde estruturada especificamente para o bem-estar e criação da raça Pastor do Cáucaso.
@@ -259,14 +253,14 @@ export default function LandingPageClient() {
 
           <div className="space-y-3.5 text-xs text-gray-300">
             <div className="flex items-start gap-2.5">
-              <MapPin className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
+              <MapPin className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
               <div>
                 <h5 className="font-bold text-white text-sm">Endereço Oficial</h5>
                 <p className="text-gray-400 text-xs mt-0.5">Itatiba - SP, CEP 13250-000</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
-              <Calendar className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
+              <Calendar className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
               <div>
                 <h5 className="font-bold text-white text-sm">Horários de Visitas</h5>
                 <p className="text-gray-400 text-xs mt-0.5">Terça a Sábado: 09h às 17h (Sob agendamento prévio no WhatsApp)</p>
@@ -300,7 +294,7 @@ function DogCard({ dog }: { dog: any }) {
   const [activePhoto, setActivePhoto] = useState(dog.avatar_url || (dog.photos && dog.photos[0]) || "");
 
   return (
-    <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#C9A96E]/50 transition-all flex flex-col justify-between group shadow-xl">
+    <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#D97457]/50 transition-all flex flex-col justify-between group shadow-xl">
       {/* Photo Container */}
       <div className="relative h-72 bg-gray-900 overflow-hidden select-none">
         {activePhoto ? (
@@ -331,7 +325,7 @@ function DogCard({ dog }: { dog: any }) {
                   }}
                   className={`w-5 h-5 rounded border transition-all flex items-center justify-center text-[9px] font-bold ${
                     activePhoto === photo 
-                      ? "bg-[#C9A96E] text-[#0F0F0F] border-[#C9A96E] scale-110" 
+                      ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457] scale-110" 
                       : "bg-[#1A1A1A] text-gray-400 border-[#2A2A2A] hover:bg-gray-800 hover:text-white"
                   }`}
                   title={`Foto ${i + 1}`}
@@ -348,9 +342,9 @@ function DogCard({ dog }: { dog: any }) {
       <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
         <div className="space-y-4">
           <div className="flex justify-between items-start">
-            <h3 className="text-lg font-bold group-hover:text-[#C9A96E] transition-colors">{dog.name}</h3>
+            <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{dog.name}</h3>
             {dog.price > 0 && (
-              <span className="text-[#C9A96E] font-extrabold text-sm">
+              <span className="text-[#D97457] font-extrabold text-sm">
                 R$ {dog.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </span>
             )}
@@ -384,11 +378,11 @@ function DogCard({ dog }: { dog: any }) {
         <div className="space-y-3 pt-3 border-t border-[#2A2A2A]/50">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2 text-[10px] text-gray-300">
-              <Check className="w-3.5 h-3.5 text-[#C9A96E]" />
+              <Check className="w-3.5 h-3.5 text-[#D97457]" />
               <span>Pedigree CBKC Incluso</span>
             </div>
             <div className="flex items-center gap-2 text-[10px] text-gray-300">
-              <Check className="w-3.5 h-3.5 text-[#C9A96E]" />
+              <Check className="w-3.5 h-3.5 text-[#D97457]" />
               <span>Linhagem Importada Selecionada</span>
             </div>
           </div>
@@ -401,7 +395,7 @@ function DogCard({ dog }: { dog: any }) {
             <Link
               href={`https://wa.me/5511998765432?text=Olá!%20Gostaria%20de%20saber%20mais%20detalhes%20sobre%20o%20cão%20${dog.name}.`}
               target="_blank"
-              className="w-full bg-[#C9A96E]/10 border border-[#C9A96E]/20 text-[#C9A96E] hover:bg-[#C9A96E] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
+              className="w-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] hover:bg-[#D97457] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
             >
               Consultar Detalhes
             </Link>

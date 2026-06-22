@@ -115,13 +115,13 @@ export default function FinanceiroPage() {
               R$ {netBalance.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </h3>
           </div>
-          <DollarSign className="w-10 h-10 text-[#C9A96E] opacity-80" />
+          <DollarSign className="w-10 h-10 text-[#D97457] opacity-80" />
         </div>
       </div>
 
       {/* Ledger list */}
       <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-4">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#C9A96E] border-b border-[#2A2A2A] pb-2">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#D97457] border-b border-[#2A2A2A] pb-2">
           Livro Razão / Histórico de Transações
         </h3>
 
@@ -254,7 +254,7 @@ export default function FinanceiroPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Salvar Lançamento
                 </button>

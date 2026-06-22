@@ -58,7 +58,7 @@ export default function ClientesPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left List */}
         <div className="space-y-3 lg:col-span-1">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#C9A96E]">Clientes Ativos</h3>
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[#D97457]">Clientes Ativos</h3>
           <div className="space-y-2">
             {clients.map((c) => (
               <button
@@ -84,24 +84,24 @@ export default function ClientesPage() {
             <div className="space-y-6 animate-in fade-in duration-200">
               <div className="border-b border-salon-border/60 pb-4">
                 <h3 className="text-base font-bold">{selectedClient.name}</h3>
-                <span className="text-[10px] text-[#C9A96E] font-semibold">Tutor Cadastrado</span>
+                <span className="text-[10px] text-[#D97457] font-semibold">Tutor Cadastrado</span>
               </div>
 
               {/* Personal Details */}
               <div className="space-y-3.5 text-xs text-gray-300 bg-salon-bg/40 border border-salon-border/60 p-4 rounded-xl">
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4.5 h-4.5 text-[#C9A96E] shrink-0" />
+                  <Phone className="w-4.5 h-4.5 text-[#D97457] shrink-0" />
                   <span><strong>Celular:</strong> {selectedClient.phone}</span>
                 </div>
                 {selectedClient.email && (
                   <div className="flex items-center gap-2">
-                    <Mail className="w-4.5 h-4.5 text-[#C9A96E] shrink-0" />
+                    <Mail className="w-4.5 h-4.5 text-[#D97457] shrink-0" />
                     <span><strong>E-mail:</strong> {selectedClient.email}</span>
                   </div>
                 )}
                 {selectedClient.city && (
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4.5 h-4.5 text-[#C9A96E] shrink-0" />
+                    <MapPin className="w-4.5 h-4.5 text-[#D97457] shrink-0" />
                     <span><strong>Cidade:</strong> {selectedClient.city}</span>
                   </div>
                 )}
@@ -109,7 +109,7 @@ export default function ClientesPage() {
 
               {/* Purchase and service histories */}
               <div className="space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#C9A96E]">Histórico de Contratações</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#D97457]">Histórico de Contratações</h4>
 
                 <div className="space-y-3 text-xs">
                   {/* Stays */}
@@ -235,7 +235,7 @@ export default function ClientesPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
+                  className="flex-1 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] py-2.5 rounded-lg font-bold"
                 >
                   Salvar
                 </button>
