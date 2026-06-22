@@ -155,7 +155,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
         );
       } else {
         await msg.reply(
-          `Olá, ${contactName}! Seja bem-vindo ao Canil Aura (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Quero comprar um filhote\n2️⃣ Quero contratar serviço de monta/cobertura\n3️⃣ Quero saber sobre hospedagem/creche\n4️⃣ Quero saber sobre adestramento\n5️⃣ Outras dúvidas / falar com o criador`
+          `Olá, ${contactName}! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Quero comprar um filhote\n2️⃣ Quero contratar serviço de monta/cobertura\n3️⃣ Quero saber sobre hospedagem/creche\n4️⃣ Quero saber sobre adestramento\n5️⃣ Outras dúvidas / falar com o criador`
         );
       }
       break;
@@ -252,7 +252,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
       await updateLeadData(lead.id, "Interessado", session.answers, "CONVERSATIONAL");
 
       await msg.reply(
-        `Registrado! Nossos padreadores importados da Rússia (como Kahn da Aura) estão disponíveis para monta por R$ 3.500,00.\n\nVocê pode tirar suas dúvidas por aqui enviando qualquer mensagem. Se quiser agendar, basta avisar.`
+        `Registrado! Nossos padreadores importados da Rússia e Europa (como Symion da Kubera) estão disponíveis para monta por R$ 3.500,00.\n\nVocê pode tirar suas dúvidas por aqui enviando qualquer mensagem. Se quiser agendar, basta avisar.`
       );
       break;
     }
@@ -267,7 +267,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
         );
       } else if (query.includes("localizacao") || query.includes("onde fica") || query.includes("endereço") || query.includes("endereco") || query.includes("cidade")) {
         await msg.reply(
-          "Nosso canil fica localizado na Rodovia Raposo Tavares, Km 50, em São Roque - SP. As visitas devem ser agendadas previamente."
+          "Nosso canil fica localizado em Itatiba - SP. As visitas devem ser agendadas previamente."
         );
       } else if (query.includes("filhote") || query.includes("disponiveis") || query.includes("disponível") || query.includes("ninhada")) {
         try {
@@ -285,10 +285,10 @@ export async function handleIncomingMessage(msg: Message, client: any) {
             reply += "\nSe quiser reservar ou agendar uma visita para vê-los, basta digitar 'Agendar visita'.";
             await msg.reply(reply);
           } else {
-            await msg.reply("No momento, não temos filhotes a pronta entrega, mas podemos incluir você na lista de espera para o cio da Sasha previsto para os próximos meses. Deseja entrar na lista?");
+            await msg.reply("No momento, não temos filhotes a pronta entrega, mas podemos incluir você na lista de espera para o cio da Vasilísia previsto para os próximos meses. Deseja entrar na lista?");
           }
         } catch {
-          await msg.reply("Temos filhotes machos (Thor) por R$ 6.000,00 e fêmeas (Athena) por R$ 6.500,00 disponíveis no canil. Quer agendar uma visita?");
+          await msg.reply("Temos filhotes machos (Buran) por R$ 6.000,00 e fêmeas (Aurora) por R$ 6.500,00 disponíveis no canil. Quer agendar uma visita?");
         }
       } else if (query.includes("visita") || query.includes("agendar") || query.includes("conhecer") || query.includes("visitar")) {
         await msg.reply(

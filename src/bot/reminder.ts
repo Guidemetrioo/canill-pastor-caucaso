@@ -60,16 +60,18 @@ export async function checkAndSendReminders(client: WhatsAppClient) {
     let reminderHours = 24;
     let enableReminders = true;
     
+    let templates: any = null;
     try {
       const { data: config, error: configErr } = await supabase
         .from("whatsapp_config")
-        .select("enable_reminders, reminder_hours")
+        .select("enable_reminders, reminder_hours, message_templates")
         .eq("id", 1)
         .maybeSingle();
         
       if (!configErr && config) {
         enableReminders = config.enable_reminders !== false;
         reminderHours = config.reminder_hours ?? 24;
+        templates = config.message_templates;
       }
     } catch (dbErr) {
       // Fallback
@@ -132,7 +134,11 @@ export async function checkAndSendReminders(client: WhatsAppClient) {
         }
         
         if (!recipientPhone) {
-          console.warn(`⚠️ [Lembrete] Compromisso ${evt.id} não possui contato vinculado.`);
+          console.warn(`⚠️ [Lembrete] Compromisso ${evt.id} não possui contato com telefone vinculado. Marcando como processado.`);
+          await supabase
+            .from("agenda")
+            .update({ reminder_sent: true })
+            .eq("id", evt.id);
           continue;
         }
         
@@ -143,16 +149,24 @@ export async function checkAndSendReminders(client: WhatsAppClient) {
         const dateStr = `${String(apptDate.getUTCDate()).padStart(2, "0")}/${String(apptDate.getUTCMonth() + 1).padStart(2, "0")}`;
         
         // Define personalized message by event type
-        let messageText = "";
-        if (evt.type === "visita") {
-          messageText = `Olá, *${recipientName}*! Passando para lembrar da sua visita agendada ao *Canil de Pastor do Cáucaso* amanhã (${dateStr}) às *${timeStr}h*.\n\n📍 *Endereço:* Rodovia Raposo Tavares, Km 50, São Roque - SP.\n\nConfirmado? Esperamos você! 🐾`;
-        } else if (evt.type === "adestramento") {
-          messageText = `Olá, *${recipientName}*! Passando para lembrar da sessão de adestramento do seu cão agendada para amanhã (${dateStr}) às *${timeStr}h*.\n\nAté logo! 🎓`;
-        } else if (evt.type === "hospedagem") {
-          messageText = `Olá, *${recipientName}*! Passando para lembrar do check-in/check-out de hospedagem de seu cão agendado para amanhã (${dateStr}) às *${timeStr}h*.\n\nTe aguardamos! 🏡`;
-        } else {
-          messageText = `Olá, *${recipientName}*! Passando para lembrar que você tem o compromisso *"${evt.title}"* agendado conosco amanhã (${dateStr}) às *${timeStr}h*.`;
+        let templateText = templates?.[evt.type] || "";
+        if (!templateText) {
+          if (evt.type === "visita") {
+            templateText = `Olá, *{nome}*! Passando para lembrar da sua visita agendada ao *Canil Vale da Kubera* amanhã ({data}) às *{hora}h*.\n\n📍 *Endereço:* Itatiba - SP.\n\nConfirmado? Esperamos você! 🐾`;
+          } else if (evt.type === "adestramento") {
+            templateText = `Olá, *{nome}*! Passando para lembrar da sessão de adestramento do seu cão agendada para amanhã ({data}) às *{hora}h*.\n\nAté logo! 🎓`;
+          } else if (evt.type === "hospedagem") {
+            templateText = `Olá, *{nome}*! Passando para lembrar do check-in/check-out de hospedagem de seu cão agendado para amanhã ({data}) às *{hora}h*.\n\nTe aguardamos! 🏡`;
+          } else {
+            templateText = `Olá, *{nome}*! Passando para lembrar que você tem o compromisso *"{atividade}"* agendado conosco amanhã ({data}) às *{hora}h*.`;
+          }
         }
+
+        let messageText = templateText
+          .replace(/{nome}/g, recipientName || "Cliente")
+          .replace(/{data}/g, dateStr || "")
+          .replace(/{hora}/g, timeStr || "")
+          .replace(/{atividade}/g, evt.title || "compromisso");
         
         const wppNumber = await getWhatsappJid(client, recipientPhone);
         
@@ -165,7 +179,15 @@ export async function checkAndSendReminders(client: WhatsAppClient) {
           .eq("id", evt.id);
           
       } catch (apptErr) {
-        console.error(`❌ [Lembrete] Erro ao disparar lembrete para evento ${evt.id}:`, apptErr);
+        console.error(`❌ [Lembrete] Erro ao disparar lembrete para evento ${evt.id}. Marcando como processado para evitar loops:`, apptErr);
+        try {
+          await supabase
+            .from("agenda")
+            .update({ reminder_sent: true })
+            .eq("id", evt.id);
+        } catch (dbErr) {
+          console.error("Erro ao atualizar banco após falha de lembrete:", dbErr);
+        }
       }
     }
   } catch (err: any) {
@@ -180,15 +202,17 @@ export async function checkAndSendNewConfirmations(client: WhatsAppClient) {
     
     // Check if confirmations are enabled dynamically from Supabase
     let enableConfirmations = true;
+    let templates: any = null;
     try {
       const { data: config, error: configErr } = await supabase
         .from("whatsapp_config")
-        .select("enable_confirmations")
+        .select("enable_confirmations, message_templates")
         .eq("id", 1)
         .maybeSingle();
         
       if (!configErr && config) {
         enableConfirmations = config.enable_confirmations !== false;
+        templates = config.message_templates;
       }
     } catch (dbErr) {
       // Fallback
@@ -238,7 +262,14 @@ export async function checkAndSendNewConfirmations(client: WhatsAppClient) {
           }
         }
         
-        if (!recipientPhone) continue;
+        if (!recipientPhone) {
+          console.warn(`⚠️ [Confirmação] Compromisso ${evt.id} não possui contato com telefone vinculado. Marcando como Confirmado.`);
+          await supabase
+            .from("agenda")
+            .update({ status: "Confirmado" })
+            .eq("id", evt.id);
+          continue;
+        }
         
         const apptDate = new Date(evt.datetime);
         const day = String(apptDate.getUTCDate()).padStart(2, "0");
@@ -248,11 +279,20 @@ export async function checkAndSendNewConfirmations(client: WhatsAppClient) {
         const minutes = String(apptDate.getUTCMinutes()).padStart(2, "0");
         const timeStr = `${hours}:${minutes}`;
         
-        let messageText = `Olá, *${recipientName}*! Seu agendamento no *Canil de Pastor do Cáucaso* foi confirmado com sucesso! 🎉\n\n` +
-          `📅 *Data:* ${dateStr}\n` +
-          `⏰ *Horário:* ${timeStr}h\n` +
-          `📝 *Atividade:* ${evt.title}\n\n` +
-          `Te aguardamos! 🐾`;
+        let templateText = templates?.confirmacao || "";
+        if (!templateText) {
+          templateText = `Olá, *{nome}*! Seu agendamento no *Canil de Pastor do Cáucaso* foi confirmado com sucesso! 🎉\n\n` +
+            `📅 *Data:* {data}\n` +
+            `⏰ *Horário:* {hora}h\n` +
+            `📝 *Atividade:* {atividade}\n\n` +
+            `Te aguardamos! 🐾`;
+        }
+
+        let messageText = templateText
+          .replace(/{nome}/g, recipientName || "Cliente")
+          .replace(/{data}/g, dateStr || "")
+          .replace(/{hora}/g, timeStr || "")
+          .replace(/{atividade}/g, evt.title || "compromisso");
           
         const wppNumber = await getWhatsappJid(client, recipientPhone);
         
@@ -265,11 +305,19 @@ export async function checkAndSendNewConfirmations(client: WhatsAppClient) {
           .eq("id", evt.id);
           
       } catch (apptErr) {
-        console.error(`❌ [Confirmação] Erro ao disparar confirmação para agendamento ${evt.id}:`, apptErr);
+        console.error(`❌ [Confirmação] Erro ao disparar confirmação para agendamento ${evt.id}. Marcando como Confirmado para evitar loops:`, apptErr);
+        try {
+          await supabase
+            .from("agenda")
+            .update({ status: "Confirmado" })
+            .eq("id", evt.id);
+        } catch (dbErr) {
+          console.error("Erro ao atualizar banco após falha de confirmação:", dbErr);
+        }
       }
     }
   } catch (err) {
-    // Fail silently
+    console.error("❌ [Confirmação] Erro crítico no loop de confirmação:", err);
   }
 }
 

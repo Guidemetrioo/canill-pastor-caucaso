@@ -6,8 +6,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Aura Barber - Gestão Premium",
-  description: "Sistema de gestão completo para barbearias de alto padrão.",
+  title: "Canil Vale da Kubera - Sistema de Gestão",
+  description: "Sistema de gestão completo para criação selecionada de cães de guarda Pastor do Cáucaso.",
 };
 
 export default function RootLayout({

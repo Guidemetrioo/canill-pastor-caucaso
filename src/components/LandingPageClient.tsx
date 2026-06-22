@@ -59,7 +59,7 @@ export default function LandingPageClient() {
             </h1>
 
             <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
-              Criação responsável em São Roque - SP. Reprodutores selecionados, importados da Rússia e Geórgia, com laudos negativos de displasia. Cães com robustez física e temperamento equilibrado de guarda.
+              Criação responsável em Itatiba - SP. Reprodutores selecionados, importados da Rússia, Europa e Geórgia, com laudos negativos de displasia. Cães com robustez física e temperamento equilibrado de guarda.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -279,9 +279,9 @@ export default function LandingPageClient() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
           <span className="text-xs text-[#C9A96E] font-bold uppercase tracking-wider">Localização</span>
-          <h2 className="text-3xl font-extrabold">Venha nos visitar em São Roque - SP</h2>
+          <h2 className="text-3xl font-extrabold">Venha nos visitar em Itatiba - SP</h2>
           <p className="text-gray-400 text-xs leading-relaxed">
-            Nossas instalações ficam em uma chácara verde com mais de 10.000m² estruturada especificamente para a raça Pastor do Cáucaso.
+            Nossas instalações ficam em uma chácara verde estruturada especificamente para o bem-estar e criação da raça Pastor do Cáucaso.
           </p>
 
           <div className="space-y-3.5 text-xs text-gray-300">
@@ -289,7 +289,7 @@ export default function LandingPageClient() {
               <MapPin className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
               <div>
                 <h5 className="font-bold text-white text-sm">Endereço Oficial</h5>
-                <p className="text-gray-400 text-xs mt-0.5">Rodovia Raposo Tavares, Km 50, Mailasqui, São Roque - SP</p>
+                <p className="text-gray-400 text-xs mt-0.5">Itatiba - SP, CEP 13250-000</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
@@ -305,8 +305,8 @@ export default function LandingPageClient() {
         {/* Embed Map Map */}
         <div className="h-80 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] bg-gray-950 shadow-xl">
           <iframe
-            title="Mapa Canil Aura"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.7725916053896!2d-47.1264883!3d-23.5765664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDM0JzM1LjYiUyA0N8KwMDcnMzUuNCJX!5e0!3m2!1spt-BR!2sbr!4v1620000000000!5md2"
+            title="Mapa Canil Vale da Kubera"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14686.082725893302!2d-46.85244584346001!3d-23.00392931168172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cec205c6d3df37%3A0xb35a09282365a6b5!2sItatiba%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1672322300000!5md2"
             width="100%"
             height="100%"
             style={{ border: 0 }}

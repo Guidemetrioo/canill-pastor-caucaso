@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
-import { Scissors, Mail, Lock, AlertCircle } from "lucide-react";
+import { Shield, Mail, Lock, AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -71,13 +71,13 @@ export default function LoginPage() {
         {/* Logo and Header */}
         <div className="flex flex-col items-center mb-8">
           <div className="w-16 h-16 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mb-4 text-primary">
-            <Scissors className="w-8 h-8 rotate-45" />
+            <Shield className="w-8 h-8" />
           </div>
           <h1 className="text-3xl font-bold tracking-wider text-salon-text-primary">
-            AURA
+            VALE DA KUBERA
           </h1>
           <p className="text-xs tracking-widest text-primary font-medium mt-1 uppercase">
-            Barber &amp; Co.
+            Canil de Pastor do Cáucaso
           </p>
           <p className="text-salon-text-secondary text-sm mt-3 text-center">
             Entre para gerenciar seus agendamentos e serviços

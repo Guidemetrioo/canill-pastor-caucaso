@@ -5,8 +5,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { Award, Check, ArrowRight, Shield } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Adestramento para Cães de Grande Porte | Canil Aura",
-  description: "Adestramento de obediência e controle comportamental para Pastor do Cáucaso, Rottweiler, Fila e outras raças de guarda. Aulas presenciais com profissionais.",
+  title: "Adestramento para Cães de Grande Porte | Canil Vale da Kubera",
+  description: "Adestramento de obediência e controle comportamental para Pastor do Cáucaso, Rottweiler, Fila e outras raças de guarda. Aulas presenciais com profissionais em Itatiba - SP.",
   keywords: ["adestramento pastor do caucaso", "treino caes de guarda sp", "adestrador cão grande porte", "obediencia urbana caes"],
 };
 
@@ -80,7 +80,7 @@ export default function AdestramentoPage() {
             </div>
 
             <a
-              href="https://wa.me/5511998765432?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20plano%20de%20adestramento%20para%20meu%20c%C3%A3o."
+              href="https://wa.me/5521998765432?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20plano%20de%20adestramento%20para%20meu%20c%C3%A3o."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-lg text-xs transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"

@@ -6,9 +6,9 @@ import ContactForm from "@/components/ContactForm";
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contato e Agendamentos | Canil Pastor do Cáucaso Aura",
-  description: "Fale com o criador. Agende uma visita guiada para ver os filhotes de Pastor do Cáucaso em nossa chácara em São Roque - SP.",
-  keywords: ["contato canil causo", "agendar visita pastor do caucaso", "telefone criador causo", "whatsapp canil aura"],
+  title: "Contato e Agendamentos | Canil Pastor do Cáucaso Vale da Kubera",
+  description: "Fale com o criador. Agende uma visita guiada para ver os filhotes de Pastor do Cáucaso em nossa chácara em Itatiba - SP.",
+  keywords: ["contato canil causo", "agendar visita pastor do caucaso", "telefone criador causo", "whatsapp canil valedakubera"],
 };
 
 export default function ContatoPage() {
@@ -45,7 +45,7 @@ export default function ContatoPage() {
                   <MapPin className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-white">Endereço</h5>
-                    <p className="text-gray-400 mt-1">Rodovia Raposo Tavares, Km 50, Mailasqui, São Roque - SP</p>
+                    <p className="text-gray-400 mt-1">Itatiba - SP, CEP 13250-000</p>
                   </div>
                 </div>
 
@@ -61,7 +61,7 @@ export default function ContatoPage() {
                   <Mail className="w-5 h-5 text-[#C9A96E] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-white">E-mail de Contato</h5>
-                    <p className="text-gray-400 mt-1">contato@canilaura.com.br</p>
+                    <p className="text-gray-400 mt-1">canilvaledakubera@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -70,8 +70,8 @@ export default function ContatoPage() {
             {/* Map */}
             <div className="h-64 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
               <iframe
-                title="Mapa Contato Canil"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.7725916053896!2d-47.1264883!3d-23.5765664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDM0JzM1LjYiUyA0N8KwMDcnMzUuNCJX!5e0!3m2!1spt-BR!2sbr!4v1620000000000!5md2"
+                title="Mapa Contato Canil Vale da Kubera"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14686.082725893302!2d-46.85244584346001!3d-23.00392931168172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cec205c6d3df37%3A0xb35a09282365a6b5!2sItatiba%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1672322300000!5md2"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

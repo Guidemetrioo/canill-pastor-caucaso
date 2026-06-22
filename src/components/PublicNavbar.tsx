@@ -30,7 +30,7 @@ export default function PublicNavbar() {
               <Shield className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-bold tracking-wider text-xl block leading-none">AURA</span>
+              <span className="font-bold tracking-wider text-xl block leading-none">VALE DA KUBERA</span>
               <span className="text-[9px] tracking-widest text-[#C9A96E] font-semibold uppercase">Canil de Pastor do Cáucaso</span>
             </div>
           </Link>

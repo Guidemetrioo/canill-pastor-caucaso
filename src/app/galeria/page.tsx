@@ -10,10 +10,10 @@ export default function GaleriaPage() {
   const [filter, setFilter] = useState<"todos" | "caes" | "filhotes" | "canil">("todos");
 
   const media = [
-    { type: "caes", url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400", title: "Kahn (Macho Reprodutor)" },
-    { type: "caes", url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400", title: "Sasha (Matriz)" },
-    { type: "filhotes", url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", title: "Ninhada Thor (35 dias)" },
-    { type: "filhotes", url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", title: "Athena (Filhote Fêmea)" },
+    { type: "caes", url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400", title: "Symion (Macho Reprodutor)" },
+    { type: "caes", url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400", title: "Vasilísia (Matriz)" },
+    { type: "filhotes", url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", title: "Ninhada Buran (35 dias)" },
+    { type: "filhotes", url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", title: "Aurora (Filhote Fêmea)" },
     { type: "canil", url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400", title: "Área de Piquetes Gramados" },
   ];
 
@@ -32,7 +32,7 @@ export default function GaleriaPage() {
             <span>Mídias &amp; Fotos</span>
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Galeria do <span className="text-[#C9A96E]">Canil Aura</span>
+            Galeria do <span className="text-[#C9A96E]">Canil Vale da Kubera</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-xl leading-relaxed">
             Confira registros reais de nossos cães adultos, das instalações e do dia a dia dos filhotes.

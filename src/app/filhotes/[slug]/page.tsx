@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!puppy) return { title: "Filhote não encontrado" };
 
   const title = `Filhote ${puppy.name} | Pastor do Cáucaso à Venda`;
-  const description = puppy.notes || `Filhote de Pastor do Cáucaso (${puppy.gender === "macho" ? "Macho" : "Fêmea"}) disponível no Canil Aura. Com pedigree CBKC, microchipado e vacinado.`;
+  const description = puppy.notes || `Filhote de Pastor do Cáucaso (${puppy.gender === "macho" ? "Macho" : "Fêmea"}) disponível no Canil Vale da Kubera. Com pedigree CBKC, microchipado e vacinado.`;
   
   return {
     title,

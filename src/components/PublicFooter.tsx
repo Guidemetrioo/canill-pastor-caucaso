@@ -14,7 +14,7 @@ export default function PublicFooter() {
               <div className="w-8 h-8 bg-[#C9A96E]/10 border border-[#C9A96E]/20 rounded-full flex items-center justify-center text-[#C9A96E]">
                 <Shield className="w-4 h-4" />
               </div>
-              <span className="font-bold tracking-wider text-white text-lg leading-none">AURA CANIL</span>
+              <span className="font-bold tracking-wider text-white text-lg leading-none">VALE DA KUBERA</span>
             </Link>
             <p className="text-xs leading-relaxed">
               Criação selecionada e responsável de cães Pastor do Cáucaso. Excelência em temperamento, porte físico e saúde certificada.
@@ -50,7 +50,7 @@ export default function PublicFooter() {
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 shrink-0 text-[#C9A96E] mt-0.5" />
                 <span>
-                  <strong>Endereço:</strong> Rodovia Raposo Tavares, Km 50, Mailasqui, São Roque - SP, CEP 18135-000
+                  <strong>Endereço:</strong> Itatiba - SP, CEP 13250-000
                 </span>
               </li>
               <li className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export default function PublicFooter() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#C9A96E]" />
-                <span><strong>E-mail:</strong> contato@canilauracaucaso.com.br</span>
+                <span><strong>E-mail:</strong> canilvaledakubera@gmail.com</span>
               </li>
             </ul>
             <div className="pt-2 text-xs">
@@ -76,7 +76,7 @@ export default function PublicFooter() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-[#2A2A2A] text-center text-[10px] space-y-1">
-          <p>&copy; {currentYear} Canil Aura Pastor do Cáucaso. Todos os direitos reservados. Registrado no CBKC / FCI.</p>
+          <p>&copy; {currentYear} Canil Vale da Kubera Pastor do Cáucaso. Todos os direitos reservados. Registrado no CBKC / FCI.</p>
           <p className="opacity-50">Desenvolvido com foco em SEO técnico e performance.</p>
         </div>
       </div>

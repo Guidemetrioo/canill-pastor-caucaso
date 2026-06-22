@@ -25,7 +25,7 @@ export default function BlogPage() {
             <span>Artigos &amp; Notícias</span>
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Blog do <span className="text-[#C9A96E]">Canil Aura</span>
+            Blog do <span className="text-[#C9A96E]">Canil Vale da Kubera</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-xl leading-relaxed">
             Dicas de adestramento, alimentação, cuidados com filhotes de grande porte e curiosidades sobre o Pastor do Cáucaso.
@@ -63,7 +63,7 @@ export default function BlogPage() {
                     </div>
                     <h3 className="text-base font-bold group-hover:text-[#C9A96E] transition-colors leading-tight">{post.title}</h3>
                     <p className="text-gray-400 text-xs line-clamp-3 leading-relaxed">
-                      {post.excerpt || "Clique para ler o artigo completo sobre a raça Pastor do Cáucaso no blog do Canil Aura."}
+                      {post.excerpt || "Clique para ler o artigo completo sobre a raça Pastor do Cáucaso no blog do Canil Vale da Kubera."}
                     </p>
                   </div>
 

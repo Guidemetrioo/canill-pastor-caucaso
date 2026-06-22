@@ -269,6 +269,12 @@ CREATE TABLE IF NOT EXISTS public.whatsapp_config (
   enable_confirmations BOOLEAN DEFAULT true,
   enable_responses BOOLEAN DEFAULT true,
   qualification_questions JSONB DEFAULT '[]'::jsonb,
+  message_templates JSONB DEFAULT '{
+    "visita": "Olá, *{nome}*! Passando para lembrar da sua visita agendada ao *Canil Vale da Kubera* amanhã ({data}) às *{hora}h*.\n\n📍 *Endereço:* Itatiba - SP.\n\nConfirmado? Esperamos você! 🐾",
+    "adestramento": "Olá, *{nome}*! Passando para lembrar da sessão de adestramento do seu cão agendada para amanhã ({data}) às *{hora}h*.\n\nAté logo! 🎓",
+    "hospedagem": "Olá, *{nome}*! Passando para lembrar do check-in/check-out de hospedagem de seu cão agendado para amanhã ({data}) às *{hora}h*.\n\nTe aguardamos! 🏡",
+    "confirmacao": "Olá, *{nome}*! Seu agendamento no *Canil Vale da Kubera* foi confirmado com sucesso! 🎉\n\n📅 *Data:* {data}\n⏰ *Horário:* {hora}h\n📝 *Atividade:* {atividade}\n\nTe aguardamos! 🐾"
+  }'::jsonb,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
@@ -277,14 +283,19 @@ CREATE POLICY "Allow public read" ON public.whatsapp_config FOR SELECT USING (tr
 CREATE POLICY "Allow public write" ON public.whatsapp_config FOR ALL USING (true);
 
 -- Populate initial configuration row
-INSERT INTO public.whatsapp_config (id, status, reminder_hours, enable_reminders, enable_confirmations, enable_responses, qualification_questions)
+INSERT INTO public.whatsapp_config (id, status, reminder_hours, enable_reminders, enable_confirmations, enable_responses, qualification_questions, message_templates)
 VALUES (1, 'disconnected', 24, true, true, true, '[
-  {"id": "service_type", "question": "Olá! Seja bem-vindo ao Canil de Pastor do Cáucaso. Como podemos te ajudar hoje?\\n\\n1️⃣ Venda de Filhotes\\n2️⃣ Serviço de Cobertura / Monta\\n3️⃣ Hospedagem / Hotel Canino\\n4️⃣ Adestramento\\n5️⃣ Falar com um Atendente/Criador"},
+  {"id": "service_type", "question": "Olá! Seja bem-vindo ao Canil Vale da Kubera. Como podemos te ajudar hoje?\\n\\n1️⃣ Venda de Filhotes\\n2️⃣ Serviço de Cobertura / Monta\\n3️⃣ Hospedagem / Hotel Canino\\n4️⃣ Adestramento\\n5️⃣ Falar com o Criador (Rafael Avellar)"},
   {"id": "puppy_gender", "question": "Ótima escolha! Para ajudar você a encontrar o filhote ideal, qual gênero você prefere?\\n\\n1️⃣ Macho\\n2️⃣ Fêmea\\n3️⃣ Sem preferência"},
   {"id": "puppy_purpose", "question": "E qual será a principal finalidade do cão?\\n\\n1️⃣ Guarda Patrimonial\\n2️⃣ Companhia Familiar\\n3️⃣ Exposição ou Reprodução futura"},
   {"id": "dog_experience", "question": "Perfeito. Você já possui experiência prévia com cães de grande porte ou de guarda?\\n\\n1️⃣ Sim\\n2️⃣ Não"},
   {"id": "lead_city", "question": "Por fim, nos informe sua cidade e estado para que possamos calcular as condições de entrega ou agendar uma visita:"}
-]'::jsonb)
+]'::jsonb, '{
+  "visita": "Olá, *{nome}*! Passando para lembrar da sua visita agendada ao *Canil Vale da Kubera* amanhã ({data}) às *{hora}h*.\n\n📍 *Endereço:* Itatiba - SP.\n\nConfirmado? Esperamos você! 🐾",
+  "adestramento": "Olá, *{nome}*! Passando para lembrar da sessão de adestramento do seu cão agendada para amanhã ({data}) às *{hora}h*.\n\nAté logo! 🎓",
+  "hospedagem": "Olá, *{nome}*! Passando para lembrar do check-in/check-out de hospedagem de seu cão agendado para amanhã ({data}) às *{hora}h*.\n\nTe aguardamos! 🏡",
+  "confirmacao": "Olá, *{nome}*! Seu agendamento no *Canil Vale da Kubera* foi confirmado com sucesso! 🎉\n\n📅 *Data:* {data}\n⏰ *Horário:* {hora}h\n📝 *Atividade:* {atividade}\n\nTe aguardamos! 🐾"
+}'::jsonb)
 ON CONFLICT (id) DO NOTHING;
 
 

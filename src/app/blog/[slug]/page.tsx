@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Artigo não encontrado" };
 
   return {
-    title: `${post.title} | Blog Canil Aura`,
-    description: post.excerpt || `Leia sobre ${post.title} no blog oficial do Canil Aura, especialista em Pastor do Cáucaso.`,
+    title: `${post.title} | Blog Canil Vale da Kubera`,
+    description: post.excerpt || `Leia sobre ${post.title} no blog oficial do Canil Vale da Kubera, especialista em Pastor do Cáucaso.`,
     openGraph: {
       title: post.title,
       description: post.excerpt || "",
@@ -60,8 +60,8 @@ export default async function BlogPostPage({ params }: Props) {
     "datePublished": fallbackPost.created_at,
     "author": {
       "@type": "Person",
-      "name": "Criador do Canil Aura",
-      "url": "https://canil-pastor-do-caucaso.vercel.app/sobre"
+      "name": "Criador do Canil Vale da Kubera",
+      "url": "https://www.instagram.com/valedakubera/"
     }
   };
 
@@ -104,7 +104,7 @@ export default async function BlogPostPage({ params }: Props) {
               </span>
               <span className="flex items-center gap-1">
                 <User className="w-4 h-4" />
-                <span>Por: Criador do Canil Aura</span>
+                <span>Por: Criador do Canil Vale da Kubera</span>
               </span>
             </div>
           </div>

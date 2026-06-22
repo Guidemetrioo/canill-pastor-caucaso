@@ -5,9 +5,9 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { Shield, MapPin, Award, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Quem Somos | Canil Pastor do Cáucaso Aura",
-  description: "Conheça a história do Canil Aura, especializado na criação e seleção genética de Pastor do Cáucaso em São Roque - SP. Laudos negativos de displasia e pedigree CBKC.",
-  keywords: ["canil pastor do caucaso", "criacao responsavel causo", "pastor do caucaso sao roque", "criador pastor do caucaso"],
+  title: "Quem Somos | Canil Pastor do Cáucaso Vale da Kubera",
+  description: "Conheça a história do Canil Vale da Kubera, especializado na criação e seleção genética de Pastor do Cáucaso em Itatiba - SP. Laudos negativos de displasia e pedigree CBKC.",
+  keywords: ["canil pastor do caucaso", "criacao responsavel causo", "pastor do caucaso itatiba", "criador pastor do caucaso valedakubera"],
 };
 
 export default function SobrePage() {
@@ -36,7 +36,7 @@ export default function SobrePage() {
               <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
-              O Canil Aura nasceu da admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso. Localizado em São Roque - SP, nosso compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
+              O Canil Vale da Kubera nasceu sob a liderança do criador Rafael Avellar, da admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso. Localizado em Itatiba - SP, nosso compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed">
               Trabalhamos exclusivamente com linhagens selecionadas, muitas delas importadas diretamente de países do Leste Europeu (Rússia, Geórgia), garantindo a rusticidade e a tipicidade da raça que são valorizadas no mundo inteiro.

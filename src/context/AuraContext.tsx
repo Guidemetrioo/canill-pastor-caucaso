@@ -167,6 +167,7 @@ export interface WhatsAppConfig {
   enable_confirmations: boolean;
   enable_responses: boolean;
   qualification_questions: { id: string; question: string }[];
+  message_templates?: Record<string, string>;
   updated_at?: string;
 }
 
@@ -249,20 +250,23 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
   const loadLocalMockData = () => {
     // 1. Clients
     setClients([
-      { id: 1, name: "Bruno Souza", phone: "(11) 98765-4321", email: "bruno.souza@gmail.com", city: "São Paulo - SP", notes: "Comprador do filhote Thor. Já teve Pastor Alemão." },
-      { id: 2, name: "Carlos Eduardo Santos", phone: "(11) 97654-3210", email: "cadu.santos@outlook.com", city: "Campinas - SP", notes: "Utiliza hospedagem mensalmente para creche." }
+      { id: 1, name: "Bruno Souza", phone: "(11) 98765-4321", email: "bruno.souza@gmail.com", city: "Itatiba - SP", notes: "Comprador do filhote Buran. Já possui experiência com cães gigantes." },
+      { id: 2, name: "Carlos Eduardo Santos", phone: "(11) 97654-3210", email: "cadu.santos@outlook.com", city: "Itatiba - SP", notes: "Utiliza hospedagem mensal para adestramento de guarda." }
     ]);
 
     // 2. Leads
     setLeads([
-      { id: 1, name: "Guilherme Mota", phone: "(11) 99999-8888", email: "gui@mota.com", status: "Visita Agendada", origin: "Instagram", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Macho", puppy_purpose: "Guarda", dog_experience: "Sim, de porte grande", lead_city: "São Roque - SP" }, current_step: "MENU", auto_respond: true, tags: ["cliente sério"], notes: "Quer visitar no sábado às 14h para ver o filhote cinza.", created_at: new Date().toISOString() },
-      { id: 2, name: "Aline Silva", phone: "(21) 98888-7777", status: "Novo", origin: "WhatsApp", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Fêmea", puppy_purpose: "Companhia", dog_experience: "Não", lead_city: "Niterói - RJ" }, current_step: "MENU", auto_respond: true, tags: ["pesquisando"], notes: "Preocupada com temperamento com crianças.", created_at: new Date().toISOString() }
+      { id: 1, name: "Guilherme Mota", phone: "(11) 99999-8888", email: "gui@mota.com", status: "Visita Agendada", origin: "Instagram", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Macho", puppy_purpose: "Guarda", dog_experience: "Sim, de porte grande", lead_city: "Itatiba - SP" }, current_step: "MENU", auto_respond: true, tags: ["cliente sério"], notes: "Quer visitar no sábado às 14h para ver os filhotes de Vasilísia.", created_at: new Date().toISOString() },
+      { id: 2, name: "Aline Silva", phone: "(11) 98888-7777", status: "Novo", origin: "WhatsApp", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Fêmea", puppy_purpose: "Companhia", dog_experience: "Não", lead_city: "Itatiba - SP" }, current_step: "MENU", auto_respond: true, tags: ["pesquisando"], notes: "Preocupada com temperamento e convivência com outros pets.", created_at: new Date().toISOString() }
     ]);
 
     // 3. Animals
     setAnimals([
-      { id: 1, name: "Kahn da Aura", gender: "macho", birthdate: "2021-04-12", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Excelente porte, importado da Rússia, pelagem cinza carvão.", avatar_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400" },
-      { id: 2, name: "Sasha da Aura", gender: "fêmea", birthdate: "2022-01-20", pedigree_url: "#", registry: "CBKC-54321", status: "disponível", notes: "Fêmea dócil com a família, guarda territorial implacável.", avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" }
+      { id: 1, name: "Symion da Kubera", gender: "macho", birthdate: "2021-04-12", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Importado da Rússia (Canil Baraik Azskaz). Gigante de 100kg com excelente estrutura e guarda implacável.", avatar_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400" },
+      { id: 2, name: "Vasilísia da Kubera", gender: "fêmea", birthdate: "2022-01-20", pedigree_url: "#", registry: "CBKC-54321", status: "disponível", notes: "Importada da Rússia. Fêmea de temperamento explosivo, dominante e excelente guardiã.", avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" },
+      { id: 3, name: "Nero da Kubera", gender: "macho", birthdate: "2020-08-15", pedigree_url: "#", registry: "CBKC-22341", status: "disponível", breed_price: 3500.00, notes: "Importado da Ucrânia. Reprodutor de grande porte, temperamento equilibrado e excelente pigmentação.", avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400" },
+      { id: 4, name: "Thara da Kubera", gender: "fêmea", birthdate: "2021-11-03", pedigree_url: "#", registry: "CBKC-22342", status: "disponível", notes: "Importada da Romênia. Matriz de excelente temperamento de proteção e instinto maternal impecável.", avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400" },
+      { id: 5, name: "Ozzy da Kubera", gender: "macho", birthdate: "2022-05-19", pedigree_url: "#", registry: "CBKC-22343", status: "disponível", breed_price: 3500.00, notes: "Importado da Espanha. Reprodutor jovem de excelente movimentação e estrutura compacta.", avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" }
     ]);
 
     // 4. Ninhadas
@@ -272,13 +276,13 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
     // 5. Filhotes
     setFilhotes([
-      { id: 1, litter_id: 1, name: "Thor", gender: "macho", status: "Disponível", price: 6000.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }, { type: "vacina", name: "2ª Dose V10", date: "2026-06-20", status: "Aplicado" }, { type: "vermífugo", name: "Drontal Puppy", date: "2026-05-15", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.8 }, { date: "2026-05-15", weight: 4.2 }, { date: "2026-06-15", weight: 9.5 }], notes: "Filhote mais ativo da ninhada, pelagem escura.", avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", photos: ["https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"] },
-      { id: 2, litter_id: 1, name: "Athena", gender: "fêmea", status: "Disponível", price: 6500.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.7 }, { date: "2026-05-15", weight: 3.9 }], notes: "Excelente estrutura óssea, muito atenta.", avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", photos: ["https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"] }
+      { id: 1, litter_id: 1, name: "Buran", gender: "macho", status: "Disponível", price: 6000.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }, { type: "vacina", name: "2ª Dose V10", date: "2026-06-20", status: "Aplicado" }, { type: "vermífugo", name: "Drontal Puppy", date: "2026-05-15", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.8 }, { date: "2026-05-15", weight: 4.2 }, { date: "2026-06-15", weight: 9.5 }], notes: "Filhote cinza imponente, active e com excelente instinto de atenção.", avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", photos: ["https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"] },
+      { id: 2, litter_id: 1, name: "Aurora", gender: "fêmea", status: "Disponível", price: 6500.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.75 }, { date: "2026-05-15", weight: 3.9 }], notes: "Fêmea cinza carvão, extremamente esperta e ativa no ambiente.", avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", photos: ["https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"] }
     ]);
 
     // 6. Services
     setServices([
-      { id: 1, name: "Serviço de Monta (Kahn)", category: "cobertura", price: 3500.00, description: "Serviço de monta com contrato e garantia de gestação." },
+      { id: 1, name: "Serviço de Monta (Symion da Kubera)", category: "cobertura", price: 3500.00, description: "Serviço de monta com contrato e garantia de gestação." },
       { id: 2, name: "Hospedagem Canina Diária", category: "hospedagem", price: 80.00, description: "Hospedagem com recreação, alimentação inclusa ou trazida pelo tutor." },
       { id: 3, name: "Pacote de Adestramento Básico", category: "adestramento", price: 1200.00, description: "Treinamento de obediência urbana (10 sessões)." }
     ]);
@@ -286,8 +290,8 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
     // 7. AgendaEvents
     const today = new Date();
     setAgendaEvents([
-      { id: 1, type: "visita", title: "Visita de Guilherme Mota", description: "Ver filhotes cinzas machos", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 14, 0).toISOString(), lead_id: 1, status: "Agendado", reminder_sent: false },
-      { id: 2, type: "adestramento", title: "Treino do cão Marley (Carlos)", description: "Treino de obediência e socialização", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 16, 0).toISOString(), client_id: 2, assigned_to: "Tratador Fábio", status: "Confirmado", reminder_sent: false }
+      { id: 1, type: "visita", title: "Visita de Guilherme Mota", description: "Ver filhotes cinzas", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 14, 0).toISOString(), lead_id: 1, status: "Agendado", reminder_sent: false },
+      { id: 2, type: "adestramento", title: "Treino do cão Marley (Carlos)", description: "Treino de obediência e socialização", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 16, 0).toISOString(), client_id: 2, assigned_to: "Criador Rafael", status: "Confirmado", reminder_sent: false }
     ]);
 
     // 8. Hospedagens
@@ -302,8 +306,8 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
     // 10. Financial Entries
     setFinancialEntries([
-      { id: 1, type: "Entrada", category: "Venda Filhote", amount: 6000.00, description: "Venda Filhote Thor - Bruno Souza", date: new Date().toISOString(), payment_method: "Pix" },
-      { id: 2, type: "Saída", category: "Ração", amount: 450.00, description: "Compra de Ração Premier Filhotes 15kg", date: new Date().toISOString() }
+      { id: 1, type: "Entrada", category: "Venda Filhote", amount: 6000.00, description: "Venda Filhote Buran - Bruno Souza", date: new Date().toISOString(), payment_method: "Pix" },
+      { id: 2, type: "Saída", category: "Ração", amount: 450.00, description: "Compra de Ração Super Premium 15kg", date: new Date().toISOString() }
     ]);
 
     // 11. Blog Posts
@@ -316,18 +320,24 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
     setWhatsappConfig({
       id: 1,
       status: "connected",
-      phone: "+5511999998888",
+      phone: "+5511998765432",
       reminder_hours: 24,
       enable_reminders: true,
       enable_confirmations: true,
       enable_responses: true,
       qualification_questions: [
         { id: "service_type", question: "Olá! Como posso ajudar você hoje?" }
-      ]
+      ],
+      message_templates: {
+        visita: "Olá, *{nome}*! Passando para lembrar da sua visita agendada ao *Canil Vale da Kubera* amanhã ({data}) às *{hora}h*.\n\n📍 *Endereço:* Itatiba - SP.\n\nConfirmado? Esperamos você! 🐾",
+        adestramento: "Olá, *{nome}*! Passando para lembrar da sessão de adestramento do seu cão agendada para amanhã ({data}) às *{hora}h*.\n\nAté logo! 🎓",
+        hospedagem: "Olá, *{nome}*! Passando para lembrar do check-in/check-out de hospedagem de seu cão agendado para amanhã ({data}) às *{hora}h*.\n\nTe aguardamos! 🏡",
+        confirmacao: "Olá, *{nome}*! Seu agendamento no *Canil Vale da Kubera* foi confirmado com sucesso! 🎉\n\n📅 *Data:* {data}\n⏰ *Horário:* {hora}h\n📝 *Atividade:* {atividade}\n\nTe aguardamos! 🐾"
+      }
     });
 
     setNotifications([
-      { id: 1, type: "sistema", message: "Sistema do Canil Aura iniciado em modo local.", read: false, created_at: new Date().toISOString() }
+      { id: 1, type: "sistema", message: "Sistema do Canil Vale da Kubera iniciado em modo local.", read: false, created_at: new Date().toISOString() }
     ]);
   };
 

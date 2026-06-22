@@ -102,19 +102,28 @@ function getChromeExecutablePath(): string | undefined {
 const executablePath = getChromeExecutablePath();
 
 // Helper to update connection status
-async function updateBotStatus(status: string, qrCode: string | null = null) {
+async function updateBotStatus(status: string, qrCode: string | null = null, phone: string | null = null) {
   try {
     const supabase = getSupabase();
     if (!supabase) return;
 
+    const updateObj: any = {
+      id: 1,
+      status,
+      qr_code: qrCode,
+      updated_at: new Date().toISOString()
+    };
+
+    if (status === "disconnected") {
+      updateObj.phone = null;
+      updateObj.qr_code = null;
+    } else if (phone !== null) {
+      updateObj.phone = phone;
+    }
+
     const { error } = await supabase
       .from("whatsapp_config")
-      .upsert({
-        id: 1,
-        status,
-        qr_code: qrCode,
-        updated_at: new Date().toISOString()
-      }, { onConflict: "id" });
+      .upsert(updateObj, { onConflict: "id" });
 
     if (error) {
       console.warn(`⚠️ [WhatsApp Bot] Não foi possível salvar status '${status}' no Supabase:`, error.message);
@@ -169,7 +178,8 @@ client.on("auth_failure", (msg) => {
 
 client.on("ready", () => {
   console.log("🚀 Robô do WhatsApp está pronto e aguardando mensagens!");
-  updateBotStatus("connected");
+  const phone = client.info?.wid?.user ? `+${client.info.wid.user}` : null;
+  updateBotStatus("connected", null, phone);
   startReminderLoop(client);
   startChatSyncLoop(client);
 });

@@ -5,7 +5,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { Shield, BookOpen, Star, AlertTriangle, Activity } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Tudo Sobre a Raça Pastor do Cáucaso | Guia Completo Canil Aura",
+  title: "Tudo Sobre a Raça Pastor do Cáucaso | Guia Completo Canil Vale da Kubera",
   description: "Entenda o temperamento, cuidados, porte, alimentação e expectativa de vida do cão Pastor do Cáucaso. O guardião territorial definitivo.",
   keywords: ["pastor do caucaso temperamento", "pastor do caucaso tamanho", "cuidados pastor do caucaso", "pastor do caucaso guarda"],
 };
@@ -65,7 +65,7 @@ export default function RacaPage() {
             <span className="text-[#C9A96E]">Pastor do Cáucaso</span>
           </h1>
           <p className="text-gray-400 text-xs italic">
-            Publicado pelo Canil Aura &bull; Tempo de leitura: ~6 min
+            Publicado pelo Canil Vale da Kubera &bull; Tempo de leitura: ~6 min
           </p>
         </div>
 

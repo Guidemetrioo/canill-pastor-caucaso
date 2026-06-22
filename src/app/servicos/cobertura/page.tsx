@@ -5,17 +5,17 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { Shield, Check, Calendar, ArrowRight, Heart } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Serviço de Cobertura e Monta | Reprodutores Pastor do Cáucaso",
-  description: "Melhore a genética de sua criação. Oferecemos serviços de monta natural ou inseminação artificial com nossos reprodutores importados com pedigree CBKC.",
+  title: "Serviço de Cobertura e Monta | Reprodutores Pastor do Cáucaso Vale da Kubera",
+  description: "Melhore a genética de sua criação. Oferecemos serviços de monta natural ou inseminação artificial com nossos reprodutores importados com pedigree CBKC em Itatiba - SP.",
   keywords: ["cobertura pastor do caucaso", "padreador pastor do caucaso", "reprodutor causo sp", "cruzamento pastor do caucaso"],
 };
 
 export default function CoberturaPage() {
   const studs = [
     {
-      name: "Kahn da Aura",
-      details: "Importado da Rússia, 78 cm de cernelha, 73 kg, pelagem cinza carvão abundante, excelente temperamento de guarda territorial.",
-      exams: ["Laudo HD- (Isento de Displasia Coxofemoral)", "Microchipado", "Pedigree CBKC/FCI de campeões"],
+      name: "Symion da Kubera",
+      details: "Importado da Rússia (Canil Baraik Azskaz). Reprodutor gigante de 100kg com excelente estrutura óssea e guarda territorial implacável.",
+      exams: ["Laudo HD- (Isento de Displasia Coxofemoral)", "Microchipado", "Pedigree CBKC/FCI de campeões", "Importado com pedigree oficial de exportação"],
       image: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400",
     }
   ];
@@ -88,7 +88,7 @@ export default function CoberturaPage() {
               </div>
             </div>
             <a
-              href="https://wa.me/5511998765432?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20servi%C3%A7o%20de%20cobertura%20do%20Kahn."
+              href="https://wa.me/5511998765432?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20servi%C3%A7o%20de%20cobertura%20do%20Symion."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-lg text-xs mt-4 transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"

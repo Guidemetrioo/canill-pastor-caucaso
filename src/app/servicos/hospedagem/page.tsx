@@ -5,9 +5,9 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { Home, Check, ArrowRight, Heart } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Hospedagem Canina e Hotel | Canil Aura São Roque",
-  description: "Hospede seu cão com total segurança. Boxes individuais higienizados, área verde de 10.000m² para recreação e supervisão 24h em São Roque - SP.",
-  keywords: ["hotel para caes sp", "hospedagem pastor do caucaso", "creche canina sao roque", "hotelzinho caes grande porte"],
+  title: "Hospedagem Canina e Hotel | Canil Vale da Kubera Itatiba",
+  description: "Hospede seu cão com total segurança. Boxes individuais higienizados, área verde para recreação e supervisão 24h em Itatiba - SP.",
+  keywords: ["hotel para caes sp", "hospedagem pastor do caucaso", "creche canina itatiba", "hotelzinho caes grande porte"],
 };
 
 export default function HospedagemPage() {
@@ -73,7 +73,7 @@ export default function HospedagemPage() {
             </div>
 
             <a
-              href="https://wa.me/5511998765432?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20uma%20vaga%20de%20hospedagem%20para%20meu%20c%C3%A3o."
+              href="https://wa.me/5521998765432?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20uma%20vaga%20de%20hospedagem%20para%20meu%20c%C3%A3o."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 bg-[#C9A96E] hover:bg-[#B8965C] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-lg text-xs transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"

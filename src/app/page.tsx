@@ -3,34 +3,34 @@ import LandingPageClient from "@/components/LandingPageClient";
 
 // 1. Server-Side Metadata for Search Engines (SEO)
 export const metadata: Metadata = {
-  title: "Aura Barber & Co. | Barbearia Premium Itaim Bibi, São Paulo",
+  title: "Canil Vale da Kubera | Cão Pastor do Cáucaso em Itatiba - SP",
   description:
-    "Agende seu horário na melhor barbearia premium do Itaim Bibi, SP. Especialistas em corte de cabelo visagista masculino, degradê navalhado, platinado/nevou e barboterapia relaxante com toalha quente e navalha afiada. Cerveja gelada cortesia.",
+    "Especialista na criação responsável e seleção genética de cães Pastor do Cáucaso (Kavkazskaya Ovcharka) em Itatiba - SP. Gigantes importados de linhagens de guarda, laudos negativos de displasia coxofemoral e pedigree CBKC.",
   keywords: [
-    "barbearia itaim bibi",
-    "barbearia faria lima",
-    "corte de cabelo visagista",
-    "platinado masculino sp",
-    "degradê masculino navalhado",
-    "barboterapia toalha quente",
-    "corte masculino sao paulo",
-    "barba de luxo sp",
+    "canil pastor do caucaso",
+    "pastor do caucaso sao paulo",
+    "filhote de pastor do caucaso",
+    "valedakubera",
+    "canil vale da kubera",
+    "criador pastor do caucaso",
+    "cão de guarda gigante",
+    "pastor do caucaso sp"
   ],
   alternates: {
-    canonical: "https://barbeiro-git-master-h2wnjznr7j-8776s-projects.vercel.app/",
+    canonical: "https://www.instagram.com/valedakubera/",
   },
   openGraph: {
-    title: "Aura Barber & Co. | Barbearia Premium Itaim Bibi, São Paulo",
+    title: "Canil Vale da Kubera | Cão Pastor do Cáucaso em Itatiba - SP",
     description:
-      "Agende seu corte visagista online na melhor barbearia do Itaim Bibi. Toalha quente, cerveja artesanal e os melhores barbeiros de São Paulo.",
-    url: "https://barbeiro-git-master-h2wnjznr7j-8776s-projects.vercel.app/",
-    siteName: "Aura Barber & Co.",
+      "Criação selecionada de Pastor do Cáucaso em Itatiba - SP. Lindos filhotes, reprodutores gigantes e temperamento equilibrado de guarda.",
+    url: "https://www.instagram.com/valedakubera/",
+    siteName: "Canil Vale da Kubera",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800",
+        url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
         width: 800,
         height: 600,
-        alt: "Aura Barber & Co. Salão Principal",
+        alt: "Pastor do Cáucaso Vale da Kubera",
       },
     ],
     locale: "pt_BR",
@@ -42,43 +42,38 @@ export default function Home() {
   // 2. Structured Data (JSON-LD) for Local SEO & Rich Snippets
   const localBusinessSchema = {
     "@context": "https://schema.org",
-    "@type": "BarberShop",
-    "name": "Aura Barber & Co.",
-    "image": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800",
-    "@id": "https://barbeiro-git-master-h2wnjznr7j-8776s-projects.vercel.app/#barbershop",
-    "url": "https://barbeiro-git-master-h2wnjznr7j-8776s-projects.vercel.app/",
+    "@type": "LocalBusiness",
+    "name": "Canil Vale da Kubera",
+    "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
+    "@id": "https://www.instagram.com/valedakubera/#kennel",
+    "url": "https://www.instagram.com/valedakubera/",
     "telephone": "+5511998765432",
-    "priceRange": "$$",
+    "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Av. Brigadeiro Faria Lima, 1500",
-      "addressLocality": "Itaim Bibi",
+      "streetAddress": "Itatiba",
+      "addressLocality": "Itatiba",
       "addressRegion": "SP",
-      "postalCode": "01451-001",
+      "postalCode": "13250-000",
       "addressCountry": "BR"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": -23.5785,
-      "longitude": -46.6896
+      "latitude": -23.0039,
+      "longitude": -46.8524
     },
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         "opens": "09:00",
-        "closes": "21:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "09:00",
-        "closes": "20:00"
+        "closes": "17:00"
       }
     ],
     "sameAs": [
-      "https://www.instagram.com/aurabarber",
-      "https://www.facebook.com/aurabarber"
+      "https://www.instagram.com/valedakubera/",
+      "https://web.facebook.com/valedakuberacanil",
+      "https://linktr.ee/acasadospeludos"
     ]
   };
 
@@ -88,34 +83,34 @@ export default function Home() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Preciso agendar com antecedência ou posso ir direto?",
+        "name": "Como funciona a reserva de filhotes de Pastor do Cáucaso?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Recomendamos fortemente o agendamento prévio online para evitar filas e garantir atendimento com seu barbeiro preferido, porém atendemos clientes sem horário marcado conforme a disponibilidade de encaixes."
+          "text": "Nossos filhotes de Pastor do Cáucaso são reservados sob lista de espera e análise de perfil do tutor. Entre em contato conosco via WhatsApp para consultar ninhadas disponíveis e planejadas."
         }
       },
       {
         "@type": "Question",
-        "name": "Quais as formas de pagamento aceitas?",
+        "name": "Os cães possuem pedigree e exames de displasia?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Aceitamos Pix, Dinheiro, Cartões de Débito e Crédito (Visa, Mastercard, Elo, Amex). Parcelamos combos e pacotes de serviços no cartão."
+          "text": "Sim! Todos os nossos exemplares possuem pedigree CBKC/FCI oficial. Nossas matrizes e padreadores possuem laudos radiográficos negativos para displasia coxofemoral antes de acasalar."
         }
       },
       {
         "@type": "Question",
-        "name": "Como funciona a política de cancelamento ou remarcação?",
+        "name": "Onde fica localizado o Canil Vale da Kubera?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Você pode alterar ou cancelar seu horário com até 2 horas de antecedência diretamente entrando em contato conosco via WhatsApp."
+          "text": "Nosso canil fica localizado em Itatiba - SP. As visitas devem ser agendadas previamente via WhatsApp para a segurança do canil."
         }
       },
       {
         "@type": "Question",
-        "name": "O café ou cerveja de cortesia estão inclusos?",
+        "name": "Qual é o valor médio de um filhote de Pastor do Cáucaso?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sim! Todos os nossos clientes têm direito a um café espresso de grãos nobres ou a uma cerveja artesanal gelada como cortesia durante o atendimento."
+          "text": "Os valores dos filhotes variam de acordo com a seleção e linhagem. Machos começam a partir de R$ 6.000,00 e fêmeas a partir de R$ 6.500,00, inclusos pedigree, microchip, vacinas V10 importadas e vermifugação."
         }
       }
     ]
@@ -124,7 +119,7 @@ export default function Home() {
   return (
     <>
       {/* Visual H1 specifically styled for SEO crawler hierarchy */}
-      <h1 className="sr-only">Aura Barber &amp; Co. | Barbearia Premium no Itaim Bibi, São Paulo</h1>
+      <h1 className="sr-only">Canil Vale da Kubera | Cão Pastor do Cáucaso em Itatiba - SP</h1>
 
       {/* Injecting Local Business JSON-LD Schema */}
       <script
