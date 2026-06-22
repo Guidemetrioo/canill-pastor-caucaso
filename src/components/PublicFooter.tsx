@@ -38,8 +38,6 @@ export default function PublicFooter() {
             <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Serviços</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/servicos/cobertura" className="hover:text-[#C9A96E] transition-colors">Cobertura / Monta</Link></li>
-              <li><Link href="/servicos/adestramento" className="hover:text-[#C9A96E] transition-colors">Adestramento Canino</Link></li>
-              <li><Link href="/servicos/hospedagem" className="hover:text-[#C9A96E] transition-colors">Creche &amp; Hotel</Link></li>
             </ul>
           </div>
 

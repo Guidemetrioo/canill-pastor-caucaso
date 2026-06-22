@@ -39,7 +39,8 @@ next-env.d.ts
 .wwebjs_auth/
 .wwebjs_cache/
 
-# git portable
+# git-portable
 .git-portable/
 mingit.zip
+
 

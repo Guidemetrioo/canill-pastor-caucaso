@@ -76,6 +76,11 @@ export interface Filhote {
   photos: string[];
   notes?: string;
   created_at?: string;
+  breed?: string;
+  age?: string;
+  origin?: string;
+  weight?: string;
+  history?: string;
 }
 
 export interface Service {
@@ -276,8 +281,74 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
     // 5. Filhotes
     setFilhotes([
-      { id: 1, litter_id: 1, name: "Buran", gender: "macho", status: "Disponível", price: 6000.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }, { type: "vacina", name: "2ª Dose V10", date: "2026-06-20", status: "Aplicado" }, { type: "vermífugo", name: "Drontal Puppy", date: "2026-05-15", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.8 }, { date: "2026-05-15", weight: 4.2 }, { date: "2026-06-15", weight: 9.5 }], notes: "Filhote cinza imponente, active e com excelente instinto de atenção.", avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", photos: ["https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"] },
-      { id: 2, litter_id: 1, name: "Aurora", gender: "fêmea", status: "Disponível", price: 6500.00, health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }], weight_history: [{ date: "2026-04-15", weight: 0.75 }, { date: "2026-05-15", weight: 3.9 }], notes: "Fêmea cinza carvão, extremamente esperta e ativa no ambiente.", avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", photos: ["https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"] }
+      {
+        id: 1,
+        name: "VENÛS",
+        gender: "fêmea",
+        status: "Disponível",
+        price: 0,
+        health_records: [],
+        weight_history: [],
+        avatar_url: "/dogs/venus_1.jpg",
+        photos: ["/dogs/venus_1.jpg", "/dogs/venus_2.jpg"],
+        breed: "Pastor do Cáucaso",
+        age: "",
+        origin: "Rússia",
+        weight: "70kg",
+        notes: "Fêmea importada da Rússia. Com uma estrutura extremamente robusta.",
+        history: "Fêmea importada da Rússia com excelente temperamento e ossatura muito robusta."
+      },
+      {
+        id: 2,
+        name: "NERO",
+        gender: "macho",
+        status: "Disponível",
+        price: 0,
+        health_records: [],
+        weight_history: [],
+        avatar_url: "/dogs/nero_1.jpg",
+        photos: ["/dogs/nero_1.jpg", "/dogs/nero_2.jpg", "/dogs/nero_3.jpg"],
+        breed: "Pastor do Cáucaso",
+        age: "",
+        origin: "Ucrânia",
+        weight: "",
+        notes: "Macho importado da Ucrânia. Um cão extremamente explosivo.",
+        history: "Macho importado da Ucrânia. Cão de guarda de alto nível com temperamento extremamente explosivo e focado."
+      },
+      {
+        id: 3,
+        name: "[Espaço para Nome]",
+        gender: "macho",
+        status: "Disponível",
+        price: 0,
+        health_records: [],
+        weight_history: [],
+        avatar_url: "",
+        photos: [],
+        breed: "Pastor do Cáucaso",
+        age: "",
+        origin: "",
+        weight: "",
+        notes: "Espaço reservado para adicionar novo cão no futuro.",
+        history: ""
+      },
+      {
+        id: 4,
+        name: "[Espaço para Nome]",
+        gender: "fêmea",
+        status: "Disponível",
+        price: 0,
+        health_records: [],
+        weight_history: [],
+        avatar_url: "",
+        photos: [],
+        breed: "Pastor do Cáucaso",
+        age: "",
+        origin: "",
+        weight: "",
+        notes: "Espaço reservado para adicionar novo cão no futuro.",
+        history: ""
+      }
     ]);
 
     // 6. Services

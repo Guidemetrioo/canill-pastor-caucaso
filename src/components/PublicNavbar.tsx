@@ -13,8 +13,6 @@ export default function PublicNavbar() {
     { href: "/filhotes", label: "Filhotes" },
     { href: "/a-raca-pastor-do-caucaso", label: "A Raça" },
     { href: "/servicos/cobertura", label: "Coberturas" },
-    { href: "/servicos/adestramento", label: "Adestramento" },
-    { href: "/servicos/hospedagem", label: "Hospedagem" },
     { href: "/blog", label: "Blog" },
     { href: "/galeria", label: "Galeria" },
     { href: "/contato", label: "Contato" },

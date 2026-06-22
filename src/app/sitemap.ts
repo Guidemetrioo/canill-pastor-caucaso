@@ -11,8 +11,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/filhotes",
     "/a-raca-pastor-do-caucaso",
     "/servicos/cobertura",
-    "/servicos/adestramento",
-    "/servicos/hospedagem",
     "/blog",
     "/galeria",
     "/contato",
