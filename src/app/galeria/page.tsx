@@ -3,18 +3,30 @@
 import { useState } from "react";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import SocialFloatingButtons from "@/components/SocialFloatingButtons";
 import { Image as ImageIcon } from "lucide-react";
 
 export default function GaleriaPage() {
   const [filter, setFilter] = useState<"todos" | "caes" | "filhotes" | "canil">("todos");
 
   const media = [
-    { type: "caes", url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400", title: "Symion (Macho Reprodutor)" },
-    { type: "caes", url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400", title: "Vasilísia (Matriz)" },
-    { type: "filhotes", url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400", title: "Ninhada Buran (35 dias)" },
-    { type: "filhotes", url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400", title: "Aurora (Filhote Fêmea)" },
-    { type: "canil", url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400", title: "Área de Piquetes Gramados" },
+    // Nero - Reprodutor Ucrânia
+    { type: "caes", url: "/dogs/nero_4.jpg", title: "NERO - Reprodutor (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_5.jpg", title: "NERO - Perfil (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_6.jpg", title: "NERO - Closeup (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_7.jpg", title: "NERO - Descansando" },
+    { type: "caes", url: "/dogs/nero_1.jpg", title: "NERO - Retrato" },
+    { type: "caes", url: "/dogs/nero_2.jpg", title: "NERO - Lateral" },
+    { type: "caes", url: "/dogs/nero_3.jpg", title: "NERO - Posição" },
+    // Vasilísia - Fêmea Rússia
+    { type: "caes", url: "/dogs/vasilisia_1.jpg", title: "VASILÍSIA - Fêmea Robusta (Rússia)" },
+    { type: "caes", url: "/dogs/vasilisia_2.jpg", title: "VASILÍSIA - Sentada" },
+    { type: "caes", url: "/dogs/vasilisia_3.jpg", title: "VASILÍSIA - Posição" },
+    // Venus - Fêmea Rússia
+    { type: "caes", url: "/dogs/venus_1.jpg", title: "VENÛS - Fêmea Importada (Rússia)" },
+    { type: "caes", url: "/dogs/venus_2.jpg", title: "VENÛS - Retrato" },
+    // Canil / Estrutura
+    { type: "canil", url: "/dogs/canil_1.jpg", title: "Canil Vale da Kubera - Instalações" },
   ];
 
   const filteredMedia = media.filter((m) => filter === "todos" || m.type === filter);
@@ -99,7 +111,7 @@ export default function GaleriaPage() {
       </main>
 
       <PublicFooter />
-      <WhatsAppButton />
+      <SocialFloatingButtons />
     </div>
   );
 }

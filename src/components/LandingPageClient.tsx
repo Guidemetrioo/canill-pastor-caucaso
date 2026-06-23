@@ -4,12 +4,12 @@ import { useRef, useEffect, useState } from "react";
 import { useAura } from "@/context/AuraContext";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import SocialFloatingButtons from "@/components/SocialFloatingButtons";
 import Link from "next/link";
 import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, MessageCircle } from "lucide-react";
 
 export default function LandingPageClient() {
-  const { filhotes, services } = useAura();
+  const { filhotes } = useAura();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -19,8 +19,65 @@ export default function LandingPageClient() {
     }
   }, []);
 
-  // Filter available puppies (limit to 4 for the home cards to show Venus, Nero, and placeholders)
-  const homePuppies = filhotes.filter((f) => f.status === "Disponível").slice(0, 4);
+  // Static dog profiles — always shown regardless of backend status
+  const staticDogs = [
+    {
+      id: 1,
+      name: "VENÛS",
+      gender: "fêmea" as const,
+      status: "Disponível" as const,
+      price: 0,
+      health_records: [],
+      weight_history: [],
+      avatar_url: "/dogs/venus_1.jpg",
+      photos: ["/dogs/venus_1.jpg", "/dogs/venus_2.jpg"],
+      breed: "Pastor do Cáucaso",
+      age: "",
+      origin: "Rússia",
+      weight: "70kg",
+      notes: "Fêmea importada da Rússia. Estrutura extremamente robusta.",
+      history: "Fêmea importada da Rússia com excelente temperamento e ossatura muito robusta.",
+    },
+    {
+      id: 2,
+      name: "NERO",
+      gender: "macho" as const,
+      status: "Disponível" as const,
+      price: 0,
+      health_records: [],
+      weight_history: [],
+      avatar_url: "/dogs/nero_4.jpg",
+      photos: ["/dogs/nero_4.jpg", "/dogs/nero_5.jpg", "/dogs/nero_1.jpg", "/dogs/nero_2.jpg", "/dogs/nero_6.jpg", "/dogs/nero_7.jpg"],
+      breed: "Pastor do Cáucaso",
+      age: "",
+      origin: "Ucrânia",
+      weight: "",
+      notes: "Macho importado da Ucrânia. Um cão extremamente explosivo.",
+      history: "Macho importado da Ucrânia. Cão de guarda de alto nível com temperamento extremamente explosivo e focado.",
+    },
+    {
+      id: 3,
+      name: "VASILÍSIA",
+      gender: "fêmea" as const,
+      status: "Disponível" as const,
+      price: 0,
+      health_records: [],
+      weight_history: [],
+      avatar_url: "/dogs/vasilisia_1.jpg",
+      photos: ["/dogs/vasilisia_1.jpg", "/dogs/vasilisia_2.jpg", "/dogs/vasilisia_3.jpg"],
+      breed: "Pastor do Cáucaso",
+      age: "",
+      origin: "Rússia",
+      weight: "",
+      notes: "Fêmea robusta importada da Rússia. Temperamento equilibrado e excelente guardiã.",
+      history: "Fêmea importada da Rússia. Estrutura robusta e temperamento equilibrado de guarda.",
+    },
+  ];
+
+  // Use context data if loaded, otherwise use static dogs
+  const homePuppies = filhotes.filter((f) => f.status === "Disponível").length > 0
+    ? filhotes.filter((f) => f.status === "Disponível").slice(0, 4)
+    : staticDogs;
 
   const testimonials = [
     {
@@ -56,7 +113,8 @@ export default function LandingPageClient() {
             playsInline
             autoPlay
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-30"
+            className="w-full h-full object-cover object-center opacity-55"
+            style={{ filter: "brightness(1.4) contrast(0.95)" }}
             poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
           >
             <source src="/banner-hero.mp4" type="video/mp4" />
@@ -160,36 +218,10 @@ export default function LandingPageClient() {
               </p>
             </div>
 
-            {/* Premium Social CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              {/* YouTube Redirect */}
-              <a
-                href="https://youtube.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#FF0000] hover:bg-[#D90000] text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-lg hover:-translate-y-0.5"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.524 3.545 12 3.545 12 3.545s-7.525 0-9.387.51A3.003 3.003 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108c1.862.51 9.387.51 9.387.51s7.524 0 9.387-.51a3.003 3.003 0 0 0 2.11-2.108c.502-1.907.502-5.837.502-5.837s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                <span>Vídeos no YouTube</span>
-              </a>
-
-              {/* Instagram Button */}
-              <a
-                href="https://instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-tr from-[#FD1D1D] via-[#F56040] to-[#C13584] hover:opacity-90 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-lg hover:-translate-y-0.5"
-              >
-                <svg className="w-4 h-4 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round" viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                <span>Nosso Instagram</span>
-              </a>
-            </div>
+            {/* Social links hint */}
+            <p className="text-sm text-gray-500 pt-2">
+              Siga nas redes sociais pelos ícones flutuantes na lateral direita da tela.
+            </p>
           </div>
 
           {/* Image Content (Nero_2) */}
@@ -284,7 +316,7 @@ export default function LandingPageClient() {
       </section>
 
       <PublicFooter />
-      <WhatsAppButton />
+      <SocialFloatingButtons />
     </div>
   );
 }
