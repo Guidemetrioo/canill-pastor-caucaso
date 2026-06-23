@@ -15,7 +15,7 @@ export default function SobrePage() {
     { label: "Área Verde", value: "10.000m²" },
     { label: "Anos de Seleção", value: "8+ Anos" },
     { label: "Matrizes Selecionadas", value: "100% CBKC" },
-    { label: "Cães Saudáveis", value: "Laudo Displasia" },
+    { label: "Best in Show Europa", value: "² Títulos" },
   ];
 
   return (
@@ -36,10 +36,10 @@ export default function SobrePage() {
               <span className="text-[#D97457]">Pastor do Cáucaso</span>
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
-              O Canil Vale da Kubera nasceu sob a liderança do criador Rafael Avellar, da admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso. Localizado em Itatiba - SP, nosso compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
+              O Canil Vale da Kubera foi fundado por <strong>Rafael Avellar</strong> — estudante de medicina veterinária e criador dedicado — em parceria com <strong>Zé Carlos</strong>, colecionar apaixonado pela raça. Juntos, impulsionados pela admiração pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso, construíram um dos plantéis mais representativos e geneticamente ricos da raça no Brasil. Localizado em Itatiba - SP, o compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Trabalhamos exclusivamente com linhagens selecionadas, muitas delas importadas diretamente de países do Leste Europeu (Rússia, Geórgia), garantindo a rusticidade e a tipicidade da raça que são valorizadas no mundo inteiro.
+              Trabalhamos com linhagens selecionadas e importadas diretamente dos países de referência da raça: <strong>Rússia, Ucrânia, Romênia e Espanha</strong>. Em 2023, trouxemos ao Brasil o <strong>Goran</strong> — o primeiro Pastor do Cáucaso a chegar ao país com dois títulos de <em>Best in Show</em> conquistados na Europa, uma conquista histórica para a cinofilia brasileira.
             </p>
           </div>
           <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
@@ -63,6 +63,54 @@ export default function SobrePage() {
               <span className="block text-xs text-gray-400 font-medium uppercase tracking-wider">{s.label}</span>
             </div>
           ))}
+        </section>
+
+        {/* Plantel Internacional */}
+        <section className="space-y-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 md:p-10">
+          <div className="text-center max-w-lg mx-auto space-y-2">
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Importáveis de Excelência</span>
+            <h2 className="text-2xl md:text-3xl font-bold">Plantél de Linhagens Internacionais</h2>
+            <p className="text-gray-400 text-xs leading-relaxed">
+              Nossos reprodutores foram selecionados nos países de origem mais respeitados da raça, garantindo genética de nível mundial.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            {[
+              {
+                flag: "🇷🇺",
+                country: "Rússia",
+                description: "Linhagens com foco em temperamento equilibrado e estrutura robusta. Importamos de canis de exposição de alto nível, incluindo o renomado Canil Baraik Azskaz.",
+                highlight: "Afár, Symion, Vénus"
+              },
+              {
+                flag: "🇺🇦",
+                country: "Ucrânia",
+                description: "Cães com porte excepcional, ossatura massiva e temperamento explosivo. Preferidos por criadores que buscam tamanho e presença imponente.",
+                highlight: "Nero (40kg aos 4 meses)"
+              },
+              {
+                flag: "🇷🇴",
+                country: "Romênia",
+                description: "Casa do Goran — campeão europeu com dois títulos de Best in Show. O primeiro Pastor do Cáucaso com essa conquista a chegar ao Brasil.",
+                highlight: "🏆 Goran — 2x Best in Show Europa"
+              },
+              {
+                flag: "🇪🇸",
+                country: "Espanha",
+                description: "Cães mais altos, com estrutura elegante e caráter forte e explosivo. O Canil Nirvana (Espanha) é referência mundial para a raça.",
+                highlight: "Apolo (Canil Nirvana)"
+              },
+            ].map((item, idx) => (
+              <div key={idx} className="flex gap-4 bg-[#0F0F0F] border border-[#2A2A2A] p-5 rounded-xl hover:border-[#D97457]/30 transition-colors">
+                <span className="text-3xl shrink-0">{item.flag}</span>
+                <div className="space-y-1.5">
+                  <h4 className="font-bold text-white text-sm">{item.country}</h4>
+                  <p className="text-gray-400 text-[11px] leading-relaxed">{item.description}</p>
+                  <span className="inline-block text-[10px] font-bold text-[#D97457] border border-[#D97457]/20 bg-[#D97457]/5 px-2 py-0.5 rounded-full">{item.highlight}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Features / Differentials */}
