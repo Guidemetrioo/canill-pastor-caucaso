@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import SocialFloatingButtons from "@/components/SocialFloatingButtons";
 import { Shield, MapPin, Award, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -44,10 +44,14 @@ export default function SobrePage() {
           </div>
           <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
             <img
-              src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=600"
-              alt="Instalações do Canil"
-              className="w-full h-full object-cover"
+              src="/dogs/vasilisia_1.jpg"
+              alt="Vasilísia - Fêmea importada da Rússia - Canil Vale da Kubera"
+              className="w-full h-full object-cover object-top"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
+              <p className="text-xs text-white font-semibold">VASILÍSIA &bull; Fêmea Importada da Rússia</p>
+            </div>
           </div>
         </section>
 
@@ -116,7 +120,7 @@ export default function SobrePage() {
       </main>
 
       <PublicFooter />
-      <WhatsAppButton />
+      <SocialFloatingButtons />
     </div>
   );
 }

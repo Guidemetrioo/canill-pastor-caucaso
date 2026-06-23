@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import SocialFloatingButtons from "@/components/SocialFloatingButtons";
 import { Shield, BookOpen, Star, AlertTriangle, Activity } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -71,10 +71,14 @@ export default function RacaPage() {
 
         <div className="relative h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
           <img
-            src="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
-            alt="Pastor do Cáucaso Guardião Adulto"
-            className="w-full h-full object-cover"
+            src="/dogs/nero_4.jpg"
+            alt="Pastor do Cáucaso - Canil Vale da Kubera"
+            className="w-full h-full object-cover object-top"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
+            <p className="text-xs text-white font-semibold">Canil Vale da Kubera &bull; Pastor do Cáucaso Legítimo</p>
+          </div>
         </div>
 
         {/* Content Body */}
@@ -177,7 +181,7 @@ export default function RacaPage() {
       </main>
 
       <PublicFooter />
-      <WhatsAppButton />
+      <SocialFloatingButtons />
     </div>
   );
 }
