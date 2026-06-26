@@ -27,17 +27,6 @@ export default function LandingPageClient() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
-      const video = videoRef.current;
-      if (video) {
-        video.loop = true;
-        video.muted = true;
-        video.playsInline = true;
-        video.play().catch((err) => console.log("Autoplay failed:", err));
-      }
-      return;
-    }
-
     const handleScroll = () => {
       const hero = heroRef.current;
       const video = videoRef.current;
@@ -77,7 +66,7 @@ export default function LandingPageClient() {
         video.removeEventListener("loadedmetadata", handleScroll);
       }
     };
-  }, [isMobile]);
+  }, []);
 
   const handleTabClick = (tab: "exposicao" | "guarda") => {
     setActiveTab(tab);
@@ -186,7 +175,7 @@ export default function LandingPageClient() {
     },
   ];
 
-  const textOpacity = isMobile ? 1 : Math.max(0, (scrollProgress - 0.7) / 0.3);
+  const textOpacity = Math.max(0, (scrollProgress - 0.7) / 0.3);
 
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-20 font-sans">
@@ -195,10 +184,10 @@ export default function LandingPageClient() {
       {/* Scroll-controlled Hero Container */}
       <section 
         ref={heroRef}
-        className={`relative w-full ${isMobile ? "h-[85vh] sm:h-screen" : "h-[200vh]"} bg-black`}
+        className="relative w-full h-[200vh] bg-black"
       >
         {/* Sticky viewport wrapper */}
-        <div className={`${isMobile ? "relative h-full" : "sticky top-0 h-screen"} w-full flex items-center overflow-hidden border-b border-[#2A2A2A]`}>
+        <div className="sticky top-0 h-[100dvh] w-full flex items-center overflow-hidden border-b border-[#2A2A2A]">
           {/* Background Video */}
           <div className="absolute inset-0 w-full h-full pointer-events-none">
             <video
@@ -225,9 +214,9 @@ export default function LandingPageClient() {
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full"
             style={{ 
               opacity: textOpacity, 
-              pointerEvents: isMobile || scrollProgress >= 0.9 ? "auto" : "none",
-              transform: isMobile ? "none" : `translateY(${(1 - textOpacity) * 20}px)`,
-              transition: isMobile ? "none" : "opacity 0.15s ease-out, transform 0.2s ease-out"
+              pointerEvents: scrollProgress >= 0.9 ? "auto" : "none",
+              transform: `translateY(${(1 - textOpacity) * 20}px)`,
+              transition: "opacity 0.15s ease-out, transform 0.2s ease-out"
             }}
           >
             <div className="max-w-2xl space-y-5">
@@ -264,7 +253,7 @@ export default function LandingPageClient() {
           </div>
 
           {/* Interactive Scroll Indicator at the bottom when text is hidden */}
-          {!isMobile && scrollProgress < 0.7 && (
+          {scrollProgress < 0.7 && (
             <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs z-30 select-none animate-bounce">
               <span>Role para reproduzir o vídeo</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
