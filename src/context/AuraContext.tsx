@@ -401,7 +401,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
     setWhatsappConfig({
       id: 1,
       status: "connected",
-      phone: "+5511998765432",
+      phone: "+5511974992059",
       reminder_hours: 24,
       enable_reminders: true,
       enable_confirmations: true,

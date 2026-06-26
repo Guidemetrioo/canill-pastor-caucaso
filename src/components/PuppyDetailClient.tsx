@@ -28,7 +28,7 @@ export default function PuppyDetailClient({ puppy }: { puppy: Puppy }) {
 
   const handleReserveClick = () => {
     const text = `Olá! Tenho interesse no filhote ${puppy.name} (${puppy.gender === "macho" ? "Macho" : "Fêmea"}).`;
-    window.open(`https://wa.me/5511998765432?text=${encodeURIComponent(text)}`, "_blank");
+    window.open(`https://wa.me/5511974992059?text=${encodeURIComponent(text)}`, "_blank");
   };
 
   const productSchema = {

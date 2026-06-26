@@ -53,7 +53,7 @@ export default function PublicFooter() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#D97457]" />
-                <span><strong>Telefone:</strong> +55 (11) 99876-5432</span>
+                <span><strong>Telefone:</strong> +55 (11) 97499-2059</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#D97457]" />

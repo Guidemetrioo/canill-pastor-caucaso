@@ -52,7 +52,7 @@ export default function ContactForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="w-full bg-[#0F0F0F] border border-[#2A2A2A] p-3 rounded-lg text-white text-xs focus:outline-none focus:border-[#D97457]"
-            placeholder="(11) 99876-5432"
+            placeholder="(11) 97499-2059"
             required
           />
         </div>

@@ -5,7 +5,7 @@ export default function SocialFloatingButtons() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
       {/* YouTube */}
       <a
-        href="https://youtube.com/"
+        href="https://www.youtube.com/@CanilValedaKubera"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Vídeos no YouTube"
@@ -25,7 +25,7 @@ export default function SocialFloatingButtons() {
 
       {/* Instagram */}
       <a
-        href="https://instagram.com/"
+        href="https://www.instagram.com/valedakubera/"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Nosso Instagram"
@@ -56,7 +56,7 @@ export default function SocialFloatingButtons() {
 
       {/* WhatsApp */}
       <a
-        href="https://wa.me/5511998765432?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20filhotes%20de%20Pastor%20do%20Cáucaso%20com%20padrão%20de%20exposição."
+        href="https://wa.me/5511974992059?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20filhotes%20de%20Pastor%20do%20Cáucaso%20com%20padrão%20de%20exposição."
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Fale conosco no WhatsApp"

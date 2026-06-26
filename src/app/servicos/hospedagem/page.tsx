@@ -73,7 +73,7 @@ export default function HospedagemPage() {
             </div>
 
             <a
-              href="https://wa.me/5521998765432?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20uma%20vaga%20de%20hospedagem%20para%20meu%20c%C3%A3o."
+              href="https://wa.me/5511974992059?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20uma%20vaga%20de%20hospedagem%20para%20meu%20c%C3%A3o."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-lg text-xs transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"

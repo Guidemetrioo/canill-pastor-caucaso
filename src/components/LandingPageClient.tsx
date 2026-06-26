@@ -11,12 +11,49 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Messag
 export default function LandingPageClient() {
   const { filhotes } = useAura();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const hero = heroRef.current;
+      const video = videoRef.current;
+      if (!hero || !video) return;
+
+      const rect = hero.getBoundingClientRect();
+      const heroHeight = hero.offsetHeight;
+      const viewHeight = window.innerHeight;
+
+      const scrollOffset = -rect.top;
+      const scrollableHeight = heroHeight - viewHeight;
+
+      if (scrollableHeight <= 0) return;
+
+      let progress = scrollOffset / scrollableHeight;
+      progress = Math.max(0, Math.min(1, progress));
+
+      setScrollProgress(progress);
+
+      if (video.duration && isFinite(video.duration)) {
+        video.currentTime = video.duration * progress;
+      }
+    };
+
     const video = videoRef.current;
     if (video) {
-      video.play().catch(() => {});
+      video.pause();
+      video.addEventListener("loadedmetadata", handleScroll);
     }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (video) {
+        video.removeEventListener("loadedmetadata", handleScroll);
+      }
+    };
   }, []);
 
   // Static dog profiles — always shown regardless of backend status
@@ -96,69 +133,92 @@ export default function LandingPageClient() {
     },
   ];
 
+  const textOpacity = Math.max(0, (scrollProgress - 0.7) / 0.3);
+
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-20 font-sans">
       <PublicNavbar />
 
-      {/* Fixed Hero Section (Horizontal Banner) */}
+      {/* Scroll-controlled Hero Container */}
       <section 
-        className="relative h-[60vh] min-h-[450px] md:h-[70vh] flex items-center overflow-hidden border-b border-[#2A2A2A] bg-black"
+        ref={heroRef}
+        className="relative w-full h-[200vh] bg-black"
       >
-        {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
-          <video
-            ref={videoRef}
-            loop
-            muted
-            playsInline
-            autoPlay
-            preload="auto"
-            className="w-full h-full object-cover object-center opacity-55"
-            style={{ filter: "brightness(1.4) contrast(0.95)" }}
-            poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+        {/* Sticky viewport wrapper */}
+        <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden border-b border-[#2A2A2A]">
+          {/* Background Video */}
+          <div className="absolute inset-0 w-full h-full pointer-events-none">
+            <video
+              ref={videoRef}
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover object-center opacity-55"
+              style={{ filter: "brightness(1.4) contrast(0.95)" }}
+              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+            >
+              <source src="/banner-hero.mp4" type="video/mp4" />
+            </video>
+            {/* Gradients overlay for legibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent z-10" />
+          </div>
+          
+          {/* Decorative ambient light */}
+          <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#D97457]/5 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Banner Text Content */}
+          <div 
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full"
+            style={{ 
+              opacity: textOpacity, 
+              pointerEvents: scrollProgress >= 0.9 ? "auto" : "none",
+              transform: `translateY(${(1 - textOpacity) * 20}px)`,
+              transition: "opacity 0.15s ease-out, transform 0.2s ease-out"
+            }}
           >
-            <source src="/banner-hero.mp4" type="video/mp4" />
-          </video>
-          {/* Gradients overlay for legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent z-10" />
-        </div>
-        
-        {/* Decorative ambient light */}
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#D97457]/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="max-w-2xl space-y-5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
+                <Shield className="w-3.5 h-3.5" />
+                <span>Criação Selecionada CBKC/FCI</span>
+              </span>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
-          <div className="max-w-2xl space-y-5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
-              <Shield className="w-3.5 h-3.5" />
-              <span>Criação Selecionada CBKC/FCI</span>
-            </span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
+                Canil <br />
+                <span className="text-[#D97457]">Vale da Kubera</span>
+              </h1>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
-              Canil <br />
-              <span className="text-[#D97457]">Vale da Kubera</span>
-            </h1>
+              <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
+                Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
+              </p>
 
-            <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
-              Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
-            </p>
-
-            <div className="flex flex-wrap gap-4 pt-2">
-              <Link
-                href="/filhotes"
-                className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-3 rounded-xl transition-all text-center text-xs shadow-[0_0_20px_rgba(217,116,87,0.25)] flex items-center justify-center gap-2"
-              >
-                <span>Ver Nossos Cães</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/sobre"
-                className="bg-[#1A1A1A] border border-[#2A2A2A] text-white hover:bg-gray-900 font-bold px-6 py-3 rounded-xl transition-all text-center text-xs"
-              >
-                Conheça Nosso Trabalho
-              </Link>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <Link
+                  href="/filhotes"
+                  className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-3 rounded-xl transition-all text-center text-xs shadow-[0_0_20px_rgba(217,116,87,0.25)] flex items-center justify-center gap-2"
+                >
+                  <span>Ver Nossos Cães</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/sobre"
+                  className="bg-[#1A1A1A] border border-[#2A2A2A] text-white hover:bg-gray-900 font-bold px-6 py-3 rounded-xl transition-all text-center text-xs"
+                >
+                  Conheça Nosso Trabalho
+                </Link>
+              </div>
             </div>
           </div>
+
+          {/* Interactive Scroll Indicator at the bottom when text is hidden */}
+          {scrollProgress < 0.7 && (
+            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs z-30 select-none animate-bounce">
+              <span>Role para reproduzir o vídeo</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </div>
+          )}
         </div>
       </section>
 
@@ -422,7 +482,7 @@ function DogCard({ dog }: { dog: any }) {
             </div>
           ) : (
             <Link
-              href={`https://wa.me/5511998765432?text=Olá!%20Gostaria%20de%20saber%20mais%20detalhes%20sobre%20o%20cão%20${dog.name}.`}
+              href={`https://wa.me/5511974992059?text=Olá!%20Gostaria%20de%20saber%20mais%20detalhes%20sobre%20o%20cão%20${dog.name}.`}
               target="_blank"
               className="w-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] hover:bg-[#D97457] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
             >

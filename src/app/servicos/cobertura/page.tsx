@@ -88,7 +88,7 @@ export default function CoberturaPage() {
               </div>
             </div>
             <a
-              href="https://wa.me/5511998765432?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20servi%C3%A7o%20de%20cobertura%20do%20Symion."
+              href="https://wa.me/5511974992059?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20servi%C3%A7o%20de%20cobertura%20do%20Symion."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-lg text-xs mt-4 transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"

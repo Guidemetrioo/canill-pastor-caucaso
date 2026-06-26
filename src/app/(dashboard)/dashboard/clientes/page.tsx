@@ -187,7 +187,7 @@ export default function ClientesPage() {
                     value={form.phone}
                     onChange={(e) => setForm(prev => ({ ...prev, phone: e.target.value }))}
                     className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
-                    placeholder="Ex: (11) 99876-5432"
+                    placeholder="Ex: (11) 97499-2059"
                     required
                   />
                 </div>

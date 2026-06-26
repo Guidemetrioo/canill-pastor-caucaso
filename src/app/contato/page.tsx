@@ -53,7 +53,7 @@ export default function ContatoPage() {
                   <Phone className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-white">Telefone / WhatsApp</h5>
-                    <p className="text-gray-400 mt-1">+55 (11) 99876-5432</p>
+                    <p className="text-gray-400 mt-1">+55 (11) 97499-2059</p>
                   </div>
                 </div>
 

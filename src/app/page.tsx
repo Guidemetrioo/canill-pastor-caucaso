@@ -49,7 +49,7 @@ export default function Home() {
     "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
     "@id": "https://www.instagram.com/valedakubera/#kennel",
     "url": "https://www.instagram.com/valedakubera/",
-    "telephone": "+5511998765432",
+    "telephone": "+5511974992059",
     "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
