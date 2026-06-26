@@ -36,10 +36,10 @@ export default function SobrePage() {
               <span className="text-[#D97457]">Pastor do Cáucaso</span>
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
-              O Canil Vale da Kubera nasceu sob a liderança do criador Rafael Avellar, da admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso. Localizado em Itatiba - SP, nosso compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
+              O Canil Vale da Kubera nasceu da paixão e dedicação dos criadores <strong>Rafael Avellar</strong> (estudante de veterinária) e <strong>José Carlos (Zé Carlos)</strong>. Movidos pela admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso, eles uniram forças para revolucionar a criação da raça no Brasil, com base em organização, ciência e respeito ao padrão oficial.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Trabalhamos exclusivamente com linhagens selecionadas, muitas delas importadas diretamente de países do Leste Europeu (Rússia, Geórgia), garantindo a rusticidade e a tipicidade da raça que são valorizadas no mundo inteiro.
+              Localizado em Itatiba - SP, o canil conta com uma estrutura cercada de área verde e piquetes planejados. Trabalhamos exclusivamente com linhagens de elite importadas diretamente de países que são referências mundiais na raça, como Rússia, Geórgia, Romênia, Ucrânia e Espanha. Nosso compromisso é selecionar cães de excelente temperamento de proteção e guarda, preservando a saúde física e a beleza morfológica para pistas de exposição.
             </p>
           </div>
           <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
@@ -63,6 +63,27 @@ export default function SobrePage() {
               <span className="block text-xs text-gray-400 font-medium uppercase tracking-wider">{s.label}</span>
             </div>
           ))}
+        </section>
+
+        {/* Video / Documentary Section */}
+        <section className="space-y-8 py-4">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Documentário em Vídeo</span>
+            <h2 className="text-2xl md:text-4xl font-extrabold">Canil Vale da Kubera no Cinofilia Digital</h2>
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+              Assista à visita de Sávio do canal <strong>Cinofilia Digital</strong> ao nosso canil. Veja o nosso plantel real em ação, incluindo nossos reprodutores importados e a análise do padrão de guarda e estrutura dos nossos cães.
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto relative aspect-video w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl bg-gray-950">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/UgnjXPSdQTY"
+              title="Canil Vale da Kubera | Pastor do Cáucaso | Cinofilia Digital"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
         </section>
 
         {/* Features / Differentials */}

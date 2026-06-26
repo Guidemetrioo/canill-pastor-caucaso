@@ -80,6 +80,27 @@ export default function RacaPage() {
             <p className="text-xs text-white font-semibold">Canil Vale da Kubera &bull; Pastor do Cáucaso Legítimo</p>
           </div>
         </div>
+        {/* Featured Video Section */}
+        <section className="space-y-4 bg-[#1A1A1A] border border-[#2A2A2A] p-6 sm:p-8 rounded-2xl">
+          <div className="space-y-2">
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Documentário Exclusivo</span>
+            <h3 className="text-lg md:text-xl font-bold text-white">
+              Análise de Guarda e Padrão da Raça pelo Cinofilia Digital
+            </h3>
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Assista à visita completa do canal <strong>Cinofilia Digital</strong> ao Canil Vale da Kubera. Acompanhe a análise prática da estrutura de cães como Boran (campeão europeu de 100 kg), Afar e Apolo em testes de guarda territorial e ataque.
+            </p>
+          </div>
+          <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-[#2A2A2A] shadow-lg bg-gray-950">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/UgnjXPSdQTY"
+              title="Análise do Pastor do Cáucaso - Cinofilia Digital no Canil Vale da Kubera"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </section>
 
         {/* Content Body */}
         <article className="space-y-8 text-sm text-gray-300">
@@ -94,6 +115,9 @@ export default function RacaPage() {
             </p>
             <p>
               Sua seleção natural priorizou animais de altíssima resistência física, tolerância a temperaturas congelantes e uma coragem indomável. Essa seleção resultou em um cão de estrutura óssea maciça, musculatura vigorosa e uma pelagem dupla densa, capaz de suportar as condições climáticas mais adversas das montanhas.
+            </p>
+            <p>
+              Para assegurar a excelência genética da raça em solo brasileiro, a seleção do Canil Vale da Kubera baseia-se em três pilares fundamentais, descritos como os requisitos indispensáveis para um cão ideal: <strong>Temperamento</strong> (guarda equilibrada e autoconfiança), <strong>Qualidade Genética</strong> (cães saudáveis e livres de doenças hereditárias) e <strong>Estrutura</strong> (conformidade perfeita com o padrão oficial anatômico da raça).
             </p>
           </section>
 
@@ -117,6 +141,12 @@ export default function RacaPage() {
             <p>
               Ele possui uma postura de guarda calma e observadora. Geralmente se posiciona em locais altos onde pode monitorar todo o perímetro. Sua reação a invasões é imediata e feroz, tornando-o o guardião residencial definitivo contra qualquer tipo de ameaça.
             </p>
+            <p>
+              <strong>Unificação de Exposição e Trabalho (Pistas e Guarda):</strong> O Canil Vale da Kubera segue o padrão tradicional europeu, onde o conceito de cão de guarda e cão de beleza morfológica caminham juntos. Rejeitamos a divisão polarizada: um Pastor do Cáucaso de elite deve ter as proporções anatômicas corretas avaliadas em grandes provas de cinofilia (como o nosso romeno **Boran**, vencedor de dois <i>Best in Shows</i> na Europa) e, ao mesmo tempo, ser um guardião rústico e protetor implacável de sua família e território. A estrutura física correta é o que garante a força, a movimentação leve e a funcionalidade para a segurança diária.
+            </p>
+            <p>
+              <strong>Maturidade Tardia:</strong> Ao contrário de raças de trabalho esportivas como o Pastor Belga Malinois, o desenvolvimento comportamental do Cáucaso ocorre de forma mais lenta e tardia. Cães com 3 ou 4 meses de idade mostram-se muito independentes e tranquilos. A consolidação do instinto ativo de guarda e proteção se completa de fato após o cão atingir os 2 anos de idade.
+            </p>
           </section>
 
           <section className="space-y-4">
@@ -133,6 +163,9 @@ export default function RacaPage() {
               <li><strong>Pelagem:</strong> Dupla, muito espessa, com subpelo denso e lanoso. Existem três variedades de comprimento de pelo: longo (com juba distinta no pescoço), médio e curto.</li>
               <li><strong>Cores:</strong> Vários tons de cinza (do claro ao escuro carvão), avermelhado, palha, branco e manchado. Máscara preta é comum e valorizada.</li>
             </ul>
+            <p>
+              <strong>Equilíbrio Estrutural (Vitalidade vs. Peso Exagerado):</strong> O Pastor do Cáucaso é um gigante ativo e rústico. Defendemos a preservação da funcionalidade e da saúde em detrimento do peso excessivo sem mobilidade (uma deformidade seletiva que infelizmente afetou raças como o Mastim Tibetano). Um Cáucaso equilibrado deve movimentar-se com leveza e apresentar vitalidade, mesmo atingindo marcas próximas de 100 kg no auge físico. Exige-se também uma cabeça limpa, livre de rugas excessivas que afetem a saúde ocular (olhos pendentes) ou barbelas hipertrofiadas.
+            </p>
           </section>
 
           <section className="space-y-4">
@@ -141,13 +174,12 @@ export default function RacaPage() {
               <span>Cuidados e Saúde Essenciais</span>
             </h2>
             <p>
-              Devido ao seu tamanho massivo, o Pastor do Cáucaso tem propensão a problemas articulares comuns em raças gigantes, com destaque para a <strong>Displasia Coxofemoral</strong> e a <strong>Displasia de Cotovelo</strong>. A melhor prevenção é adquirir filhotes de criadores que realizam o controle radiográfico das matrizes e padreadores.
+              Devido ao seu tamanho massivo, o Pastor do Cáucaso tem propensão a problemas articulares comuns em raças gigantes, com destaque para a <strong>Displasia Coxofemoral</strong> e a <strong>Displasia de Cotovelo</strong>. A melhor prevenção é adquirir filhotes de criadores que realizam o controle radiográfico rígido das matrizes e padreadores.
             </p>
             <p>
-              Além disso, a alimentação de alta qualidade super premium durante o primeiro ano de vida é crucial para apoiar o crescimento rápido da estrutura óssea sem sobrecarga. Escovações semanais são necessárias para remover pelos mortos, principalmente durante as épocas de muda na primavera e no outono.
+              Além disso, a raça exige atenção especial para o diagnóstico preventivo de disfunções como o <strong>Hipotireoidismo</strong> (que prejudica a pelagem e o metabolismo dos cães gigantes). Um acompanhamento veterinário cuidadoso e a escolha de linhagens saudáveis são fundamentais para o desenvolvimento de exemplares fortes e com alta expectativa de vida. Escovações semanais são necessárias para remover pelos mortos, principalmente durante as épocas de muda na primavera e no outono.
             </p>
           </section>
-
         </article>
 
         {/* FAQs */}
