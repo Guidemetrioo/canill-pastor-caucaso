@@ -56,7 +56,7 @@ export default function SocialFloatingButtons() {
 
       {/* WhatsApp */}
       <a
-        href="https://wa.me/5511998765432?text=Ol%C3%A1!+Tenho+interesse+nos+c%C3%A3es+Pastor+do+C%C3%A1ucaso."
+        href="https://wa.me/5511998765432?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20filhotes%20de%20Pastor%20do%20Cáucaso%20com%20padrão%20de%20exposição."
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Fale conosco no WhatsApp"

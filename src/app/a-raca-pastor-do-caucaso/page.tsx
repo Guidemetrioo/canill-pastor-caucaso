@@ -182,6 +182,27 @@ export default function RacaPage() {
           </section>
         </article>
 
+        {/* Plantel Premiado Section */}
+        <section className="space-y-6 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6 md:p-8">
+          <div className="space-y-2">
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Linhagem de Pista</span>
+            <h3 className="text-xl font-bold text-white border-b border-[#2A2A2A] pb-3">Plantel Premiado em Exposições Internacionais</h3>
+            <p className="text-xs text-gray-400 leading-relaxed font-sans pt-1">
+              Nosso plantel reúne exemplares da Rússia, Ucrânia, Romênia e Espanha com histórico comprovado em exposições — incluindo cães campeões e premiados com Best in Show na Europa. Cada cão é selecionado primeiro pelo padrão de exposição da raça (estrutura, peso, movimentação) e, a partir dessa base, desenvolve naturalmente o instinto de guarda — formando o que consideramos a linhagem mais completa do Pastor do Cáucaso no Brasil.
+            </p>
+          </div>
+
+          <div className="bg-[#121212] border border-[#2A2A2A] rounded-xl p-5 md:p-6 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#2A2A2A] pb-3">
+              <h4 className="text-base font-bold text-[#D97457] sm:text-lg">Goran (Boran) — Campeão na Europa</h4>
+              <span className="bg-[#D97457]/10 text-[#D97457] text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-[#D97457]/20 uppercase">Destaque do Plantel</span>
+            </div>
+            <p className="text-xs text-gray-300 leading-relaxed font-sans">
+              Trazido da Romênia em 2023, o Goran (Boran) é duas vezes Best in Show e considerado o primeiro Pastor do Cáucaso a chegar ao Brasil com esse histórico de exposição na Europa. Possui uma estrutura robusta, padrão de raça impecável e já é reprodutor confirmado no plantel do Canil Vale da Kubera.
+            </p>
+          </div>
+        </section>
+
         {/* FAQs */}
         <section className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6 md:p-8 space-y-6">
           <h3 className="text-xl font-bold text-white border-b border-[#2A2A2A] pb-3">Perguntas Frequentes</h3>

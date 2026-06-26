@@ -36,10 +36,7 @@ export default function SobrePage() {
               <span className="text-[#D97457]">Pastor do Cáucaso</span>
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
-              O Canil Vale da Kubera nasceu da paixão e dedicação dos criadores <strong>Rafael Avellar</strong> (estudante de veterinária) e <strong>José Carlos (Zé Carlos)</strong>. Movidos pela admiração profunda pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso, eles uniram forças para revolucionar a criação da raça no Brasil, com base em organização, ciência e respeito ao padrão oficial.
-            </p>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Localizado em Itatiba - SP, o canil conta com uma estrutura cercada de área verde e piquetes planejados. Trabalhamos exclusivamente com linhagens de elite importadas diretamente de países que são referências mundiais na raça, como Rússia, Geórgia, Romênia, Ucrânia e Espanha. Nosso compromisso é selecionar cães de excelente temperamento de proteção e guarda, preservando a saúde física e a beleza morfológica para pistas de exposição.
+              O Canil Vale da Kubera é especializado na criação do Pastor do Cáucaso (Kavkazskaya Ovcharka), com plantel formado por linhagens importadas da Rússia, Ucrânia, Romênia e Espanha. Nosso trabalho é guiado por três pilares: genética de qualidade, estrutura compatível com o padrão da raça e temperamento equilibrado. Selecionamos exemplares com histórico comprovado — incluindo cães premiados em exposições na Europa — para formar uma linhagem brasileira sólida, livre de problemas como displasia e hipotireoidismo, e funcional tanto para exposição quanto para guarda residencial.
             </p>
           </div>
           <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
@@ -89,49 +86,49 @@ export default function SobrePage() {
         {/* Features / Differentials */}
         <section className="space-y-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 md:p-12">
           <div className="text-center max-w-lg mx-auto space-y-2">
-            <h2 className="text-2xl md:text-3xl font-bold">Nossos Diferenciais</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">Nossa Filosofia de Criação</h2>
             <p className="text-gray-400 text-xs leading-relaxed">
-              Como criadores responsáveis, seguimos protocolos rigorosos para entregar o melhor companheiro de guarda.
+              Trabalhamos com os mais rígidos critérios técnicos internacionais para criar exemplares saudáveis e fiéis ao padrão.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
             <div className="flex gap-4">
               <Award className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5">
-                <h4 className="text-sm font-bold">Laudos de Saúde</h4>
+              <div className="space-y-1.5 font-sans">
+                <h4 className="text-sm font-bold">Padrão de Exposição com Funcionalidade</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Todas as nossas matrizes e padreadores realizam exames radiográficos para atestar a ausência de Displasia Coxofemoral antes de qualquer acasalamento.
+                  No Canil Vale da Kubera, o cão de exposição é a base de toda a nossa seleção genética. Trabalhamos com exemplares avaliados por especialistas e aprovados no padrão oficial da raça — estrutura, peso, pelagem, dentição e movimentação — e que, ao mesmo tempo, exercem naturalmente a guarda territorial da família. Não enxergamos &quot;linha de exposição&quot; e &quot;linha de trabalho&quot; como conceitos opostos: um cão bem estruturado e aprovado em exposição é, por definição, um cão saudável e funcional.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
               <Shield className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5">
-                <h4 className="text-sm font-bold">Temperamento Equilibrado</h4>
+              <div className="space-y-1.5 font-sans">
+                <h4 className="text-sm font-bold">Genética Selecionada para Padrão de Exposição</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Realizamos socialização precoce com estímulos ambientais e humanos para desenvolver cães seguros, autoconfiantes e territorialistas no nível correto.
+                  Cada cruzamento no Canil Vale da Kubera é pensado para atender ao padrão de exposição da raça: estrutura óssea robusta, angulações corretas, dentição completa e vitalidade comprovada — sempre livres de displasia e hipotireoidismo. Nosso plantel inclui exemplares com tatuagem de identificação e procedência documentada da Rússia, Ucrânia, Romênia e Espanha, selecionados por critérios técnicos avaliados em exposições internacionais.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
               <MapPin className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5">
-                <h4 className="text-sm font-bold">Instalações Premium</h4>
+              <div className="space-y-1.5 font-sans">
+                <h4 className="text-sm font-bold">Conheça o Temperamento do Pastor do Cáucaso</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Mais de 10.000m² com piquetes gramados espaçosos, boxes higienizados diariamente e maternidade climatizada para o conforto absoluto das fêmeas e filhotes.
+                  O Pastor do Cáucaso é uma raça de guarda territorial, com temperamento controlado e maturação tardia — atinge a fase adulta após os 2 anos de idade. É um cão dócil com a família e protetor com estranhos, equilibrando instinto de guarda com comportamento estável em ambientes de exposição.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
               <CheckCircle className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5">
-                <h4 className="text-sm font-bold">Suporte Vitalício</h4>
+              <div className="space-y-1.5 font-sans">
+                <h4 className="text-sm font-bold">O Que Define um Cão de Exposição</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Ao adquirir um de nossos filhotes, você terá canal aberto permanente com o criador para tirar dúvidas de alimentação, manejo, adestramento e desenvolvimento.
+                  Um cão de exposição é avaliado por especialistas quanto à conformidade com o padrão oficial da raça: estrutura, peso, pelagem, dentição, formato de cabeça, angulações e movimentação. No Canil Vale da Kubera, esse é o ponto de partida de toda a nossa seleção — só avançamos com exemplares que comprovam saúde, vitalidade e fidelidade ao padrão do Pastor do Cáucaso, características que se traduzem diretamente em cães mais equilibrados também como guardiões da família.
                 </p>
               </div>
             </div>

@@ -135,12 +135,12 @@ export default function LandingPageClient() {
             </span>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
-              Guardiões de Elite: <br />
-              <span className="text-[#D97457]">Pastor do Cáucaso</span>
+              Canil <br />
+              <span className="text-[#D97457]">Vale da Kubera</span>
             </h1>
 
             <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
-              Criação responsável em Itatiba - SP. Reprodutores selecionados, importados da Rússia, Europa e Geórgia, com laudos negativos de displasia. Cães com robustez física e temperamento equilibrado de guarda.
+              Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -203,18 +203,15 @@ export default function LandingPageClient() {
           <div className="lg:col-span-7 space-y-6">
             <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">A Raça &amp; Criação</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-              O Legítimo Pastor do Cáucaso: <br />
-              <span className="text-[#D97457]">Segurança e Excelência de Pista</span>
+              Padrão de Exposição <br />
+              <span className="text-[#D97457]">com Funcionalidade</span>
             </h2>
             <div className="space-y-4 text-gray-400 text-xs sm:text-sm leading-relaxed font-sans">
               <p>
-                O Pastor do Cáucaso é uma das raças de guarda mais antigas e eficientes do mundo. Com uma estrutura rústica, ossatura pesada e temperamento equilibrado, é o cão ideal para a segurança e proteção ativa de chácaras, fazendas e residências.
+                No <strong>Canil Vale da Kubera</strong>, o cão de exposição é a base de toda a nossa seleção genética. Trabalhamos com exemplares avaliados por especialistas e aprovados no padrão oficial da raça — estrutura, peso, pelagem, dentição e movimentação — e que, ao mesmo tempo, exercem naturalmente a guarda territorial da família.
               </p>
               <p>
-                No <strong>Canil Vale da Kubera</strong>, nosso trabalho é focado em duas grandes aptidões: criamos cães com excelente instinto de defesa para a segurança familiar, mas que também preservam a beleza e o padrão oficial da raça para participar de grandes campeonatos, pistas e exposições de cinofilia.
-              </p>
-              <p>
-                Seja para proteger quem você ama ou para brilhar nas pistas de julgamento, nossos reprodutores importados garantem filhotes de altíssimo nível genético e saúde atestada.
+                Não enxergamos &quot;linha de exposição&quot; e &quot;linha de trabalho&quot; como conceitos opostos: um cão bem estruturado e aprovado em exposição é, por definição, um cão saudável e funcional.
               </p>
             </div>
 

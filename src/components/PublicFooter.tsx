@@ -17,7 +17,7 @@ export default function PublicFooter() {
               <span className="font-bold tracking-wider text-white text-lg leading-none">VALE DA KUBERA</span>
             </Link>
             <p className="text-xs leading-relaxed">
-              Criação selecionada e responsável de cães Pastor do Cáucaso. Excelência em temperamento, porte físico e saúde certificada.
+              Canil especializado em Pastor do Cáucaso com padrão de exposição. Genética importada da Rússia, Ucrânia, Romênia e Espanha. Estrutura e saúde comprovadas.
             </p>
           </div>
 

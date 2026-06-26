@@ -3,9 +3,9 @@ import LandingPageClient from "@/components/LandingPageClient";
 
 // 1. Server-Side Metadata for Search Engines (SEO)
 export const metadata: Metadata = {
-  title: "Canil Vale da Kubera | Cão Pastor do Cáucaso em Itatiba - SP",
+  title: "Canil Vale da Kubera | Pastor do Cáucaso",
   description:
-    "Especialista na criação responsável e seleção genética de cães Pastor do Cáucaso (Kavkazskaya Ovcharka) em Itatiba - SP. Gigantes importados de linhagens de guarda, laudos negativos de displasia coxofemoral e pedigree CBKC.",
+    "Canil especializado em Pastor do Cáucaso com padrão de exposição. Genética importada da Rússia, Ucrânia, Romênia e Espanha. Estrutura e saúde comprovadas.",
   keywords: [
     "canil pastor do caucaso",
     "pastor do caucaso sao paulo",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     canonical: "https://www.instagram.com/valedakubera/",
   },
   openGraph: {
-    title: "Canil Vale da Kubera | Cão Pastor do Cáucaso em Itatiba - SP",
+    title: "Canil Vale da Kubera | Pastor do Cáucaso",
     description:
-      "Criação selecionada de Pastor do Cáucaso em Itatiba - SP. Lindos filhotes, reprodutores gigantes e temperamento equilibrado de guarda.",
+      "Canil especializado em Pastor do Cáucaso com padrão de exposição. Genética importada da Rússia, Ucrânia, Romênia e Espanha. Estrutura e saúde comprovadas.",
     url: "https://www.instagram.com/valedakubera/",
     siteName: "Canil Vale da Kubera",
     images: [
@@ -44,6 +44,8 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Canil Vale da Kubera",
+    "description": "O Canil Vale da Kubera é especializado na criação do Pastor do Cáucaso (Kavkazskaya Ovcharka), com plantel formado por linhagens importadas da Rússia, Ucrânia, Romênia e Espanha. Nosso trabalho é guiado por três pilares: genética de qualidade, estrutura compatível com o padrão da raça e temperamento equilibrado.",
+    "knowsAbout": ["Pastor do Cáucaso", "Kavkazskaya Ovcharka", "Criação de Cães", "Cinofilia"],
     "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
     "@id": "https://www.instagram.com/valedakubera/#kennel",
     "url": "https://www.instagram.com/valedakubera/",
