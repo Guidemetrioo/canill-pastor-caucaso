@@ -31,3 +31,12 @@
     color: #D97457;
   }
 }
+
+/* Hide scrollbar for Chrome, Safari, Opera, Edge, IE and Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

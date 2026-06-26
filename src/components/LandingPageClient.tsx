@@ -12,9 +12,32 @@ export default function LandingPageClient() {
   const { filhotes } = useAura();
   const videoRef = useRef<HTMLVideoElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeTab, setActiveTab] = useState<"exposicao" | "guarda">("exposicao");
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      const video = videoRef.current;
+      if (video) {
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.play().catch((err) => console.log("Autoplay failed:", err));
+      }
+      return;
+    }
+
     const handleScroll = () => {
       const hero = heroRef.current;
       const video = videoRef.current;
@@ -54,7 +77,37 @@ export default function LandingPageClient() {
         video.removeEventListener("loadedmetadata", handleScroll);
       }
     };
-  }, []);
+  }, [isMobile]);
+
+  const handleTabClick = (tab: "exposicao" | "guarda") => {
+    setActiveTab(tab);
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const cardWidth = container.clientWidth;
+    container.scrollTo({
+      left: tab === "exposicao" ? 0 : cardWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const handleContainerScroll = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const scrollLeft = container.scrollLeft;
+    const clientWidth = container.clientWidth;
+    if (scrollLeft + 10 >= clientWidth) {
+      setActiveTab("guarda");
+    } else if (scrollLeft <= 10) {
+      setActiveTab("exposicao");
+    } else {
+      const center = scrollLeft + clientWidth / 2;
+      if (center < clientWidth) {
+        setActiveTab("exposicao");
+      } else {
+        setActiveTab("guarda");
+      }
+    }
+  };
 
   // Static dog profiles — always shown regardless of backend status
   const staticDogs = [
@@ -133,7 +186,7 @@ export default function LandingPageClient() {
     },
   ];
 
-  const textOpacity = Math.max(0, (scrollProgress - 0.7) / 0.3);
+  const textOpacity = isMobile ? 1 : Math.max(0, (scrollProgress - 0.7) / 0.3);
 
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-20 font-sans">
@@ -142,10 +195,10 @@ export default function LandingPageClient() {
       {/* Scroll-controlled Hero Container */}
       <section 
         ref={heroRef}
-        className="relative w-full h-[200vh] bg-black"
+        className={`relative w-full ${isMobile ? "h-[85vh] sm:h-screen" : "h-[200vh]"} bg-black`}
       >
         {/* Sticky viewport wrapper */}
-        <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden border-b border-[#2A2A2A]">
+        <div className={`${isMobile ? "relative h-full" : "sticky top-0 h-screen"} w-full flex items-center overflow-hidden border-b border-[#2A2A2A]`}>
           {/* Background Video */}
           <div className="absolute inset-0 w-full h-full pointer-events-none">
             <video
@@ -172,9 +225,9 @@ export default function LandingPageClient() {
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full"
             style={{ 
               opacity: textOpacity, 
-              pointerEvents: scrollProgress >= 0.9 ? "auto" : "none",
-              transform: `translateY(${(1 - textOpacity) * 20}px)`,
-              transition: "opacity 0.15s ease-out, transform 0.2s ease-out"
+              pointerEvents: isMobile || scrollProgress >= 0.9 ? "auto" : "none",
+              transform: isMobile ? "none" : `translateY(${(1 - textOpacity) * 20}px)`,
+              transition: isMobile ? "none" : "opacity 0.15s ease-out, transform 0.2s ease-out"
             }}
           >
             <div className="max-w-2xl space-y-5">
@@ -211,7 +264,7 @@ export default function LandingPageClient() {
           </div>
 
           {/* Interactive Scroll Indicator at the bottom when text is hidden */}
-          {scrollProgress < 0.7 && (
+          {!isMobile && scrollProgress < 0.7 && (
             <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs z-30 select-none animate-bounce">
               <span>Role para reproduzir o vídeo</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -256,41 +309,162 @@ export default function LandingPageClient() {
         </div>
       </section>
 
-      {/* Breed Info & Social Media Section */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Text Content */}
-          <div className="lg:col-span-7 space-y-6">
+      {/* Breed Info & Social Media Section (Interactive Slider) */}
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-2">
             <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">A Raça &amp; Criação</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
               Padrão de Exposição <br />
               <span className="text-[#D97457]">com Funcionalidade</span>
             </h2>
-            <div className="space-y-4 text-gray-400 text-xs sm:text-sm leading-relaxed font-sans">
-              <p>
-                No <strong>Canil Vale da Kubera</strong>, o cão de exposição é a base de toda a nossa seleção genética. Trabalhamos com exemplares avaliados por especialistas e aprovados no padrão oficial da raça — estrutura, peso, pelagem, dentição e movimentação — e que, ao mesmo tempo, exercem naturalmente a guarda territorial da família.
-              </p>
-              <p>
-                Não enxergamos &quot;linha de exposição&quot; e &quot;linha de trabalho&quot; como conceitos opostos: um cão bem estruturado e aprovado em exposição é, por definição, um cão saudável e funcional.
-              </p>
-            </div>
-
-            {/* Social links hint */}
-            <p className="text-sm text-gray-500 pt-2">
-              Siga nas redes sociais pelos ícones flutuantes na lateral direita da tela.
+            <p className="text-gray-400 text-xs max-w-2xl leading-relaxed">
+              No Canil Vale da Kubera, unimos a beleza e o rigor morfológico exigidos pelas exposições internacionais ao instinto de proteção nato do Pastor do Cáucaso. Deslize para o lado ou selecione abaixo para ver os pilares de cada perfil.
             </p>
           </div>
 
-          {/* Image Content (Nero_2) */}
-          <div className="lg:col-span-5 relative h-96 sm:h-[450px] w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl">
-            <img
-              src="/dogs/nero_2.jpg"
-              alt="Pastor do Cáucaso Nero"
-              className="w-full h-full object-cover object-center scale-102 hover:scale-105 transition-transform duration-700"
-            />
-            {/* Ambient vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+          {/* Carousel Tabs/Controls */}
+          <div className="flex items-center gap-3 self-start md:self-end">
+            <button
+              onClick={() => handleTabClick("exposicao")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
+                activeTab === "exposicao"
+                  ? "bg-[#D97457] border-[#D97457] text-[#0F0F0F] shadow-lg shadow-[#D97457]/15"
+                  : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-400 hover:text-white"
+              }`}
+            >
+              <Award className="w-4 h-4" />
+              <span>Exposição</span>
+            </button>
+            <button
+              onClick={() => handleTabClick("guarda")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
+                activeTab === "guarda"
+                  ? "bg-[#D97457] border-[#D97457] text-[#0F0F0F] shadow-lg shadow-[#D97457]/15"
+                  : "bg-[#1A1A1A] border-[#2A2A2A] text-gray-400 hover:text-white"
+              }`}
+            >
+              <Shield className="w-4 h-4" />
+              <span>Guarda</span>
+            </button>
           </div>
+        </div>
+
+        {/* Scrollable container with cards */}
+        <div 
+          ref={scrollContainerRef}
+          onScroll={handleContainerScroll}
+          className="flex overflow-x-auto snap-x snap-mandatory gap-6 no-scrollbar scroll-smooth pb-4"
+        >
+          {/* Card 1: Exposição */}
+          <div className="w-full flex-shrink-0 snap-start grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141414] border border-[#2A2A2A] p-6 sm:p-10 rounded-3xl shadow-xl">
+            {/* Text column */}
+            <div className="lg:col-span-7 space-y-5 order-2 lg:order-1">
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-[10px] font-bold uppercase tracking-wider">
+                <Award className="w-3 h-3" />
+                <span>Padrão Oficial Morfológico</span>
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                Cão de Exposição: Genética &amp; Beleza de Padrão Internacional
+              </h3>
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                Nossos exemplares de exposição são criados com base nas diretrizes oficiais da FCI/CBKC. Focamos no aprimoramento morfológico para produzir cães saudáveis, robustos e com conformação perfeita.
+              </p>
+              <ul className="space-y-3.5 font-sans">
+                <li className="flex items-start gap-2.5 text-xs text-gray-300">
+                  <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Genética Importada Selecta:</strong> Linhagens exclusivas da Rússia, Romênia, Ucrânia e Espanha de alto rendimento morfológico.
+                  </div>
+                </li>
+                <li className="flex items-start gap-2.5 text-xs text-gray-300">
+                  <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Estrutura &amp; Tipicidade:</strong> Cabeça massiva, mordedura correta em tesoura, pelagem dupla extremamente densa e movimentação harmônica.
+                  </div>
+                </li>
+                <li className="flex items-start gap-2.5 text-xs text-gray-300">
+                  <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Laudos de Saúde Oficiais:</strong> Controle genético rígido com radiografias de quadril (HD-A/B) e cotovelos para eliminação de displasia.
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Image column */}
+            <div className="lg:col-span-5 relative h-64 sm:h-80 md:h-[350px] w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl order-1 lg:order-2">
+              <img
+                src="/dogs/venus_1.jpg"
+                alt="Pastor do Cáucaso padrão de exposição - Vênus"
+                className="w-full h-full object-cover object-center scale-102 hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Card 2: Guarda */}
+          <div className="w-full flex-shrink-0 snap-start grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141414] border border-[#2A2A2A] p-6 sm:p-10 rounded-3xl shadow-xl">
+            {/* Text column */}
+            <div className="lg:col-span-7 space-y-5 order-2 lg:order-1">
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-[10px] font-bold uppercase tracking-wider">
+                <Shield className="w-3 h-3" />
+                <span>Instinto Territorial de Guarda</span>
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                Cão de Guarda: Proteção Inata, Equilibrada &amp; Incorruptível
+              </h3>
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                O Pastor do Cáucaso possui um instinto de defesa nativo da raça. Ele atua de maneira vigilante e altamente territorial, sendo uma proteção real para fazendas, sítios e residências.
+              </p>
+              <ul className="space-y-3.5 font-sans">
+                <li className="flex items-start gap-2.5 text-xs text-gray-300">
+                  <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Instinto Autônomo de Guarda:</strong> O Cáucaso dispensa treinamentos agressivos ou induções ao ataque; sua vigilância territorial é totalmente nata.
+                  </div>
+                </li>
+                <li className="flex items-start gap-2.5 text-xs text-gray-300">
+                  <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Temperamento Equilibrado:</strong> Alta lealdade e afeto com a família, enquanto se mantém como uma barreira inabalável contra ameaças externas.
+                  </div>
+                </li>
+                <li className="flex items-start gap-2.5 text-xs text-gray-300">
+                  <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Desenvolvimento e Maturação:</strong> Amadurecimento mental tardio. O potencial pleno de guarda territorial se consolida após os 2 anos de idade.
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Image column */}
+            <div className="lg:col-span-5 relative h-64 sm:h-80 md:h-[350px] w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl order-1 lg:order-2">
+              <img
+                src="/dogs/nero_4.jpg"
+                alt="Pastor do Cáucaso cão de guarda - Nero"
+                className="w-full h-full object-cover object-center scale-102 hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator Dots */}
+        <div className="flex justify-center gap-2 pt-2">
+          <span
+            onClick={() => handleTabClick("exposicao")}
+            className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-all duration-300 ${
+              activeTab === "exposicao" ? "bg-[#D97457] w-6" : "bg-gray-700"
+            }`}
+          />
+          <span
+            onClick={() => handleTabClick("guarda")}
+            className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-all duration-300 ${
+              activeTab === "guarda" ? "bg-[#D97457] w-6" : "bg-gray-700"
+            }`}
+          />
         </div>
       </section>
 
