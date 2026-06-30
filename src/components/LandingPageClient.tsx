@@ -585,12 +585,24 @@ export default function LandingPageClient() {
                     <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
                     <input
                       id="visit-date"
-                      type="date"
+                      type="text"
+                      placeholder="Escolha a data da visita"
+                      onFocus={(e) => {
+                        e.currentTarget.type = "date";
+                        if ('showPicker' in e.currentTarget) {
+                          try {
+                            e.currentTarget.showPicker();
+                          } catch (err) {}
+                        }
+                      }}
+                      onBlur={(e) => {
+                        if (!e.currentTarget.value) e.currentTarget.type = "text";
+                      }}
                       required
                       value={visitDate}
                       onChange={handleDateChange}
-                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
-                      style={{ minWidth: 0, width: '100%', boxSizing: 'border-box' }}
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans block"
+                      style={{ minWidth: 0, width: '100%', maxWidth: '100%', boxSizing: 'border-box', display: 'block' }}
                     />
                   </div>
 
