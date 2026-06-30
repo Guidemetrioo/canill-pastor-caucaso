@@ -6,16 +6,20 @@ import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import SocialFloatingButtons from "@/components/SocialFloatingButtons";
 import Link from "next/link";
-import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, MessageCircle } from "lucide-react";
+import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, MessageCircle, Clock, Users } from "lucide-react";
 
 export default function LandingPageClient() {
   const { filhotes } = useAura();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState<"exposicao" | "guarda">("exposicao");
+  const [activeDogGender, setActiveDogGender] = useState<"fêmea" | "macho">("fêmea");
+
+  // Booking Form State
+  const [visitDate, setVisitDate] = useState("");
+  const [visitTime, setVisitTime] = useState("10:00");
+  const [visitorName, setVisitorName] = useState("");
+  const [visitError, setVisitError] = useState("");
 
   useEffect(() => {
     const checkMobile = () => {
@@ -24,48 +28,6 @@ export default function LandingPageClient() {
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const hero = heroRef.current;
-      const video = videoRef.current;
-      if (!hero || !video) return;
-
-      const rect = hero.getBoundingClientRect();
-      const heroHeight = hero.offsetHeight;
-      const viewHeight = window.innerHeight;
-
-      const scrollOffset = -rect.top;
-      const scrollableHeight = heroHeight - viewHeight;
-
-      if (scrollableHeight <= 0) return;
-
-      let progress = scrollOffset / scrollableHeight;
-      progress = Math.max(0, Math.min(1, progress));
-
-      setScrollProgress(progress);
-
-      if (video.duration && isFinite(video.duration)) {
-        video.currentTime = video.duration * progress;
-      }
-    };
-
-    const video = videoRef.current;
-    if (video) {
-      video.pause();
-      video.addEventListener("loadedmetadata", handleScroll);
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (video) {
-        video.removeEventListener("loadedmetadata", handleScroll);
-      }
-    };
   }, []);
 
   const handleTabClick = (tab: "exposicao" | "guarda") => {
@@ -98,6 +60,46 @@ export default function LandingPageClient() {
     }
   };
 
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setVisitDate(val);
+    if (!val) return;
+
+    const d = new Date(val + "T00:00:00");
+    const day = d.getDay(); // 0 Sunday, 6 Saturday
+    if (day === 0 || day === 6) {
+      setVisitError("Visitas presenciais disponíveis apenas de Segunda a Sexta-feira.");
+    } else {
+      setVisitError("");
+    }
+  };
+
+  const handleScheduleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!visitDate) {
+      setVisitError("Por favor, selecione uma data.");
+      return;
+    }
+    const d = new Date(visitDate + "T00:00:00");
+    const day = d.getDay();
+    if (day === 0 || day === 6) {
+      setVisitError("Visitas presenciais disponíveis apenas de Segunda a Sexta-feira.");
+      return;
+    }
+    if (!visitorName.trim()) {
+      setVisitError("Por favor, insira o seu nome.");
+      return;
+    }
+
+    setVisitError("");
+    const parts = visitDate.split("-");
+    const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+
+    const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()}.`;
+    const url = `https://wa.me/5511974992059?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+  };
+
   // Static dog profiles — always shown regardless of backend status
   const staticDogs = [
     {
@@ -111,10 +113,10 @@ export default function LandingPageClient() {
       avatar_url: "/dogs/venus_1.jpg",
       photos: ["/dogs/venus_1.jpg", "/dogs/venus_2.jpg"],
       breed: "Pastor do Cáucaso",
-      age: "",
+      age: "3 anos",
       origin: "Rússia",
       weight: "70kg",
-      notes: "Fêmea importada da Rússia. Estrutura extremamente robusta.",
+      notes: "Fêmea importada da Rússia. Estrutura extremamente robusta e excelente temperamento familiar.",
       history: "Fêmea importada da Rússia com excelente temperamento e ossatura muito robusta.",
     },
     {
@@ -128,10 +130,10 @@ export default function LandingPageClient() {
       avatar_url: "/dogs/nero_4.jpg",
       photos: ["/dogs/nero_4.jpg", "/dogs/nero_5.jpg", "/dogs/nero_1.jpg", "/dogs/nero_2.jpg", "/dogs/nero_6.jpg", "/dogs/nero_7.jpg"],
       breed: "Pastor do Cáucaso",
-      age: "",
+      age: "4 anos",
       origin: "Ucrânia",
-      weight: "",
-      notes: "Macho importado da Ucrânia. Um cão extremamente explosivo.",
+      weight: "85kg",
+      notes: "Macho importado da Ucrânia. Cão de guarda de alto nível com temperamento extremamente explosivo e focado.",
       history: "Macho importado da Ucrânia. Cão de guarda de alto nível com temperamento extremamente explosivo e focado.",
     },
     {
@@ -145,160 +147,339 @@ export default function LandingPageClient() {
       avatar_url: "/dogs/vasilisia_1.jpg",
       photos: ["/dogs/vasilisia_1.jpg", "/dogs/vasilisia_2.jpg", "/dogs/vasilisia_3.jpg"],
       breed: "Pastor do Cáucaso",
-      age: "",
+      age: "2 anos",
       origin: "Rússia",
-      weight: "",
+      weight: "68kg",
       notes: "Fêmea robusta importada da Rússia. Temperamento equilibrado e excelente guardiã.",
       history: "Fêmea importada da Rússia. Estrutura robusta e temperamento equilibrado de guarda.",
     },
   ];
 
   // Use context data if loaded, otherwise use static dogs
-  const homePuppies = filhotes.filter((f) => f.status === "Disponível").length > 0
-    ? filhotes.filter((f) => f.status === "Disponível").slice(0, 4)
+  const baseDogs = filhotes.filter((f) => f.status === "Disponível").length > 0
+    ? filhotes.filter((f) => f.status === "Disponível")
     : staticDogs;
 
-  const testimonials = [
-    {
-      name: "Rodrigo Almeida",
-      location: "São Paulo - SP",
-      dog: "Thor (Macho, 2 anos)",
-      text: "Excelente cão de guarda. O Thor é extremamente dócil com as minhas filhas, mas um guardião implacável na propriedade. O suporte pós-venda do canil foi nota 10.",
-      stars: 5,
-    },
-    {
-      name: "Mariana Costa",
-      location: "Curitiba - PR",
-      dog: "Athena (Fêmea, 1 ano e meio)",
-      text: "Fêmea atenta, muito equilibrada e rústica. Veio com pedigree CBKC completo e laudos negativos de displasia dos pais. Indico o canil de olhos fechados.",
-      stars: 5,
-    },
-  ];
+  // Enrich data for known dogs to ensure fields (weight, age) are fully populated
+  const allDogs = baseDogs.map(dog => {
+    const nameUpper = dog.name.toUpperCase();
+    if (nameUpper.includes("VENÛS") || nameUpper.includes("VENUS")) {
+      return { ...dog, weight: dog.weight || "70kg", age: dog.age || "3 anos" };
+    }
+    if (nameUpper.includes("NERO")) {
+      return { ...dog, weight: dog.weight || "85kg", age: dog.age || "4 anos" };
+    }
+    if (nameUpper.includes("VASILÍSIA") || nameUpper.includes("VASILISIA")) {
+      return { ...dog, weight: dog.weight || "68kg", age: dog.age || "2 anos" };
+    }
+    return dog;
+  });
 
-  const textOpacity = Math.max(0, (scrollProgress - 0.7) / 0.3);
+  // Filter dogs by selected gender tab
+  const filteredDogs = allDogs.filter((dog) => dog.gender === activeDogGender);
 
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-20 font-sans">
       <PublicNavbar />
 
-      {/* Scroll-controlled Hero Container */}
-      <section 
-        ref={heroRef}
-        className="relative w-full h-[200vh] bg-black"
-      >
-        {/* Sticky viewport wrapper */}
-        <div className="sticky top-0 h-[100dvh] w-full flex items-center overflow-hidden border-b border-[#2A2A2A]">
-          {/* Background Video */}
-          <div className="absolute inset-0 w-full h-full pointer-events-none">
-            <video
-              ref={videoRef}
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover object-center opacity-55"
-              style={{ filter: "brightness(1.4) contrast(0.95)" }}
-              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
-            >
-              <source src="/banner-hero.mp4" type="video/mp4" />
-            </video>
-            {/* Gradients overlay for legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-transparent z-10" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent z-10" />
-          </div>
-          
-          {/* Decorative ambient light */}
-          <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#D97457]/5 rounded-full blur-3xl pointer-events-none" />
-
-          {/* Banner Text Content */}
-          <div 
-            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full"
-            style={{ 
-              opacity: textOpacity, 
-              pointerEvents: scrollProgress >= 0.9 ? "auto" : "none",
-              transform: `translateY(${(1 - textOpacity) * 20}px)`,
-              transition: "opacity 0.15s ease-out, transform 0.2s ease-out"
-            }}
+      {/* 1. Optimized Responsive Hero Banner */}
+      <section className="relative w-full h-[80vh] md:h-[90vh] bg-black overflow-hidden border-b border-[#2A2A2A]">
+        {/* Background Video */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover object-center opacity-55"
+            style={{ filter: "brightness(1.1) contrast(0.95)" }}
+            poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
           >
-            <div className="max-w-2xl space-y-5">
+            <source src="/banner-hero.mp4" type="video/mp4" />
+          </video>
+          {/* Gradients overlay for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F]/90 via-[#0F0F0F]/60 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent z-10" />
+        </div>
+        
+        {/* Decorative ambient light */}
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#D97457]/5 rounded-full blur-3xl pointer-events-none z-10" />
+
+        {/* Banner Text Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full h-full flex items-center">
+          <div className="max-w-2xl space-y-6">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
+              <Shield className="w-3.5 h-3.5" />
+              <span>Criação Selecionada CBKC/FCI</span>
+            </span>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none text-white">
+              Canil <br />
+              <span className="text-[#D97457]">Vale da Kubera</span>
+            </h1>
+
+            <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-xl font-sans">
+              Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
+            </p>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <a
+                href="#caes"
+                className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs shadow-[0_0_20px_rgba(217,116,87,0.25)] flex items-center justify-center gap-2"
+              >
+                <span>Ver Nossos Cães</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <Link
+                href="/sobre"
+                className="bg-[#1A1A1A] border border-[#2A2A2A] text-white hover:bg-gray-900 font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs"
+              >
+                Conheça Nosso Trabalho
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Seção Sobre Nós */}
+      <section className="py-20 bg-[#0F0F0F] border-b border-[#2A2A2A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 space-y-6">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
-                <Shield className="w-3.5 h-3.5" />
-                <span>Criação Selecionada CBKC/FCI</span>
+                <Users className="w-3.5 h-3.5" />
+                <span>Sobre Nós</span>
               </span>
-
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
-                Canil <br />
-                <span className="text-[#D97457]">Vale da Kubera</span>
-              </h1>
-
-              <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl">
-                Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
+                O Canil <span className="text-[#D97457]">Vale da Kubera</span>
+              </h2>
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl font-sans">
+                O Canil Vale da Kubera é fruto de uma dedicação absoluta à preservação, criação e aprimoramento da raça Pastor do Cáucaso no Brasil. Nosso trabalho é estruturado a partir de três pilares inegociáveis: saúde de ferro, conformação morfológica perfeita e o autêntico temperamento de guarda territorial.
               </p>
-
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Link
-                  href="/filhotes"
-                  className="bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold px-6 py-3 rounded-xl transition-all text-center text-xs shadow-[0_0_20px_rgba(217,116,87,0.25)] flex items-center justify-center gap-2"
-                >
-                  <span>Ver Nossos Cães</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/sobre"
-                  className="bg-[#1A1A1A] border border-[#2A2A2A] text-white hover:bg-gray-900 font-bold px-6 py-3 rounded-xl transition-all text-center text-xs"
-                >
-                  Conheça Nosso Trabalho
-                </Link>
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-2xl font-sans">
+                Buscamos sempre unir a nobreza e rusticidade do padrão clássico europeu às necessidades de proteção e companheirismo das famílias brasileiras. Nossos cães são membros da nossa família e guardiões de nossa propriedade.
+              </p>
+            </div>
+            <div className="lg:col-span-5 relative h-72 sm:h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+              <img
+                src="/dogs/canil_1.jpg"
+                alt="Estrutura Canil Vale da Kubera"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-[#2A2A2A]">
+                <p className="text-xs text-[#D97457] font-bold">10.000m² de Área Verde</p>
+                <p className="text-[10px] text-gray-400">Estrutura projetada para o bem-estar animal</p>
               </div>
             </div>
           </div>
 
-          {/* Interactive Scroll Indicator at the bottom when text is hidden */}
-          {scrollProgress < 0.7 && (
-            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs z-30 select-none animate-bounce">
-              <span>Role para reproduzir o vídeo</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
+          {/* Cards dos Pilares */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#141414] border border-[#2A2A2A] p-8 rounded-2xl space-y-4 hover:border-[#D97457]/30 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-[#D97457]/10 border border-[#D97457]/20 flex items-center justify-center text-[#D97457] group-hover:scale-110 transition-transform">
+                <MapPin className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-white">O Lugar</h3>
+              <p className="text-gray-400 text-xs leading-relaxed font-sans">
+                Localizado em Itatiba - SP, o canil conta com uma chácara verde de mais de 10.000m² totalmente estruturada, com piquetes espaçosos, área de solário e maternidade climatizada, proporcionando espaço de sobra para exercícios e sociabilidade.
+              </p>
             </div>
-          )}
+
+            <div className="bg-[#141414] border border-[#2A2A2A] p-8 rounded-2xl space-y-4 hover:border-[#D97457]/30 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-[#D97457]/10 border border-[#D97457]/20 flex items-center justify-center text-[#D97457] group-hover:scale-110 transition-transform">
+                <Shield className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-white">Criação &amp; Cães</h3>
+              <p className="text-gray-400 text-xs leading-relaxed font-sans">
+                Trabalhamos com matrizes e padreadores importados das linhagens europeias mais renomadas (Rússia, Ucrânia, Romênia e Espanha). Todos os nossos cães possuem controle radiográfico rígido de quadril (HD) e cotovelos livre de displasia.
+              </p>
+            </div>
+
+            <div className="bg-[#141414] border border-[#2A2A2A] p-8 rounded-2xl space-y-4 hover:border-[#D97457]/30 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-[#D97457]/10 border border-[#D97457]/20 flex items-center justify-center text-[#D97457] group-hover:scale-110 transition-transform">
+                <Award className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-white">A História</h3>
+              <p className="text-gray-400 text-xs leading-relaxed font-sans">
+                Acumulamos mais de 8 anos de estudos cinófilos e prática com a raça. Fomos pioneiros na busca pelo equilíbrio perfeito: produzir cães aptos para as exigentes pistas de exposição sem perder a coragem territorial inerente ao Pastor do Cáucaso.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Available Puppies & Dogs Section */}
-      <section className="py-20 bg-[#121212]/50 border-b border-[#2A2A2A]">
+      {/* 3. Seção Agenda de Visita */}
+      <section className="py-20 bg-[#121212]/30 border-b border-[#2A2A2A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Visitas Presenciais</span>
+            </span>
+            <h2 className="text-3xl font-extrabold text-white">Agende sua Visita</h2>
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Venha conhecer de perto nossa estrutura de 10.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto bg-[#161616] border border-[#2A2A2A] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+            {/* Background glowing light */}
+            <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#D97457]/5 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+              {/* Disponibilidade Info */}
+              <div className="md:col-span-5 space-y-6">
+                <div className="space-y-2">
+                  <h4 className="text-base font-bold text-white">Disponibilidade</h4>
+                  <p className="text-xs text-gray-400 font-sans">Atendimento personalizado com os criadores.</p>
+                </div>
+
+                <div className="space-y-4 font-sans text-xs">
+                  <div className="flex items-center gap-3 text-gray-300">
+                    <div className="w-8 h-8 rounded-lg bg-[#D97457]/10 flex items-center justify-center text-[#D97457] shrink-0">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">Segunda a Sexta-feira</p>
+                      <p className="text-gray-500 text-[10px]">Dias de visitação</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-gray-300">
+                    <div className="w-8 h-8 rounded-lg bg-[#D97457]/10 flex items-center justify-center text-[#D97457] shrink-0">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">10:00 às 18:00</p>
+                      <p className="text-gray-500 text-[10px]">Horários disponíveis</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl text-[10px] text-gray-400 font-sans leading-relaxed">
+                  <strong>Aviso Importante:</strong> Para segurança do canil e bem-estar dos cães, não realizamos visitas sem agendamento prévio.
+                </div>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleScheduleSubmit} className="md:col-span-7 space-y-4">
+                <div className="space-y-1.5">
+                  <label htmlFor="visitor-name" className="text-xs text-gray-400 font-semibold block">Nome Completo</label>
+                  <input
+                    id="visitor-name"
+                    type="text"
+                    required
+                    placeholder="Seu nome"
+                    value={visitorName}
+                    onChange={(e) => setVisitorName(e.target.value)}
+                    className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#D97457] transition-all font-sans"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label htmlFor="visit-date" className="text-xs text-gray-400 font-semibold block">Data da Visita</label>
+                    <input
+                      id="visit-date"
+                      type="date"
+                      required
+                      value={visitDate}
+                      onChange={handleDateChange}
+                      className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#D97457] transition-all font-sans"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="visit-time" className="text-xs text-gray-400 font-semibold block">Horário</label>
+                    <select
+                      id="visit-time"
+                      value={visitTime}
+                      onChange={(e) => setVisitTime(e.target.value)}
+                      className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#D97457] transition-all font-sans"
+                    >
+                      <option value="10:00">10:00</option>
+                      <option value="11:00">11:00</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="14:00">14:00</option>
+                      <option value="15:00">15:00</option>
+                      <option value="16:00">16:00</option>
+                      <option value="17:00">17:00</option>
+                      <option value="18:00">18:00</option>
+                    </select>
+                  </div>
+                </div>
+
+                {visitError && (
+                  <p className="text-xs text-red-500 font-semibold mt-1 font-sans">{visitError}</p>
+                )}
+
+                <button
+                  type="submit"
+                  className="w-full bg-[#D97457] hover:bg-[#C25F43] text-[#0F0F0F] font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-[0_0_20px_rgba(217,116,87,0.25)]"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Solicitar Agendamento via WhatsApp</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Seção dos Cães (Separada por Abas: Machos e Fêmeas) */}
+      <section id="caes" className="py-20 bg-[#121212]/50 border-b border-[#2A2A2A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-2">
-              <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Cães &amp; Ninhadas</span>
+              <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Plantel Canino</span>
               <h2 className="text-3xl font-extrabold">Nossos Cães</h2>
-              <p className="text-gray-400 text-xs max-w-lg leading-relaxed">
-                Conheça nossos reprodutores importados e ninhadas selecionadas de Pastor do Cáucaso.
+              <p className="text-gray-400 text-xs max-w-lg leading-relaxed font-sans">
+                Conheça os exemplares importados e matrizes selecionadas de Pastor do Cáucaso do nosso canil.
               </p>
             </div>
-            <Link
-              href="/filhotes"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D97457] hover:underline"
-            >
-              <span>Ver todos ({filhotes.length})</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            
+            {/* Genders tabs selector */}
+            <div className="flex items-center gap-3 bg-[#1A1A1A] p-1.5 rounded-xl border border-[#2A2A2A] self-start md:self-end">
+              <button
+                onClick={() => setActiveDogGender("fêmea")}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  activeDogGender === "fêmea"
+                    ? "bg-[#D97457] text-[#0F0F0F]"
+                    : "text-gray-400 hover:text-white"
+                }`}
+              >
+                Fêmeas (Matrizes)
+              </button>
+              <button
+                onClick={() => setActiveDogGender("macho")}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  activeDogGender === "macho"
+                    ? "bg-[#D97457] text-[#0F0F0F]"
+                    : "text-gray-400 hover:text-white"
+                }`}
+              >
+                Machos (Padreadores)
+              </button>
+            </div>
           </div>
 
-          {homePuppies.length === 0 ? (
-            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-10 text-center text-gray-400 text-xs">
-              Nenhum cão ou filhote cadastrado no momento.
+          {filteredDogs.length === 0 ? (
+            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-10 text-center text-gray-400 text-xs font-sans">
+              Nenhum cão ou filhote disponível nesta categoria no momento.
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {homePuppies.map((puppy) => (
-                <DogCard key={puppy.id} dog={puppy} />
+              {filteredDogs.map((dog) => (
+                <DogCard key={dog.id} dog={dog} />
               ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Breed Info & Social Media Section (Interactive Slider) */}
+      {/* 5. A Raça & Criação (Existing Slider section) */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2">
@@ -307,7 +488,7 @@ export default function LandingPageClient() {
               Padrão de Exposição <br />
               <span className="text-[#D97457]">com Funcionalidade</span>
             </h2>
-            <p className="text-gray-400 text-xs max-w-2xl leading-relaxed">
+            <p className="text-gray-400 text-xs max-w-2xl leading-relaxed font-sans">
               No Canil Vale da Kubera, unimos a beleza e o rigor morfológico exigidos pelas exposições internacionais ao instinto de proteção nato do Pastor do Cáucaso. Deslize para o lado ou selecione abaixo para ver os pilares de cada perfil.
             </p>
           </div>
@@ -346,7 +527,7 @@ export default function LandingPageClient() {
           className="flex overflow-x-auto snap-x snap-mandatory gap-6 no-scrollbar scroll-smooth pb-4"
         >
           {/* Card 1: Exposição */}
-          <div className="w-full flex-shrink-0 snap-start grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141414] border border-[#2A2A2A] p-6 sm:p-10 rounded-3xl shadow-xl">
+          <div className="w-full flex-shrink-0 snap-start grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141414] border border-[#2A2A2A] p-6 sm:p-10 rounded-3xl shadow-xl font-sans">
             {/* Text column */}
             <div className="lg:col-span-7 space-y-5 order-2 lg:order-1">
               <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-[10px] font-bold uppercase tracking-wider">
@@ -359,7 +540,7 @@ export default function LandingPageClient() {
               <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                 Nossos exemplares de exposição são criados com base nas diretrizes oficiais da FCI/CBKC. Focamos no aprimoramento morfológico para produzir cães saudáveis, robustos e com conformação perfeita.
               </p>
-              <ul className="space-y-3.5 font-sans">
+              <ul className="space-y-3.5">
                 <li className="flex items-start gap-2.5 text-xs text-gray-300">
                   <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
                   <div>
@@ -393,7 +574,7 @@ export default function LandingPageClient() {
           </div>
 
           {/* Card 2: Guarda */}
-          <div className="w-full flex-shrink-0 snap-start grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141414] border border-[#2A2A2A] p-6 sm:p-10 rounded-3xl shadow-xl">
+          <div className="w-full flex-shrink-0 snap-start grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141414] border border-[#2A2A2A] p-6 sm:p-10 rounded-3xl shadow-xl font-sans">
             {/* Text column */}
             <div className="lg:col-span-7 space-y-5 order-2 lg:order-1">
               <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-[10px] font-bold uppercase tracking-wider">
@@ -406,7 +587,7 @@ export default function LandingPageClient() {
               <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                 O Pastor do Cáucaso possui um instinto de defesa nativo da raça. Ele atua de maneira vigilante e altamente territorial, sendo uma proteção real para fazendas, sítios e residências.
               </p>
-              <ul className="space-y-3.5 font-sans">
+              <ul className="space-y-3.5">
                 <li className="flex items-start gap-2.5 text-xs text-gray-300">
                   <Check className="w-4 h-4 text-[#D97457] shrink-0 mt-0.5" />
                   <div>
@@ -457,53 +638,16 @@ export default function LandingPageClient() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-[#121212]/50 border-t border-b border-[#2A2A2A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center space-y-2 max-w-lg mx-auto">
-            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Depoimentos</span>
-            <h2 className="text-3xl font-extrabold">O que dizem os tutores</h2>
-            <p className="text-gray-400 text-xs leading-relaxed">
-              Confiança e transparência que resultam em parcerias duradouras com nossos clientes.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((test, index) => (
-              <div
-                key={index}
-                className="bg-[#1A1A1A] border border-[#2A2A2A] p-6 rounded-2xl space-y-4 hover:border-gray-800 transition-colors shadow-lg relative flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex gap-1 text-[#D97457]">
-                    {[...Array(test.stars)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-[#D97457] fill-[#D97457]" />
-                    ))}
-                  </div>
-                  <p className="text-gray-300 text-xs italic leading-relaxed font-sans">&ldquo;{test.text}&rdquo;</p>
-                </div>
-                <div className="flex justify-between items-center pt-3 border-t border-[#2A2A2A]/50">
-                  <div className="flex flex-col">
-                    <span className="text-white text-xs font-bold">{test.name}</span>
-                    <span className="text-gray-500 text-[10px]">{test.location}</span>
-                  </div>
-                  <span className="text-xs text-[#D97457] font-semibold">{test.dog}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Location / Map */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* 6. Location / Map Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center border-t border-[#2A2A2A]">
         <div className="space-y-6">
           <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Localização</span>
           <h2 className="text-3xl font-extrabold">Venha nos visitar em Itatiba - SP</h2>
-          <p className="text-gray-400 text-xs leading-relaxed">
+          <p className="text-gray-400 text-xs leading-relaxed font-sans">
             Nossas instalações ficam em uma chácara verde estruturada especificamente para o bem-estar e criação da raça Pastor do Cáucaso.
           </p>
 
-          <div className="space-y-3.5 text-xs text-gray-300">
+          <div className="space-y-3.5 text-xs text-gray-300 font-sans">
             <div className="flex items-start gap-2.5">
               <MapPin className="w-5 h-5 text-[#D97457] shrink-0 mt-0.5" />
               <div>

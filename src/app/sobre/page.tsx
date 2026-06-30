@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import SocialFloatingButtons from "@/components/SocialFloatingButtons";
-import { Shield, MapPin, Award, CheckCircle } from "lucide-react";
+import { Shield, MapPin, Award, CheckCircle, Star } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Quem Somos | Canil Pastor do Cáucaso Vale da Kubera",
@@ -131,6 +131,59 @@ export default function SobrePage() {
                   Um cão de exposição é avaliado por especialistas quanto à conformidade com o padrão oficial da raça: estrutura, peso, pelagem, dentição, formato de cabeça, angulações e movimentação. No Canil Vale da Kubera, esse é o ponto de partida de toda a nossa seleção — só avançamos com exemplares que comprovam saúde, vitalidade e fidelidade ao padrão do Pastor do Cáucaso, características que se traduzem diretamente em cães mais equilibrados também como guardiões da família.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials (Migrated from Home) */}
+        <section className="py-20 bg-[#121212]/50 border border-[#2A2A2A] rounded-2xl">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="text-center space-y-2 max-w-lg mx-auto">
+              <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Depoimentos</span>
+              <h2 className="text-3xl font-extrabold text-white">O que dizem os tutores</h2>
+              <p className="text-gray-400 text-xs leading-relaxed">
+                Confiança e transparência que resultam em parcerias duradouras com nossos clientes.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {[
+                {
+                  name: "Rodrigo Almeida",
+                  location: "São Paulo - SP",
+                  dog: "Thor (Macho, 2 anos)",
+                  text: "Excelente cão de guarda. O Thor é extremamente dócil com as minhas filhas, mas um guardião implacável na propriedade. O suporte pós-venda do canil foi nota 10.",
+                  stars: 5,
+                },
+                {
+                  name: "Mariana Costa",
+                  location: "Curitiba - PR",
+                  dog: "Athena (Fêmea, 1 ano e meio)",
+                  text: "Fêmea atenta, muito equilibrada e rústica. Veio com pedigree CBKC completo e laudos negativos de displasia dos pais. Indico o canil de olhos fechados.",
+                  stars: 5,
+                },
+              ].map((test, index) => (
+                <div
+                  key={index}
+                  className="bg-[#1A1A1A] border border-[#2A2A2A] p-6 rounded-2xl space-y-4 hover:border-gray-800 transition-colors shadow-lg relative flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="flex gap-1 text-[#D97457]">
+                      {[...Array(test.stars)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-[#D97457] fill-[#D97457]" />
+                      ))}
+                    </div>
+                    <p className="text-gray-300 text-xs italic leading-relaxed font-sans">&ldquo;{test.text}&rdquo;</p>
+                  </div>
+                  <div className="flex justify-between items-center pt-3 border-t border-[#2A2A2A]/50">
+                    <div className="flex flex-col">
+                      <span className="text-white text-xs font-bold">{test.name}</span>
+                      <span className="text-gray-500 text-[10px]">{test.location}</span>
+                    </div>
+                    <span className="text-xs text-[#D97457] font-semibold">{test.dog}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
