@@ -24,11 +24,14 @@ export default function PublicNavbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#D97457]/10 border border-[#D97457]/20 rounded-full flex items-center justify-center text-[#D97457]">
-              <Shield className="w-5 h-5" />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Logo Vale da Kubera" 
+              className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm"
+              style={{ filter: "invert(1)" }}
+            />
             <div>
-              <span className="font-bold tracking-wider text-xl block leading-none">VALE DA KUBERA</span>
+              <span className="font-bold tracking-wider text-xl block leading-none font-comfortaa">VALE DA KUBERA</span>
               <span className="text-[9px] tracking-widest text-[#D97457] font-semibold uppercase">Canil de Pastor do Cáucaso</span>
             </div>
           </Link>
@@ -50,23 +53,10 @@ export default function PublicNavbar() {
             >
               Painel Admin
             </Link>
-            {/* Logo image in top right */}
-            <div className="border-l border-gray-700/30 pl-4 h-10 flex items-center">
-              <img 
-                src="/logo.png" 
-                alt="Logo Canil Vale da Kubera" 
-                className="w-10 h-10 object-contain rounded-lg shadow-md border border-gray-800" 
-              />
-            </div>
           </div>
 
-          {/* Mobile Menu Button + Logo */}
-          <div className="lg:hidden flex items-center gap-3">
-            <img 
-              src="/logo.png" 
-              alt="Logo Canil Vale da Kubera" 
-              className="w-9 h-9 object-contain rounded-lg border border-gray-800" 
-            />
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-400 hover:text-white transition-colors focus:outline-none"
