@@ -318,38 +318,39 @@ export default function LandingPageClient() {
         }
       `}} />
 
-      <section className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden border-b" style={{ borderColor: borderHex }}>
+      <section className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden border-b bg-black" style={{ borderColor: borderHex }}>
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover object-center opacity-40"
-            style={{ filter: "brightness(1.05) contrast(0.95)" }}
+            className="w-full h-full object-cover object-center opacity-75"
+            style={{ filter: "brightness(0.9) contrast(1.1)" }}
             poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
           >
             <source src="/banner-hero.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to right, ${navbarBg}FA, ${navbarBg}A0, transparent)` }} />
-          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to top, ${navbarBg}, transparent)` }} />
+          {/* Subtle dark gradient overlay to keep text highly readable on top of video */}
+          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4), transparent)` }} />
+          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent)` }} />
         </div>
         
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none z-10" style={{ backgroundColor: `${accentHex}0F` }} />
+        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none z-10" style={{ backgroundColor: `${accentHex}20` }} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full h-full flex items-center">
           <div className="max-w-2xl space-y-6">
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${t.tagBg} ${t.tagText}`}>
-              <Shield className="w-3.5 h-3.5" />
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/60 border border-white/20 text-white`}>
+              <Shield className="w-3.5 h-3.5 text-white" />
               <span>Criação Selecionada CBKC/FCI</span>
             </span>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none font-comfortaa">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none font-comfortaa text-white">
               Canil <br />
-              <span style={{ color: accentHex }}>Vale da Kubera</span>
+              <span style={{ color: t.accentHex }}>Vale da Kubera</span>
             </h1>
 
-            <p className={`text-sm sm:text-base leading-relaxed max-w-xl font-sans ${t.textMuted}`}>
+            <p className="text-sm sm:text-base leading-relaxed max-w-xl font-sans text-gray-200">
               Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
             </p>
 
@@ -363,8 +364,7 @@ export default function LandingPageClient() {
               </a>
               <Link
                 href="/sobre"
-                className={`border bg-white font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs hover:bg-gray-50`}
-                style={{ borderColor: borderHex, color: textColor }}
+                className="border border-white/20 bg-white/10 text-white hover:bg-white/20 font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs"
               >
                 Conheça Nosso Trabalho
               </Link>
