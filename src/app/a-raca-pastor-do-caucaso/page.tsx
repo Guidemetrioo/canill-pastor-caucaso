@@ -85,17 +85,17 @@ export default function RacaPage() {
           <div className="space-y-2">
             <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Documentário Exclusivo</span>
             <h3 className="text-lg md:text-xl font-bold text-white">
-              Análise de Guarda e Padrão da Raça pelo Cinofilia Digital
+              Padrão de Guarda e Movimentação da Raça
             </h3>
             <p className="text-xs text-gray-400 leading-relaxed">
-              Assista à visita completa do canal <strong>Cinofilia Digital</strong> ao Canil Vale da Kubera. Acompanhe a análise prática da estrutura de cães como Boran (campeão europeu de 100 kg), Afar e Apolo em testes de guarda territorial e ataque.
+              Assista à apresentação detalhada sobre a funcionalidade, o temperamento de guarda territorial e a estrutura física ideal do cão Pastor do Cáucaso.
             </p>
           </div>
           <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-[#2A2A2A] shadow-lg bg-gray-950">
             <iframe
               className="w-full h-full"
-              src="https://www.youtube.com/embed/UgnjXPSdQTY"
-              title="Análise do Pastor do Cáucaso - Cinofilia Digital no Canil Vale da Kubera"
+              src="https://www.youtube.com/embed/LNFTv6pZqEk"
+              title="Apresentação da Raça Pastor do Cáucaso"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
