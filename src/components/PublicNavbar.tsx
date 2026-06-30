@@ -79,6 +79,25 @@ export default function PublicNavbar() {
           color: ${t.accentHex} !important;
         }
 
+        /* Force high contrast light text colors in dark video sections (Hero & Agendar) */
+        #hero-banner p,
+        #hero-banner h1,
+        #hero-banner span:not([style]),
+        #agendar h2,
+        #agendar h4,
+        #agendar label,
+        #agendar p,
+        #agendar span:not([style]),
+        #agendar strong {
+          color: #FFFFFF !important;
+        }
+        #hero-banner p,
+        #agendar p.text-gray-400,
+        #agendar span.text-gray-400,
+        #agendar label.text-gray-300 {
+          color: #D1D5DB !important;
+        }
+
         /* Active Navigation Header custom styling */
         nav {
           background-color: ${t.bgHex}DD !important;

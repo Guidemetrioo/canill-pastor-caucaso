@@ -252,6 +252,7 @@ export default function LandingPageClient() {
       {/* Scroll-pinned Hero Wrapper */}
       <div className="relative h-[145vh] bg-black">
         <section 
+          id="hero-banner"
           className="sticky top-0 w-full h-screen overflow-hidden border-b flex items-center" 
           style={{ borderColor: isHeroScrolled ? borderHex : 'transparent' }}
         >
