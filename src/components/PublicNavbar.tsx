@@ -4,9 +4,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, Shield } from "lucide-react";
+import { useAura } from "@/context/AuraContext";
 
 export default function PublicNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { activeTheme, activeFont, themes } = useAura();
+  const t = themes[activeTheme];
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -20,7 +23,95 @@ export default function PublicNavbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F0F0F]/80 backdrop-blur-md border-b border-[#2A2A2A] text-white">
+    <>
+      {/* Inject Dynamic Theme Styles Globally for all public pages */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Megrim&family=Comfortaa:wght@400;700&display=swap');
+        
+        .font-comfortaa, .font-megrim, h1, h2, h3, h4, h5, h6 {
+          font-family: ${activeFont === 'megrim' ? "'Megrim', cursive" : "'Comfortaa', sans-serif"} !important;
+          letter-spacing: ${activeFont === 'megrim' ? "0.04em" : "normal"};
+        }
+
+        /* Override main dark backgrounds */
+        body, 
+        .min-h-screen, 
+        div.bg-\\[\\#0F0F0F\\] {
+          background-color: ${t.bgHex} !important;
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+          transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* General text contrast */
+        p, li, td, th {
+          color: ${t.textMuted.replace('text-[', '').replace(']', '')} !important;
+        }
+        
+        /* Strong text and headers */
+        strong, span.font-bold, p.font-semibold, div.font-extrabold {
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+        }
+
+        /* Card and container background overrides */
+        div.bg-\\[\\#1A1A1A\\], 
+        section.bg-\\[\\#1A1A1A\\],
+        div.bg-black\\/60,
+        .card-theme {
+          background-color: ${t.cardBgHex} !important;
+          border-color: ${t.borderHex} !important;
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+        }
+
+        /* Border overrides */
+        .border-\\[\\#2A2A2A\\], 
+        div.border-\\[\\#2A2A2A\\],
+        .border-gray-800 {
+          border-color: ${t.borderHex} !important;
+        }
+
+        /* Icon and tag styling */
+        svg {
+          color: ${t.accentHex} !important;
+        }
+        span.bg-\\[\\#D97457\\]\\/10,
+        span.text-\\[\\#D97457\\] {
+          background-color: ${t.tagBg.replace('bg-[', '').replace(']', '')} !important;
+          color: ${t.accentHex} !important;
+        }
+
+        /* Active Navigation Header custom styling */
+        nav {
+          background-color: ${t.bgHex}DD !important;
+          border-color: ${t.borderHex} !important;
+          backdrop-filter: blur(12px) !important;
+        }
+        nav span, nav a, nav button {
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+        }
+        nav a:hover {
+          color: ${t.accentHex} !important;
+        }
+
+        /* Footer styling */
+        footer {
+          background-color: ${activeTheme === 'eco-rustic' ? '#FAF8F5' : activeTheme === 'terracota-warmth' ? '#F4F5F2' : '#F3F5F2'} !important;
+          border-color: ${t.borderHex} !important;
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+        }
+        footer h3, footer h4, footer span, footer p, footer a {
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+        }
+        footer a:hover {
+          color: ${t.accentHex} !important;
+        }
+
+        /* Whatsapp theme button */
+        .whatsapp-theme-button {
+          background-color: ${t.secondaryAccentHex} !important;
+        }
+      `}} />
+
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F0F0F]/80 backdrop-blur-md border-b border-[#2A2A2A] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -91,5 +182,6 @@ export default function PublicNavbar() {
         </div>
       )}
     </nav>
+    </>
   );
 }

@@ -3,6 +3,96 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 
+export type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
+
+export interface ThemeConfig {
+  name: string;
+  bg: string;
+  cardBg: string;
+  cardBorder: string;
+  primaryAccent: string;
+  primaryAccentHover: string;
+  primaryAccentText: string;
+  secondaryAccent: string;
+  textMain: string;
+  textMuted: string;
+  tagBg: string;
+  tagText: string;
+  border: string;
+  bgForm: string;
+  accentHex: string;
+  secondaryAccentHex: string;
+  bgHex: string;
+  borderHex: string;
+  cardBgHex: string;
+}
+
+export const themesConfig: Record<ThemeName, ThemeConfig> = {
+  "eco-rustic": {
+    name: "Eco-Rustic (Verde + Terracota)",
+    bg: "bg-[#F4F5F2]",
+    cardBg: "bg-[#FFFFFF]",
+    cardBorder: "border-[#E5E7EB] hover:border-[#0F6B2E]/30",
+    primaryAccent: "bg-[#0F6B2E] text-white hover:bg-[#0D5B27]",
+    primaryAccentHover: "hover:bg-[#0D5B27]",
+    primaryAccentText: "text-[#0F6B2E]",
+    secondaryAccent: "bg-[#B24F18] text-white hover:bg-[#964213]",
+    textMain: "text-[#222521]",
+    textMuted: "text-[#555E54]",
+    tagBg: "bg-[#0F6B2E]/10 border-[#0F6B2E]/20",
+    tagText: "text-[#0F6B2E]",
+    border: "border-[#E2E8F0]",
+    bgForm: "bg-[#F9FAFB]",
+    accentHex: "#0F6B2E",
+    secondaryAccentHex: "#B24F18",
+    bgHex: "#F4F5F2",
+    borderHex: "#E2E8F0",
+    cardBgHex: "#FFFFFF"
+  },
+  "terracota-warmth": {
+    name: "Terracota Warmth (Terracota + Verde)",
+    bg: "bg-[#FAF8F5]",
+    cardBg: "bg-[#FFFFFF]",
+    cardBorder: "border-[#F3EFEA] hover:border-[#A84415]/30",
+    primaryAccent: "bg-[#A84415] text-white hover:bg-[#8D3810]",
+    primaryAccentHover: "hover:bg-[#8D3810]",
+    primaryAccentText: "text-[#A84415]",
+    secondaryAccent: "bg-[#135E2D] text-white hover:bg-[#0F4B23]",
+    textMain: "text-[#26211E]",
+    textMuted: "text-[#665B54]",
+    tagBg: "bg-[#A84415]/10 border-[#A84415]/20",
+    tagText: "text-[#A84415]",
+    border: "border-[#EFEBE4]",
+    bgForm: "bg-[#FAF9F7]",
+    accentHex: "#A84415",
+    secondaryAccentHex: "#135E2D",
+    bgHex: "#FAF8F5",
+    borderHex: "#EFEBE4",
+    cardBgHex: "#FFFFFF"
+  },
+  "minimalista-organica": {
+    name: "Minimalista Orgânica",
+    bg: "bg-[#ECEFEA]",
+    cardBg: "bg-[#FFFFFF]",
+    cardBorder: "border-[#DDE2DB] hover:border-[#0E612B]/30",
+    primaryAccent: "bg-[#0E612B] text-white hover:bg-[#0B4D22]",
+    primaryAccentHover: "hover:bg-[#0B4D22]",
+    primaryAccentText: "text-[#0E612B]",
+    secondaryAccent: "bg-[#B04A1B] text-white hover:bg-[#913B14]",
+    textMain: "text-[#1C1C1C]",
+    textMuted: "text-[#555E54]",
+    tagBg: "bg-[#0E612B]/10 border-[#0E612B]/20",
+    tagText: "text-[#0E612B]",
+    border: "border-[#DDE2DB]",
+    bgForm: "bg-[#F3F5F2]",
+    accentHex: "#0E612B",
+    secondaryAccentHex: "#B04A1B",
+    bgHex: "#ECEFEA",
+    borderHex: "#DDE2DB",
+    cardBgHex: "#FFFFFF"
+  }
+};
+
 // Interfaces
 export interface Client {
   id: number;
@@ -191,6 +281,13 @@ interface AuraContextProps {
   notifications: Notification[];
   whatsappConfig: WhatsAppConfig | null;
 
+  // Dynamic Theme & Font Selection
+  activeTheme: ThemeName;
+  setActiveTheme: (theme: ThemeName) => void;
+  activeFont: "megrim" | "comfortaa";
+  setActiveFont: (font: "megrim" | "comfortaa") => void;
+  themes: Record<ThemeName, ThemeConfig>;
+
   // Actions
   addClient: (client: Omit<Client, "id">) => Promise<number>;
   updateClient: (id: number, data: Partial<Client>) => Promise<void>;
@@ -239,6 +336,10 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [whatsappConfig, setWhatsappConfig] = useState<WhatsAppConfig | null>(null);
+
+  // Dynamic Theme & Font Selection States
+  const [activeTheme, setActiveTheme] = useState<ThemeName>("eco-rustic");
+  const [activeFont, setActiveFont] = useState<"megrim" | "comfortaa">("megrim");
 
   const isSupabaseConfigured = () => {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -838,6 +939,11 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         blogPosts,
         notifications,
         whatsappConfig,
+        activeTheme,
+        setActiveTheme,
+        activeFont,
+        setActiveFont,
+        themes: themesConfig,
         addClient,
         updateClient,
         addLead,

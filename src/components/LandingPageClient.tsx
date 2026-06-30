@@ -11,16 +11,14 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Messag
 type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
 
 export default function LandingPageClient() {
-  const { filhotes } = useAura();
+  const { filhotes, activeTheme, setActiveTheme, activeFont, setActiveFont, themes } = useAura();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const agendaWrapperRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState<"exposicao" | "guarda">("exposicao");
   const [activeDogGender, setActiveDogGender] = useState<"fêmea" | "macho">("fêmea");
 
-  // Dynamic Theme & Font Selection State
-  const [activeTheme, setActiveTheme] = useState<ThemeName>("eco-rustic");
-  const [activeFont, setActiveFont] = useState<"megrim" | "comfortaa">("megrim");
+  // Dynamic Theme Selector open state
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
 
   // Booking Form State
@@ -33,92 +31,6 @@ export default function LandingPageClient() {
   // Dynamic Scroll & Animation State
   const [scrollY, setScrollY] = useState(0);
   const [agendaScrollProgress, setAgendaScrollProgress] = useState(0);
-
-  const themes: Record<ThemeName, {
-    name: string;
-    bg: string;
-    cardBg: string;
-    cardBorder: string;
-    primaryAccent: string;
-    primaryAccentHover: string;
-    primaryAccentText: string;
-    secondaryAccent: string;
-    textMain: string;
-    textMuted: string;
-    tagBg: string;
-    tagText: string;
-    border: string;
-    bgForm: string;
-    accentHex: string;
-    secondaryAccentHex: string;
-    bgHex: string;
-    borderHex: string;
-    cardBgHex: string;
-  }> = {
-    "eco-rustic": {
-      name: "Eco-Rustic (Verde + Terracota)",
-      bg: "bg-[#F4F5F2]",
-      cardBg: "bg-[#FFFFFF]",
-      cardBorder: "border-[#E5E7EB] hover:border-[#0F6B2E]/30",
-      primaryAccent: "bg-[#0F6B2E] text-white hover:bg-[#0D5B27]",
-      primaryAccentHover: "hover:bg-[#0D5B27]",
-      primaryAccentText: "text-[#0F6B2E]",
-      secondaryAccent: "bg-[#B24F18] text-white hover:bg-[#964213]",
-      textMain: "text-[#222521]",
-      textMuted: "text-[#555E54]",
-      tagBg: "bg-[#0F6B2E]/10 border-[#0F6B2E]/20",
-      tagText: "text-[#0F6B2E]",
-      border: "border-[#E2E8F0]",
-      bgForm: "bg-[#F9FAFB]",
-      accentHex: "#0F6B2E",
-      secondaryAccentHex: "#B24F18",
-      bgHex: "#F4F5F2",
-      borderHex: "#E2E8F0",
-      cardBgHex: "#FFFFFF"
-    },
-    "terracota-warmth": {
-      name: "Terracota Warmth (Terracota + Verde)",
-      bg: "bg-[#FAF8F5]",
-      cardBg: "bg-[#FFFFFF]",
-      cardBorder: "border-[#F3EFEA] hover:border-[#A84415]/30",
-      primaryAccent: "bg-[#A84415] text-white hover:bg-[#8D3810]",
-      primaryAccentHover: "hover:bg-[#8D3810]",
-      primaryAccentText: "text-[#A84415]",
-      secondaryAccent: "bg-[#135E2D] text-white hover:bg-[#0F4B23]",
-      textMain: "text-[#26211E]",
-      textMuted: "text-[#665B54]",
-      tagBg: "bg-[#A84415]/10 border-[#A84415]/20",
-      tagText: "text-[#A84415]",
-      border: "border-[#EFEBE4]",
-      bgForm: "bg-[#FAF9F7]",
-      accentHex: "#A84415",
-      secondaryAccentHex: "#135E2D",
-      bgHex: "#FAF8F5",
-      borderHex: "#EFEBE4",
-      cardBgHex: "#FFFFFF"
-    },
-    "minimalista-organica": {
-      name: "Minimalista Orgânica",
-      bg: "bg-[#ECEFEA]",
-      cardBg: "bg-[#FFFFFF]",
-      cardBorder: "border-[#DDE2DB] hover:border-[#0E612B]/30",
-      primaryAccent: "bg-[#0E612B] text-white hover:bg-[#0B4D22]",
-      primaryAccentHover: "hover:bg-[#0B4D22]",
-      primaryAccentText: "text-[#0E612B]",
-      secondaryAccent: "bg-[#B04A1B] text-white hover:bg-[#913B14]",
-      textMain: "text-[#1C1C1C]",
-      textMuted: "text-[#555E54]",
-      tagBg: "bg-[#0E612B]/10 border-[#0E612B]/20",
-      tagText: "text-[#0E612B]",
-      border: "border-[#D6DDD3]",
-      bgForm: "bg-[#F3F5F2]",
-      accentHex: "#0E612B",
-      secondaryAccentHex: "#B04A1B",
-      bgHex: "#ECEFEA",
-      borderHex: "#D6DDD3",
-      cardBgHex: "#FFFFFF"
-    }
-  };
 
   const t = themes[activeTheme];
 
@@ -336,52 +248,6 @@ export default function LandingPageClient() {
   return (
     <div className={`min-h-screen pt-20 font-sans transition-colors duration-500 ${t.bg} ${t.textMain}`}>
       <PublicNavbar />
-
-      {/* Inject Megrim/Comfortaa Font & Dynamic Overrides for Navbar/Footer */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Megrim&family=Comfortaa:wght@400;700&display=swap');
-        .font-comfortaa, .font-megrim {
-          font-family: ${activeFont === 'megrim' ? "'Megrim', cursive" : "'Comfortaa', sans-serif"} !important;
-          letter-spacing: ${activeFont === 'megrim' ? "0.04em" : "normal"};
-        }
-        nav {
-          background-color: ${currentNavBg} !important;
-          border-color: ${currentNavBorder} !important;
-          transition: background-color 0.3s ease, border-color 0.3s ease !important;
-        }
-        nav span, nav a {
-          color: ${currentNavText} !important;
-          transition: color 0.3s ease !important;
-        }
-        nav a:hover {
-          color: ${isHeroScrolled ? accentHex : '#ffffffcc'} !important;
-        }
-        nav div.w-10 {
-          background-color: ${isHeroScrolled ? `${accentHex}1A` : 'rgba(255, 255, 255, 0.15)'} !important;
-          border-color: ${isHeroScrolled ? `${accentHex}33` : 'rgba(255, 255, 255, 0.25)'} !important;
-          color: ${isHeroScrolled ? accentHex : '#ffffff'} !important;
-          transition: all 0.3s ease !important;
-        }
-        nav button {
-          color: ${currentNavText} !important;
-          transition: color 0.3s ease !important;
-        }
-        footer {
-          background-color: ${footerBg} !important;
-          border-color: ${borderHex} !important;
-          color: ${textColor} !important;
-        }
-        footer h3, footer h4, footer span, footer p, footer a {
-          color: ${textColor} !important;
-        }
-        footer a:hover {
-          color: ${accentHex} !important;
-        }
-        /* Custom styles for whatsapp floating button and detail buttons */
-        .whatsapp-theme-button {
-          background-color: ${secondaryAccentHex} !important;
-        }
-      `}} />
 
       {/* Scroll-pinned Hero Wrapper */}
       <div className="relative h-[145vh] bg-black">
