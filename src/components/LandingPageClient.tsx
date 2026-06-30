@@ -520,70 +520,50 @@ export default function LandingPageClient() {
             <div className="max-w-3xl w-full bg-black/35 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
               <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                {/* Disponibilidade Info */}
-                <div className="md:col-span-5 space-y-6 text-left">
-                  <div className="space-y-2">
-                    <h4 className="text-base font-bold font-comfortaa text-white">Disponibilidade</h4>
-                    <p className="text-xs text-gray-400 font-sans">Atendimento personalizado com os criadores.</p>
+              <div className="space-y-6">
+                {/* Header availability row */}
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 border-b border-white/10 pb-6 text-xs text-gray-200">
+                  <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
+                    <Calendar className="w-4 h-4 text-gray-400" />
+                    <span><strong>Segunda a Sexta-feira</strong> (Visitação)</span>
                   </div>
-
-                  <div className="space-y-4 font-sans text-xs text-gray-200">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
-                        <Calendar className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="font-semibold">Segunda a Sexta-feira</p>
-                        <p className="text-gray-400 text-[10px]">Dias de visitação</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
-                        <Clock className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="font-semibold">10:00 às 18:00</p>
-                        <p className="text-gray-400 text-[10px]">Horários disponíveis</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] text-gray-400 font-sans leading-relaxed">
-                    <strong>Aviso Importante:</strong> Para segurança do canil e bem-estar dos cães, não realizamos visitas sem agendamento prévio.
+                  <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
+                    <Clock className="w-4 h-4 text-gray-400" />
+                    <span><strong>10:00 às 18:00</strong> (Horários)</span>
                   </div>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleScheduleSubmit} className="md:col-span-7 space-y-4 text-left">
-                  <div className="space-y-1.5">
-                    <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
-                    <input
-                      id="visitor-name"
-                      type="text"
-                      required
-                      placeholder="Seu nome"
-                      value={visitorName}
-                      onChange={(e) => setVisitorName(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                    />
+                <form onSubmit={handleScheduleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <div className="space-y-1.5">
+                      <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
+                      <input
+                        id="visitor-name"
+                        type="text"
+                        required
+                        placeholder="Seu nome"
+                        value={visitorName}
+                        onChange={(e) => setVisitorName(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
+                      <input
+                        id="visitor-phone"
+                        type="tel"
+                        required
+                        placeholder="(XX) XXXXX-XXXX"
+                        value={visitorPhone}
+                        onChange={(e) => setVisitorPhone(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
-                    <input
-                      id="visitor-phone"
-                      type="tel"
-                      required
-                      placeholder="(XX) XXXXX-XXXX"
-                      value={visitorPhone}
-                      onChange={(e) => setVisitorPhone(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                     <div className="space-y-1.5">
                       <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
                       <input
@@ -618,12 +598,12 @@ export default function LandingPageClient() {
                   </div>
 
                   {visitError && (
-                    <p className="text-xs text-red-500 font-semibold mt-1 font-sans">{visitError}</p>
+                    <p className="text-xs text-red-500 font-semibold mt-1 text-left font-sans">{visitError}</p>
                   )}
 
                   <button
                     type="submit"
-                    className={`w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg ${t.secondaryAccent}`}
+                    className={`w-full md:w-auto md:px-8 font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mx-auto mt-4 shadow-lg ${t.secondaryAccent}`}
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>Solicitar Agendamento via WhatsApp</span>
