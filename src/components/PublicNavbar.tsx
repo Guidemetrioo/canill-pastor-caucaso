@@ -50,10 +50,23 @@ export default function PublicNavbar() {
             >
               Painel Admin
             </Link>
+            {/* Logo image in top right */}
+            <div className="border-l border-gray-700/30 pl-4 h-10 flex items-center">
+              <img 
+                src="/logo.png" 
+                alt="Logo Canil Vale da Kubera" 
+                className="w-10 h-10 object-contain rounded-lg shadow-md border border-gray-800" 
+              />
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
+          {/* Mobile Menu Button + Logo */}
+          <div className="lg:hidden flex items-center gap-3">
+            <img 
+              src="/logo.png" 
+              alt="Logo Canil Vale da Kubera" 
+              className="w-9 h-9 object-contain rounded-lg border border-gray-800" 
+            />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-400 hover:text-white transition-colors focus:outline-none"
