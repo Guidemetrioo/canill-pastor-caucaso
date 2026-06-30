@@ -373,10 +373,15 @@ export default function LandingPageClient() {
               onClick={() => setAboutTab("lugar")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "lugar"
-                  ? `${t.primaryAccent} shadow-lg scale-102`
+                  ? (isMobile ? "shadow-lg scale-102 text-white" : `${t.primaryAccent} shadow-lg scale-102`)
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
               }`}
-              style={{ borderColor: aboutTab === "lugar" ? "transparent" : borderHex }}
+              style={{ 
+                background: (aboutTab === "lugar" && isMobile)
+                  ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})`
+                  : undefined,
+                borderColor: aboutTab === "lugar" ? "transparent" : borderHex 
+              }}
             >
               <MapPin className="w-4 h-4" />
               <span>O Lugar</span>
@@ -385,10 +390,15 @@ export default function LandingPageClient() {
               onClick={() => setAboutTab("criacao")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "criacao"
-                  ? `${t.primaryAccent} shadow-lg scale-102`
+                  ? (isMobile ? "shadow-lg scale-102 text-white" : `${t.primaryAccent} shadow-lg scale-102`)
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
               }`}
-              style={{ borderColor: aboutTab === "criacao" ? "transparent" : borderHex }}
+              style={{ 
+                background: (aboutTab === "criacao" && isMobile)
+                  ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})`
+                  : undefined,
+                borderColor: aboutTab === "criacao" ? "transparent" : borderHex 
+              }}
             >
               <Shield className="w-4 h-4" />
               <span>Criação &amp; Cães</span>
@@ -397,10 +407,15 @@ export default function LandingPageClient() {
               onClick={() => setAboutTab("historia")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "historia"
-                  ? `${t.primaryAccent} shadow-lg scale-102`
+                  ? (isMobile ? "shadow-lg scale-102 text-white" : `${t.primaryAccent} shadow-lg scale-102`)
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
               }`}
-              style={{ borderColor: aboutTab === "historia" ? "transparent" : borderHex }}
+              style={{ 
+                background: (aboutTab === "historia" && isMobile)
+                  ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})`
+                  : undefined,
+                borderColor: aboutTab === "historia" ? "transparent" : borderHex 
+              }}
             >
               <Award className="w-4 h-4" />
               <span>A História</span>
