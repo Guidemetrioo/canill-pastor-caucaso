@@ -110,7 +110,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           {/* Image */}
-          <div className="relative h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] bg-gray-950">
+          <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] bg-gray-950">
             <img
               src={fallbackPost.image_url || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600"}
               alt={fallbackPost.title}

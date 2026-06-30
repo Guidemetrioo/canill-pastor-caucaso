@@ -51,7 +51,7 @@ export default function AdestramentoPage() {
 
         {/* Pricing/Contract info */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative h-80 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+          <div className="relative h-60 sm:h-80 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
             <img
               src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600"
               alt="Cão em Treinamento"

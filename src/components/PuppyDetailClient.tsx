@@ -71,7 +71,7 @@ export default function PuppyDetailClient({ puppy }: { puppy: Puppy }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Gallery Box */}
             <div className="space-y-4">
-              <div className="relative h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] bg-gray-950">
+              <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] bg-gray-950">
                 <img
                   src={activePhoto || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600"}
                   alt={`Foto de ${puppy.name}`}

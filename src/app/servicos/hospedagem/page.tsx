@@ -82,7 +82,7 @@ export default function HospedagemPage() {
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
-          <div className="relative h-80 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+          <div className="relative h-60 sm:h-80 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
             <img
               src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=600"
               alt="Boxes e Lazer Canino"

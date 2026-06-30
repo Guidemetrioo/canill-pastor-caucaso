@@ -39,7 +39,7 @@ export default function SobrePage() {
               O Canil Vale da Kubera é especializado na criação do Pastor do Cáucaso (Kavkazskaya Ovcharka), com plantel formado por linhagens importadas da Rússia, Ucrânia, Romênia e Espanha. Nosso trabalho é guiado por três pilares: genética de qualidade, estrutura compatível com o padrão da raça e temperamento equilibrado. Selecionamos exemplares com histórico comprovado — incluindo cães premiados em exposições na Europa — para formar uma linhagem brasileira sólida, livre de problemas como displasia e hipotireoidismo, e funcional tanto para exposição quanto para guarda residencial.
             </p>
           </div>
-          <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+          <div className="relative h-64 sm:h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
             <img
               src="/dogs/vasilisia_1.jpg"
               alt="Vasilísia - Fêmea importada da Rússia - Canil Vale da Kubera"

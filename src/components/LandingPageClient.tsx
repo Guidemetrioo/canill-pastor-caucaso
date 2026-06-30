@@ -812,7 +812,7 @@ export default function LandingPageClient() {
           </div>
         </div>
 
-        <div className="h-80 w-full rounded-2xl overflow-hidden shadow-xl border bg-white" style={{ borderColor: borderHex }}>
+        <div className="h-60 sm:h-80 w-full rounded-2xl overflow-hidden shadow-xl border bg-white" style={{ borderColor: borderHex }}>
           <iframe
             title="Mapa Canil Vale da Kubera"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14686.082725893302!2d-46.85244584346001!3d-23.00392931168172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cec205c6d3df37%3A0xb35a09282365a6b5!2sItatiba%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1672322300000!5md2"

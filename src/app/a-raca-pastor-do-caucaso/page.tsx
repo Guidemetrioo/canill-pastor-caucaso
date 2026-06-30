@@ -69,7 +69,7 @@ export default function RacaPage() {
           </p>
         </div>
 
-        <div className="relative h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+        <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
           <img
             src="/dogs/nero_4.jpg"
             alt="Pastor do Cáucaso - Canil Vale da Kubera"
