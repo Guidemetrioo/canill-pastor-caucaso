@@ -17,6 +17,7 @@ export default function LandingPageClient() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState<"exposicao" | "guarda">("exposicao");
   const [activeDogGender, setActiveDogGender] = useState<"fêmea" | "macho">("fêmea");
+  const [aboutTab, setAboutTab] = useState<"lugar" | "criacao" | "historia">("lugar");
 
   // Dynamic Theme Selector open state
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
@@ -366,36 +367,83 @@ export default function LandingPageClient() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className={`border p-8 rounded-2xl space-y-4 transition-all group ${t.cardBg} ${t.cardBorder}`}>
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${t.tagBg} ${t.tagText}`}>
-                <MapPin className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold font-comfortaa">O Lugar</h3>
-              <p className={`text-xs leading-relaxed font-sans ${t.textMuted}`}>
-                Localizado em Itatiba - SP, o canil conta com uma chácara verde de mais de 10.000m² totalmente estruturada, com piquetes espaçosos, área de solário e maternidade climatizada, proporcionando espaço de sobra para exercises e sociabilidade.
-              </p>
-            </div>
+          {/* Tab Selector Buttons */}
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-xl mx-auto border-b pb-6" style={{ borderColor: borderHex }}>
+            <button
+              onClick={() => setAboutTab("lugar")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
+                aboutTab === "lugar"
+                  ? `${t.primaryAccent} shadow-lg scale-102`
+                  : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
+              }`}
+              style={{ borderColor: aboutTab === "lugar" ? "transparent" : borderHex }}
+            >
+              <MapPin className="w-4 h-4" />
+              <span>O Lugar</span>
+            </button>
+            <button
+              onClick={() => setAboutTab("criacao")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
+                aboutTab === "criacao"
+                  ? `${t.primaryAccent} shadow-lg scale-102`
+                  : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
+              }`}
+              style={{ borderColor: aboutTab === "criacao" ? "transparent" : borderHex }}
+            >
+              <Shield className="w-4 h-4" />
+              <span>Criação &amp; Cães</span>
+            </button>
+            <button
+              onClick={() => setAboutTab("historia")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
+                aboutTab === "historia"
+                  ? `${t.primaryAccent} shadow-lg scale-102`
+                  : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
+              }`}
+              style={{ borderColor: aboutTab === "historia" ? "transparent" : borderHex }}
+            >
+              <Award className="w-4 h-4" />
+              <span>A História</span>
+            </button>
+          </div>
 
-            <div className={`border p-8 rounded-2xl space-y-4 transition-all group ${t.cardBg} ${t.cardBorder}`}>
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${t.tagBg} ${t.tagText}`}>
-                <Shield className="w-6 h-6" />
+          {/* Active Tab Content Card */}
+          <div className="max-w-3xl mx-auto">
+            {aboutTab === "lugar" && (
+              <div className={`border p-8 sm:p-10 rounded-3xl space-y-4 transition-all duration-300 shadow-xl border-dashed ${t.cardBg}`} style={{ borderColor: borderHex }}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${t.tagBg} ${t.tagText}`}>
+                  <MapPin className="w-7 h-7" />
+                </div>
+                <h3 className="text-2xl font-bold font-comfortaa">O Lugar</h3>
+                <p className={`text-sm sm:text-base leading-relaxed font-sans ${t.textMuted}`}>
+                  Localizado em Itatiba - SP, o canil conta com uma chácara verde de mais de 10.000m² totalmente estruturada, com piquetes espaçosos, área de solário e maternidade climatizada, proporcionando espaço de sobra para exercises e sociabilidade.
+                </p>
               </div>
-              <h3 className="text-lg font-bold font-comfortaa">Criação &amp; Cães</h3>
-              <p className={`text-xs leading-relaxed font-sans ${t.textMuted}`}>
-                Trabalhamos com matrizes e padreadores importados das linhagens europeias mais renomadas (Rússia, Ucrânia, Romênia e Espanha). Todos os nossos cães possuem controle radiográfico rígido de quadril (HD) e cotovelos livre de displasia.
-              </p>
-            </div>
+            )}
 
-            <div className={`border p-8 rounded-2xl space-y-4 transition-all group ${t.cardBg} ${t.cardBorder}`}>
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${t.tagBg} ${t.tagText}`}>
-                <Award className="w-6 h-6" />
+            {aboutTab === "criacao" && (
+              <div className={`border p-8 sm:p-10 rounded-3xl space-y-4 transition-all duration-300 shadow-xl border-dashed ${t.cardBg}`} style={{ borderColor: borderHex }}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${t.tagBg} ${t.tagText}`}>
+                  <Shield className="w-7 h-7" />
+                </div>
+                <h3 className="text-2xl font-bold font-comfortaa">Criação &amp; Cães</h3>
+                <p className={`text-sm sm:text-base leading-relaxed font-sans ${t.textMuted}`}>
+                  Trabalhamos com matrizes e padreadores importados das linhagens europeias mais renomadas (Rússia, Ucrânia, Romênia e Espanha). Todos os nossos cães possuem controle radiográfico rígido de quadril (HD) e cotovelos livre de displasia.
+                </p>
               </div>
-              <h3 className="text-lg font-bold font-comfortaa">A História</h3>
-              <p className={`text-xs leading-relaxed font-sans ${t.textMuted}`}>
-                Acumulamos mais de 8 anos de estudos cinófilos e prática com a raça. Fomos pioneiros na busca pelo equilíbrio perfeito: produzir cães aptos para as exigentes pistas de exposição sem perder a coragem territorial inerente ao Pastor do Cáucaso.
-              </p>
-            </div>
+            )}
+
+            {aboutTab === "historia" && (
+              <div className={`border p-8 sm:p-10 rounded-3xl space-y-4 transition-all duration-300 shadow-xl border-dashed ${t.cardBg}`} style={{ borderColor: borderHex }}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${t.tagBg} ${t.tagText}`}>
+                  <Award className="w-7 h-7" />
+                </div>
+                <h3 className="text-2xl font-bold font-comfortaa">A História</h3>
+                <p className={`text-sm sm:text-base leading-relaxed font-sans ${t.textMuted}`}>
+                  Acumulamos mais de 8 anos de estudos cinófilos e prática com a raça. Fomos pioneiros na busca pelo equilíbrio perfeito: produzir cães aptos para as exigentes pistas de exposição sem perder a coragem territorial inerente ao Pastor do Cáucaso.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
