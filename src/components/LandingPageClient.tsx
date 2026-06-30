@@ -564,7 +564,7 @@ export default function LandingPageClient() {
                       placeholder="Seu nome"
                       value={visitorName}
                       onChange={(e) => setVisitorName(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
                     />
                   </div>
 
@@ -577,7 +577,7 @@ export default function LandingPageClient() {
                       placeholder="(XX) XXXXX-XXXX"
                       value={visitorPhone}
                       onChange={(e) => setVisitorPhone(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
                     />
                   </div>
 
@@ -589,7 +589,8 @@ export default function LandingPageClient() {
                       required
                       value={visitDate}
                       onChange={handleDateChange}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      style={{ minWidth: 0, width: '100%', boxSizing: 'border-box' }}
                     />
                   </div>
 
@@ -599,7 +600,8 @@ export default function LandingPageClient() {
                       id="visit-time"
                       value={visitTime}
                       onChange={(e) => setVisitTime(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      style={{ minWidth: 0, width: '100%', boxSizing: 'border-box' }}
                     >
                       <option value="10:00">10:00</option>
                       <option value="11:00">11:00</option>
