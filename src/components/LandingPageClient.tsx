@@ -27,6 +27,9 @@ export default function LandingPageClient() {
   const [visitorName, setVisitorName] = useState("");
   const [visitError, setVisitError] = useState("");
 
+  // Dynamic Scroll & Animation State
+  const [scrollY, setScrollY] = useState(0);
+
   const themes: Record<ThemeName, {
     name: string;
     bg: string;
@@ -122,13 +125,38 @@ export default function LandingPageClient() {
   const secondaryAccentHex = t.secondaryAccentHex;
   const borderHex = t.borderHex;
 
+  // Scroll Animation Calculations
+  const scrollRange = 350;
+  const progress = Math.min(Math.max(scrollY / scrollRange, 0), 1);
+  const videoBrightness = 1.05 - (progress * 0.35); // 1.05 to 0.70
+  const videoContrast = 0.95 + (progress * 0.15);   // 0.95 to 1.10
+  const videoOpacity = 0.85 + (progress * 0.15);     // 0.85 to 1.00
+  const overlayOpacity = progress * 0.75;            // 0.00 to 0.75
+  const textTranslateY = (1 - progress) * 150;       // 150px to 0px
+  const textOpacity = progress;                       // 0.00 to 1.00
+
+  // Scroll Navbar Calculations
+  const isHeroScrolled = scrollY > 80;
+  const currentNavBg = isHeroScrolled ? `${navbarBg}EE` : 'transparent';
+  const currentNavBorder = isHeroScrolled ? borderHex : 'transparent';
+  const currentNavText = isHeroScrolled ? textColor : '#ffffff';
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
-    return () => window.removeEventListener("resize", checkMobile);
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const handleTabClick = (tab: "exposicao" | "guarda") => {
@@ -201,6 +229,7 @@ export default function LandingPageClient() {
     window.open(url, "_blank");
   };
 
+  // Static dog profiles — always shown regardless of backend status
   const staticDogs = [
     {
       id: 1,
@@ -255,10 +284,12 @@ export default function LandingPageClient() {
     },
   ];
 
+  // Use context data if loaded, otherwise use static dogs
   const baseDogs = filhotes.filter((f) => f.status === "Disponível").length > 0
     ? filhotes.filter((f) => f.status === "Disponível")
     : staticDogs;
 
+  // Enrich data for known dogs to ensure fields (weight, age) are fully populated
   const allDogs = baseDogs.map(dog => {
     const nameUpper = dog.name.toUpperCase();
     if (nameUpper.includes("VENÛS") || nameUpper.includes("VENUS")) {
@@ -273,34 +304,40 @@ export default function LandingPageClient() {
     return dog;
   });
 
+  // Filter dogs by selected gender tab
   const filteredDogs = allDogs.filter((dog) => dog.gender === activeDogGender);
 
   return (
     <div className={`min-h-screen pt-20 font-sans transition-colors duration-500 ${t.bg} ${t.textMain}`}>
       <PublicNavbar />
 
+      {/* Inject Comfortaa Font & Dynamic Overrides for Navbar/Footer */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
         .font-comfortaa {
           font-family: 'Comfortaa', sans-serif !important;
         }
         nav {
-          background-color: ${navbarBg}EE !important;
-          border-color: ${borderHex} !important;
+          background-color: ${currentNavBg} !important;
+          border-color: ${currentNavBorder} !important;
+          transition: background-color 0.3s ease, border-color 0.3s ease !important;
         }
         nav span, nav a {
-          color: ${textColor} !important;
+          color: ${currentNavText} !important;
+          transition: color 0.3s ease !important;
         }
         nav a:hover {
-          color: ${accentHex} !important;
+          color: ${isHeroScrolled ? accentHex : '#ffffffcc'} !important;
         }
         nav div.w-10 {
-          background-color: ${accentHex}1A !important;
-          border-color: ${accentHex}33 !important;
-          color: ${accentHex} !important;
+          background-color: ${isHeroScrolled ? `${accentHex}1A` : 'rgba(255, 255, 255, 0.15)'} !important;
+          border-color: ${isHeroScrolled ? `${accentHex}33` : 'rgba(255, 255, 255, 0.25)'} !important;
+          color: ${isHeroScrolled ? accentHex : '#ffffff'} !important;
+          transition: all 0.3s ease !important;
         }
         nav button {
-          color: ${textColor} !important;
+          color: ${currentNavText} !important;
+          transition: color 0.3s ease !important;
         }
         footer {
           background-color: ${footerBg} !important;
@@ -313,65 +350,89 @@ export default function LandingPageClient() {
         footer a:hover {
           color: ${accentHex} !important;
         }
+        /* Custom styles for whatsapp floating button and detail buttons */
         .whatsapp-theme-button {
           background-color: ${secondaryAccentHex} !important;
         }
       `}} />
 
-      <section className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden border-b bg-black" style={{ borderColor: borderHex }}>
-        <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover object-center opacity-75"
-            style={{ filter: "brightness(0.9) contrast(1.1)" }}
-            poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+      {/* Scroll-pinned Hero Wrapper */}
+      <div className="relative h-[145vh] bg-black">
+        <section 
+          className="sticky top-0 w-full h-screen overflow-hidden border-b flex items-center" 
+          style={{ borderColor: isHeroScrolled ? borderHex : 'transparent' }}
+        >
+          {/* Background Video */}
+          <div className="absolute inset-0 w-full h-full pointer-events-none z-0 bg-black">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover object-center transition-all duration-75"
+              style={{ 
+                filter: `brightness(${videoBrightness}) contrast(${videoContrast})`,
+                opacity: videoOpacity 
+              }}
+              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+            >
+              <source src="/banner-hero.mp4" type="video/mp4" />
+            </video>
+            {/* Dark overlay: starts transparent (clean video) and gets darker as we scroll */}
+            <div 
+              className="absolute inset-0 z-10 transition-all duration-75" 
+              style={{ background: `linear-gradient(to right, rgba(0, 0, 0, ${overlayOpacity * 1.13}), rgba(0, 0, 0, ${overlayOpacity * 0.5}), transparent)` }} 
+            />
+            <div 
+              className="absolute inset-0 z-10 transition-all duration-75" 
+              style={{ background: `linear-gradient(to top, rgba(0, 0, 0, ${overlayOpacity * 0.9}), transparent)` }} 
+            />
+          </div>
+          
+          <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none z-10" style={{ backgroundColor: `${accentHex}20` }} />
+
+          {/* Text Content: Animated Translate and Opacity */}
+          <div 
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full flex items-center transition-all duration-75"
+            style={{ 
+              transform: `translateY(${textTranslateY}px)`,
+              opacity: textOpacity
+            }}
           >
-            <source src="/banner-hero.mp4" type="video/mp4" />
-          </video>
-          {/* Subtle dark gradient overlay to keep text highly readable on top of video */}
-          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4), transparent)` }} />
-          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent)` }} />
-        </div>
-        
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none z-10" style={{ backgroundColor: `${accentHex}20` }} />
+            <div className="max-w-2xl space-y-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/60 border border-white/20 text-white">
+                <Shield className="w-3.5 h-3.5 text-white" />
+                <span>Criação Selecionada CBKC/FCI</span>
+              </span>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full h-full flex items-center">
-          <div className="max-w-2xl space-y-6">
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/60 border border-white/20 text-white`}>
-              <Shield className="w-3.5 h-3.5 text-white" />
-              <span>Criação Selecionada CBKC/FCI</span>
-            </span>
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight font-comfortaa text-white">
+                Canil <br className="sm:hidden" />
+                <span style={{ color: t.accentHex }}>Vale da Kubera</span>
+              </h1>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none font-comfortaa text-white">
-              Canil <br />
-              <span style={{ color: t.accentHex }}>Vale da Kubera</span>
-            </h1>
+              <p className="text-sm sm:text-base leading-relaxed max-w-xl font-sans text-gray-200">
+                Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
+              </p>
 
-            <p className="text-sm sm:text-base leading-relaxed max-w-xl font-sans text-gray-200">
-              Criação especializada em Pastor do Cáucaso (Kavkazskaya Ovcharka) com padrão de exposição internacional, unindo estrutura premiada e instinto de guarda em um único cão.
-            </p>
-
-            <div className="flex flex-wrap gap-4 pt-2">
-              <a
-                href="#caes"
-                className={`font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg ${t.secondaryAccent}`}
-              >
-                <span>Ver Nossos Cães</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <Link
-                href="/sobre"
-                className="border border-white/20 bg-white/10 text-white hover:bg-white/20 font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs"
-              >
-                Conheça Nosso Trabalho
-              </Link>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <a
+                  href="#caes"
+                  className={`font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg ${t.secondaryAccent}`}
+                >
+                  <span>Ver Nossos Cães</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <Link
+                  href="/sobre"
+                  className="border border-white/20 bg-white/10 text-white hover:bg-white/20 font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs"
+                >
+                  Conheça Nosso Trabalho
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section className="py-20 border-b" style={{ borderColor: borderHex }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
