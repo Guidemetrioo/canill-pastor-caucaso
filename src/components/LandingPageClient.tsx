@@ -28,7 +28,6 @@ export default function LandingPageClient() {
   const bookingVideoRef = useRef<HTMLVideoElement>(null);
 
   // States
-  const [activeDogType, setActiveDogType] = useState<"femeas" | "machos">("femeas");
   const [activeExpoGuarda, setActiveExpoGuarda] = useState<"exposicao" | "guarda">("exposicao");
   const [activeInfoTab, setActiveInfoTab] = useState<"lugar" | "criacao" | "historia" | "disponibilidade">("lugar");
 
@@ -48,12 +47,24 @@ export default function LandingPageClient() {
     }
   }, []);
 
+  // Photo position overrides: photo path → object-position value
+  const photoPositions: Record<string, string> = {
+    "/dogs/burham_1.jpg": "center 20%",
+    "/dogs/orham_3.jpg": "center 30%",
+  };
+
   // Dog Active Photos
   const [activePhotos, setActivePhotos] = useState<Record<number, string>>({
-    1: "/dogs/venus_1.jpg",
-    2: "/dogs/vasilisia_1.jpg",
-    3: "/dogs/nero_4.jpg",
-    4: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+    1: "/dogs/apolo_1.jpg",
+    2: "/dogs/orham_1.jpg",
+    3: "/dogs/putin_1.jpg",
+    4: "/dogs/burham_1.jpg",
+    5: "/dogs/symeon_1.jpg",
+    6: "/dogs/nero_new_4.jpg",
+    7: "/dogs/jara_1.jpg",
+    8: "/dogs/pandora_1.jpg",
+    9: "/dogs/thara_1.jpg",
+    10: "/dogs/vasilisia_new_1.jpg"
   });
 
   const changePhoto = (dogId: number, photo: string) => {
@@ -99,57 +110,118 @@ export default function LandingPageClient() {
     setTimeout(() => setFormSubmitted(false), 5000);
   };
 
-  const femaleDogs = [
+  const allDogs = [
     {
       id: 1,
-      name: "VENÛS",
-      gender: "Fêmea",
-      origin: "Rússia",
-      weight: "70kg",
-      age: "3 anos",
-      notes: "Fêmea importada da Rússia. Estrutura extremamente robusta e excelente temperamento familiar.",
-      avatar_url: "/dogs/venus_1.jpg",
-      photos: ["/dogs/venus_1.jpg", "/dogs/venus_2.jpg", "/dogs/venus_3.jpg"]
+      name: "APOLO",
+      gender: "Macho",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Macho imponente do plantel Vale da Kubera. Excelente conformação e instinto de guarda apurado.",
+      avatar_url: "/dogs/apolo_1.jpg",
+      photos: ["/dogs/apolo_1.jpg", "/dogs/apolo_2.jpg", "/dogs/apolo_3.jpg", "/dogs/apolo_4.jpg", "/dogs/apolo_5.jpg"]
     },
     {
       id: 2,
-      name: "VASILÍSIA",
-      gender: "Fêmea",
-      origin: "Rússia",
-      weight: "68kg",
-      age: "2 anos",
-      notes: "Fêmea robusta importada da Rússia. Temperamento equilibrado e excelente guardiã.",
-      avatar_url: "/dogs/vasilisia_1.jpg",
-      photos: ["/dogs/vasilisia_1.jpg", "/dogs/vasilisia_2.jpg", "/dogs/vasilisia_3.jpg"]
-    }
-  ];
-
-  const maleDogs = [
+      name: "ORHAM",
+      gender: "Macho",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.",
+      avatar_url: "/dogs/orham_1.jpg",
+      photos: ["/dogs/orham_1.jpg", "/dogs/orham_2.jpg", "/dogs/orham_3.jpg", "/dogs/orham_4.jpg"]
+    },
     {
       id: 3,
-      name: "NERO",
+      name: "PUTIN",
       gender: "Macho",
-      origin: "Ucrânia",
-      weight: "40kg (com 4 meses)",
-      age: "Jovem",
-      notes: "Macho importado da Ucrânia. Cão de guarda de altíssimo nível, temperamento explosivo, focado e ossatura extremamente robusta.",
-      avatar_url: "/dogs/nero_4.jpg",
-      photos: ["/dogs/nero_4.jpg", "/dogs/nero_5.jpg", "/dogs/nero_6.jpg", "/dogs/nero_7.jpg", "/dogs/nero_1.jpg", "/dogs/nero_2.jpg"]
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.",
+      avatar_url: "/dogs/putin_1.jpg",
+      photos: ["/dogs/putin_1.jpg", "/dogs/putin_2.jpg", "/dogs/putin_3.jpg", "/dogs/putin_4.jpg"]
     },
     {
       id: 4,
-      name: "SYMION da Kubera",
+      name: "BURHAM",
       gender: "Macho",
-      origin: "Rússia",
-      weight: "100kg",
-      age: "Adulto",
-      notes: "Importado da Rússia (Canil Baraik Azskaz). Gigante de estrutura impressionante e guarda territorial implacável.",
-      avatar_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
-      photos: ["https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"]
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.",
+      avatar_url: "/dogs/burham_1.jpg",
+      photos: ["/dogs/burham_1.jpg", "/dogs/burham_2.jpg", "/dogs/burham_3.jpg", "/dogs/burham_4.jpg", "/dogs/burham_5.jpg", "/dogs/burham_6.jpg"]
+    },
+    {
+      id: 5,
+      name: "SYMEON",
+      gender: "Macho",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor principal do plantel Vale da Kubera.",
+      avatar_url: "/dogs/symeon_1.jpg",
+      photos: ["/dogs/symeon_1.jpg", "/dogs/symeon_2.jpg", "/dogs/symeon_3.jpg", "/dogs/symeon_4.jpg", "/dogs/symeon_5.jpg"]
+    },
+    {
+      id: 6,
+      name: "NERO",
+      gender: "Macho",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.",
+      avatar_url: "/dogs/nero_new_4.jpg",
+      photos: ["/dogs/nero_new_4.jpg", "/dogs/nero_new_1.jpg", "/dogs/nero_new_2.jpg", "/dogs/nero_new_3.jpg"]
+    },
+    {
+      id: 7,
+      name: "J-ARA",
+      gender: "Fêmea",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Fêmea do plantel Vale da Kubera. Temperamento dócil com a família e instinto de guarda apurado.",
+      avatar_url: "/dogs/jara_1.jpg",
+      photos: ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg"]
+    },
+    {
+      id: 8,
+      name: "PANDORA",
+      gender: "Fêmea",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Fêmea de excelente conformação morfológica e pelagem densa característica da raça.",
+      avatar_url: "/dogs/pandora_1.jpg",
+      photos: ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg"]
+    },
+    {
+      id: 9,
+      name: "THARA",
+      gender: "Fêmea",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Fêmea robusta com temperamento equilibrado e instinto maternal impecável.",
+      avatar_url: "/dogs/thara_1.jpg",
+      photos: ["/dogs/thara_1.jpg", "/dogs/thara_2.jpg"]
+    },
+    {
+      id: 10,
+      name: "VASILÍSIA",
+      gender: "Fêmea",
+      origin: "Brasil",
+      weight: "",
+      age: "",
+      notes: "Fêmea de estrutura impressionante e presença marcante. Matriz de destaque do plantel Vale da Kubera.",
+      avatar_url: "/dogs/vasilisia_new_1.jpg",
+      photos: ["/dogs/vasilisia_new_1.jpg", "/dogs/vasilisia_new_2.jpg", "/dogs/vasilisia_new_3.jpg", "/dogs/vasilisia_new_4.jpg"]
     }
   ];
-
-  const activeDogs = activeDogType === "femeas" ? femaleDogs : maleDogs;
 
   const testimonials = [
     {
@@ -403,30 +475,17 @@ export default function LandingPageClient() {
               </p>
             </div>
 
-            {/* Switcher Buttons */}
-            <div className="flex items-center gap-3 p-1.5 rounded-xl border border-[#E2E8F0] self-start md:self-end bg-white">
-              <button
-                onClick={() => setActiveDogType("femeas")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                  activeDogType === "femeas" ? "bg-[#0F6B2E] text-white shadow-sm" : "text-[#555E54] hover:text-[#222521]"
-                }`}
-              >
-                Fêmeas (Matrizes)
-              </button>
-              <button
-                onClick={() => setActiveDogType("machos")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                  activeDogType === "machos" ? "bg-[#0F6B2E] text-white shadow-sm" : "text-[#555E54] hover:text-[#222521]"
-                }`}
-              >
-                Machos (Padreadores)
-              </button>
-            </div>
+          {/* Switcher Buttons */}
+          <div className="flex items-center gap-3 p-1.5 rounded-xl border border-[#E2E8F0] self-start md:self-end bg-white">
+            <span className="px-4 py-2 rounded-lg text-xs font-bold bg-[#0F6B2E] text-white shadow-sm">
+              Plantel Completo (10 Cães)
+            </span>
+          </div>
           </div>
 
-          {/* Dogs Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {activeDogs.map((dog) => (
+          {/* Dogs Grid - 3 columns for 6 dogs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {allDogs.map((dog) => (
               <div key={dog.id} className="border border-[#E5E7EB] bg-white rounded-2xl overflow-hidden shadow-lg transition-all flex flex-col justify-between group hover:border-[#0F6B2E]/30">
                 {/* Photo container */}
                 <div className="relative h-72 bg-gray-100 overflow-hidden select-none border-b border-[#E2E8F0]">
@@ -434,6 +493,7 @@ export default function LandingPageClient() {
                     src={activePhotos[dog.id] || dog.avatar_url}
                     alt={dog.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    style={{ objectPosition: photoPositions[activePhotos[dog.id] || dog.avatar_url] || "center center" }}
                   />
                   <span className="absolute top-4 right-4 bg-black/75 text-white text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full tracking-wider z-20">
                     {dog.gender}
@@ -503,7 +563,7 @@ export default function LandingPageClient() {
                       </div>
                       <div className="flex items-center gap-2 text-[10px] text-[#222521]">
                         <Check className="w-3.5 h-3.5 text-[#0F6B2E]" />
-                        <span>Linhagem Importada Selecionada</span>
+                        <span>Linhagem Selecionada</span>
                       </div>
                     </div>
 
@@ -596,8 +656,8 @@ export default function LandingPageClient() {
               </div>
               <div className="lg:col-span-5 relative h-64 sm:h-80 md:h-[350px] w-full rounded-2xl overflow-hidden shadow-md order-1 lg:order-2 border border-[#E2E8F0]">
                 <img
-                  src="/dogs/venus_1.jpg"
-                  alt="Pastor do Cáucaso padrão de exposição - Vênus"
+                  src="/dogs/symeon_1.jpg"
+                  alt="Pastor do Cáucaso padrão de exposição - Symeon"
                   className="w-full h-full object-cover object-center scale-102 hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -636,7 +696,7 @@ export default function LandingPageClient() {
               </div>
               <div className="lg:col-span-5 relative h-64 sm:h-80 md:h-[350px] w-full rounded-2xl overflow-hidden shadow-md order-1 lg:order-2 border border-[#E2E8F0]">
                 <img
-                  src="/dogs/nero_4.jpg"
+                  src="/dogs/nero_new_1.jpg"
                   alt="Pastor do Cáucaso cão de guarda - Nero"
                   className="w-full h-full object-cover object-center scale-102 hover:scale-105 transition-transform duration-700"
                 />
