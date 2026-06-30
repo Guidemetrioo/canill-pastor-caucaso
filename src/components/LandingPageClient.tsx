@@ -11,7 +11,7 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Messag
 type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
 
 export default function LandingPageClient() {
-  const { filhotes, activeTheme, setActiveTheme, activeFont, setActiveFont, themes } = useAura();
+  const { filhotes, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent } = useAura();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const agendaWrapperRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -138,7 +138,7 @@ export default function LandingPageClient() {
     }
   };
 
-  const handleScheduleSubmit = (e: React.FormEvent) => {
+  const handleScheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!visitDate) {
       setVisitError("Por favor, selecione uma data.");
@@ -163,9 +163,29 @@ export default function LandingPageClient() {
     const parts = visitDate.split("-");
     const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
 
+    // 1. Save in the administration schedule (Supabase agenda)
+    const eventDateTime = new Date(`${visitDate}T${visitTime}:00`).toISOString();
+    try {
+      await addAgendaEvent({
+        type: "visita",
+        title: `Visita de ${visitorName.trim()}`,
+        description: `Agendado pelo site. Telefone: ${visitorPhone.trim()}`,
+        datetime: eventDateTime,
+        status: "Agendado"
+      });
+    } catch (err) {
+      console.error("Erro ao registrar agendamento na agenda:", err);
+    }
+
+    // 2. Open WhatsApp link as fallback/instant notification
     const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()} e meu telefone/WhatsApp é ${visitorPhone.trim()}.`;
     const url = `https://wa.me/5511974992059?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
+
+    // 3. Clear fields
+    setVisitorName("");
+    setVisitorPhone("");
+    setVisitDate("");
   };
 
   // Static dog profiles — always shown regardless of backend status
@@ -603,10 +623,11 @@ export default function LandingPageClient() {
 
                   <button
                     type="submit"
-                    className={`w-full md:w-auto md:px-8 font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mx-auto mt-4 shadow-lg ${t.secondaryAccent}`}
+                    className="w-full md:w-auto md:px-12 font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mx-auto mt-4 shadow-lg text-white font-sans hover:opacity-90 active:scale-95"
+                    style={{ backgroundColor: t.accentHex }}
                   >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Solicitar Agendamento via WhatsApp</span>
+                    <Calendar className="w-4 h-4" />
+                    <span>Agendar Visita</span>
                   </button>
                 </form>
               </div>
