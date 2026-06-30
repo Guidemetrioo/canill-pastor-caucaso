@@ -554,67 +554,63 @@ export default function LandingPageClient() {
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleScheduleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                    <div className="space-y-1.5">
-                      <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
-                      <input
-                        id="visitor-name"
-                        type="text"
-                        required
-                        placeholder="Seu nome"
-                        value={visitorName}
-                        onChange={(e) => setVisitorName(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
-                      <input
-                        id="visitor-phone"
-                        type="tel"
-                        required
-                        placeholder="(XX) XXXXX-XXXX"
-                        value={visitorPhone}
-                        onChange={(e) => setVisitorPhone(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                      />
-                    </div>
+                <form onSubmit={handleScheduleSubmit} className="max-w-md mx-auto w-full space-y-5">
+                  <div className="space-y-1.5 text-left">
+                    <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
+                    <input
+                      id="visitor-name"
+                      type="text"
+                      required
+                      placeholder="Seu nome"
+                      value={visitorName}
+                      onChange={(e) => setVisitorName(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                    />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                    <div className="space-y-1.5">
-                      <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
-                      <input
-                        id="visit-date"
-                        type="date"
-                        required
-                        value={visitDate}
-                        onChange={handleDateChange}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
-                      />
-                    </div>
+                  <div className="space-y-1.5 text-left">
+                    <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
+                    <input
+                      id="visitor-phone"
+                      type="tel"
+                      required
+                      placeholder="(XX) XXXXX-XXXX"
+                      value={visitorPhone}
+                      onChange={(e) => setVisitorPhone(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                    />
+                  </div>
 
-                    <div className="space-y-1.5">
-                      <label htmlFor="visit-time" className="text-xs font-semibold block text-gray-300">Horário</label>
-                      <select
-                        id="visit-time"
-                        value={visitTime}
-                        onChange={(e) => setVisitTime(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
-                      >
-                        <option value="10:00">10:00</option>
-                        <option value="11:00">11:00</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:00">13:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="16:00">16:00</option>
-                        <option value="17:00">17:00</option>
-                        <option value="18:00">18:00</option>
-                      </select>
-                    </div>
+                  <div className="space-y-1.5 text-left">
+                    <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
+                    <input
+                      id="visit-date"
+                      type="date"
+                      required
+                      value={visitDate}
+                      onChange={handleDateChange}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5 text-left">
+                    <label htmlFor="visit-time" className="text-xs font-semibold block text-gray-300">Horário</label>
+                    <select
+                      id="visit-time"
+                      value={visitTime}
+                      onChange={(e) => setVisitTime(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                    >
+                      <option value="10:00">10:00</option>
+                      <option value="11:00">11:00</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="14:00">14:00</option>
+                      <option value="15:00">15:00</option>
+                      <option value="16:00">16:00</option>
+                      <option value="17:00">17:00</option>
+                      <option value="18:00">18:00</option>
+                    </select>
                   </div>
 
                   {visitError && (
@@ -623,7 +619,7 @@ export default function LandingPageClient() {
 
                   <button
                     type="submit"
-                    className="w-full md:w-auto md:px-12 font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mx-auto mt-4 shadow-lg text-white font-sans hover:opacity-90 active:scale-95"
+                    className="w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg text-white font-sans hover:opacity-90 active:scale-95"
                     style={{ backgroundColor: t.accentHex }}
                   >
                     <Calendar className="w-4 h-4" />
