@@ -267,7 +267,6 @@ export default function LandingPageClient() {
                 filter: `brightness(${videoBrightness}) contrast(${videoContrast})`,
                 opacity: videoOpacity 
               }}
-              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
             >
               <source src="/banner-hero.mp4" type="video/mp4" />
             </video>
@@ -419,7 +418,6 @@ export default function LandingPageClient() {
                 filter: `brightness(${agendaVideoBrightness}) contrast(${agendaVideoContrast})`,
                 opacity: agendaVideoOpacity 
               }}
-              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
             >
               <source src="/banner2.mp4" type="video/mp4" />
             </video>
