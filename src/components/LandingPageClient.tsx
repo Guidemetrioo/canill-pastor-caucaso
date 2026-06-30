@@ -464,10 +464,10 @@ export default function LandingPageClient() {
       </section>
 
       {/* Scroll-pinned Agenda Wrapper */}
-      <div ref={agendaWrapperRef} className="relative h-[145vh] bg-black">
+      <div ref={agendaWrapperRef} className="relative h-auto md:h-[145vh] bg-black">
         <section 
           id="agendar" 
-          className="sticky top-0 w-full h-screen overflow-hidden border-b flex flex-col justify-center items-center" 
+          className="relative md:sticky top-0 w-full h-auto min-h-screen md:h-screen overflow-visible md:overflow-hidden border-b flex flex-col justify-center items-center py-16 md:py-0" 
           style={{ borderColor: borderHex }}
         >
           {/* Background Video */}
@@ -502,8 +502,8 @@ export default function LandingPageClient() {
           <div 
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full space-y-8 flex flex-col justify-center items-center transition-all duration-75"
             style={{ 
-              transform: `translateY(${agendaTextTranslateY}px)`,
-              opacity: agendaTextOpacity
+              transform: isMobile ? undefined : `translateY(${agendaTextTranslateY}px)`,
+              opacity: isMobile ? 1 : agendaTextOpacity
             }}
           >
             <div className="text-center max-w-2xl mx-auto space-y-4">
@@ -517,7 +517,7 @@ export default function LandingPageClient() {
               </p>
             </div>
 
-            <div className="max-w-3xl w-full bg-black/35 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <div className="max-w-3xl w-full bg-black/35 border border-white/10 rounded-3xl p-6 sm:p-10 pb-10 sm:pb-14 shadow-2xl relative overflow-hidden backdrop-blur-md">
               <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
               <div className="space-y-6">
