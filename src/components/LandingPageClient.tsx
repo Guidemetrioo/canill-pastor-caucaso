@@ -589,7 +589,7 @@ export default function LandingPageClient() {
               </p>
             </div>
 
-            <div className="max-w-3xl w-full bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <div className="max-w-3xl w-full bg-black/35 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
               <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
