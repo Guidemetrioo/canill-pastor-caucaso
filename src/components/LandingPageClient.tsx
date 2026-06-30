@@ -368,10 +368,10 @@ export default function LandingPageClient() {
           </div>
 
           {/* Tab Selector Buttons */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-xl mx-auto border-b pb-6" style={{ borderColor: borderHex }}>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-4 max-w-[280px] md:max-w-xl mx-auto border-b pb-6" style={{ borderColor: borderHex }}>
             <button
               onClick={() => setAboutTab("lugar")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
+              className={`w-full md:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "lugar"
                   ? (isMobile ? "shadow-lg scale-102 text-white" : `${t.primaryAccent} shadow-lg scale-102`)
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
@@ -388,7 +388,7 @@ export default function LandingPageClient() {
             </button>
             <button
               onClick={() => setAboutTab("criacao")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
+              className={`w-full md:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "criacao"
                   ? (isMobile ? "shadow-lg scale-102 text-white" : `${t.primaryAccent} shadow-lg scale-102`)
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
@@ -405,7 +405,7 @@ export default function LandingPageClient() {
             </button>
             <button
               onClick={() => setAboutTab("historia")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
+              className={`w-full md:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "historia"
                   ? (isMobile ? "shadow-lg scale-102 text-white" : `${t.primaryAccent} shadow-lg scale-102`)
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
