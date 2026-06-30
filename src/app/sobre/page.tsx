@@ -66,9 +66,9 @@ export default function SobrePage() {
         <section className="space-y-8 py-4">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Documentário em Vídeo</span>
-            <h2 className="text-2xl md:text-4xl font-extrabold">Canil Vale da Kubera no Cinofilia Digital</h2>
+            <h2 className="text-2xl md:text-4xl font-extrabold">Nossa Estrutura em Ação</h2>
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-              Assista à visita de Sávio do canal <strong>Cinofilia Digital</strong> ao nosso canil. Veja o nosso plantel real em ação, incluindo nossos reprodutores importados e a análise do padrão de guarda e estrutura dos nossos cães.
+              Confira a infraestrutura do Canil Vale da Kubera em nosso documentário em vídeo. Conheça nossa chácara de 10.000m², os piquetes de exercício e veja nosso plantel real em ação, conforme registrado em visita especial conduzida pelo canal Cinofilia Digital.
             </p>
           </div>
           
