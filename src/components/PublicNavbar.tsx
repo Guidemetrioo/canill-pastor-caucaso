@@ -1,4 +1,5 @@
 "use client";
+// Vercel trigger comment: reposicionar logo VK e ajustar opacidade do agendamento
 
 import Link from "next/link";
 import { useState } from "react";
