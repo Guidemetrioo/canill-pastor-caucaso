@@ -311,16 +311,14 @@ export default function LandingPageClient() {
               <div className="flex flex-wrap gap-4 pt-2">
                 <a
                   href="#caes"
-                  className="font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg text-white hover:scale-102 hover:shadow-xl"
-                  style={{ background: `linear-gradient(135deg, ${t.secondaryAccentHex}, ${t.accentHex})` }}
+                  className={`font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg ${t.secondaryAccent}`}
                 >
                   <span>Ver Nossos Cães</span>
                   <ArrowRight className="w-4 h-4" />
                 </a>
                 <a
                   href="#agendar"
-                  className="font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg text-white hover:scale-102 hover:shadow-xl"
-                  style={{ background: `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` }}
+                  className={`font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg ${t.primaryAccent}`}
                 >
                   <Calendar className="w-4 h-4" />
                   <span>Agendar sua Visita</span>
@@ -375,13 +373,10 @@ export default function LandingPageClient() {
               onClick={() => setAboutTab("lugar")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "lugar"
-                  ? "shadow-lg scale-102 text-white"
+                  ? `${t.primaryAccent} shadow-lg scale-102`
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
               }`}
-              style={{ 
-                background: aboutTab === "lugar" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent",
-                borderColor: aboutTab === "lugar" ? "transparent" : borderHex 
-              }}
+              style={{ borderColor: aboutTab === "lugar" ? "transparent" : borderHex }}
             >
               <MapPin className="w-4 h-4" />
               <span>O Lugar</span>
@@ -390,13 +385,10 @@ export default function LandingPageClient() {
               onClick={() => setAboutTab("criacao")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "criacao"
-                  ? "shadow-lg scale-102 text-white"
+                  ? `${t.primaryAccent} shadow-lg scale-102`
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
               }`}
-              style={{ 
-                background: aboutTab === "criacao" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent",
-                borderColor: aboutTab === "criacao" ? "transparent" : borderHex 
-              }}
+              style={{ borderColor: aboutTab === "criacao" ? "transparent" : borderHex }}
             >
               <Shield className="w-4 h-4" />
               <span>Criação &amp; Cães</span>
@@ -405,13 +397,10 @@ export default function LandingPageClient() {
               onClick={() => setAboutTab("historia")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border ${
                 aboutTab === "historia"
-                  ? "shadow-lg scale-102 text-white"
+                  ? `${t.primaryAccent} shadow-lg scale-102`
                   : `border-gray-200 text-gray-500 hover:border-gray-400 ${t.cardBg}`
               }`}
-              style={{ 
-                background: aboutTab === "historia" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent",
-                borderColor: aboutTab === "historia" ? "transparent" : borderHex 
-              }}
+              style={{ borderColor: aboutTab === "historia" ? "transparent" : borderHex }}
             >
               <Award className="w-4 h-4" />
               <span>A História</span>
@@ -619,8 +608,7 @@ export default function LandingPageClient() {
 
                   <button
                     type="submit"
-                    className="w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg text-white hover:scale-102"
-                    style={{ background: `linear-gradient(135deg, ${t.secondaryAccentHex}, ${t.accentHex})` }}
+                    className={`w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg ${t.secondaryAccent}`}
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>Solicitar Agendamento via WhatsApp</span>
@@ -648,12 +636,9 @@ export default function LandingPageClient() {
                 onClick={() => setActiveDogGender("fêmea")}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                   activeDogGender === "fêmea"
-                    ? "text-white shadow-md scale-102"
+                    ? t.primaryAccent
                     : `${t.textMuted} hover:text-black`
                 }`}
-                style={{
-                  background: activeDogGender === "fêmea" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent"
-                }}
               >
                 Fêmeas (Matrizes)
               </button>
@@ -661,12 +646,9 @@ export default function LandingPageClient() {
                 onClick={() => setActiveDogGender("macho")}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                   activeDogGender === "macho"
-                    ? "text-white shadow-md scale-102"
+                    ? t.primaryAccent
                     : `${t.textMuted} hover:text-black`
                 }`}
-                style={{
-                  background: activeDogGender === "macho" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent"
-                }}
               >
                 Machos (Padreadores)
               </button>
@@ -705,13 +687,10 @@ export default function LandingPageClient() {
               onClick={() => handleTabClick("exposicao")}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                 activeTab === "exposicao"
-                  ? "text-white shadow-md scale-102"
-                  : "bg-white text-gray-500 hover:text-black"
+                  ? t.primaryAccent
+                  : `bg-white text-gray-500 hover:text-black`
               }`}
-              style={{ 
-                borderColor: borderHex,
-                background: activeTab === "exposicao" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent"
-              }}
+              style={{ borderColor: borderHex }}
             >
               <Award className="w-4 h-4" />
               <span>Exposição</span>
@@ -720,13 +699,10 @@ export default function LandingPageClient() {
               onClick={() => handleTabClick("guarda")}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                 activeTab === "guarda"
-                  ? "text-white shadow-md scale-102"
-                  : "bg-white text-gray-500 hover:text-black"
+                  ? t.primaryAccent
+                  : `bg-white text-gray-500 hover:text-black`
               }`}
-              style={{ 
-                borderColor: borderHex,
-                background: activeTab === "guarda" ? `linear-gradient(135deg, ${t.accentHex}, ${t.secondaryAccentHex})` : "transparent"
-              }}
+              style={{ borderColor: borderHex }}
             >
               <Shield className="w-4 h-4" />
               <span>Guarda</span>
