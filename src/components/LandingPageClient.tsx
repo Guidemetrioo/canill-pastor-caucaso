@@ -25,6 +25,7 @@ export default function LandingPageClient() {
   const [visitDate, setVisitDate] = useState("");
   const [visitTime, setVisitTime] = useState("10:00");
   const [visitorName, setVisitorName] = useState("");
+  const [visitorPhone, setVisitorPhone] = useState("");
   const [visitError, setVisitError] = useState("");
 
   // Dynamic Scroll & Animation State
@@ -219,12 +220,16 @@ export default function LandingPageClient() {
       setVisitError("Por favor, insira o seu nome.");
       return;
     }
+    if (!visitorPhone.trim()) {
+      setVisitError("Por favor, insira o seu telefone.");
+      return;
+    }
 
     setVisitError("");
     const parts = visitDate.split("-");
     const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
 
-    const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()}.`;
+    const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()} e meu telefone/WhatsApp é ${visitorPhone.trim()}.`;
     const url = `https://wa.me/5511974992059?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
   };
@@ -311,11 +316,12 @@ export default function LandingPageClient() {
     <div className={`min-h-screen pt-20 font-sans transition-colors duration-500 ${t.bg} ${t.textMain}`}>
       <PublicNavbar />
 
-      {/* Inject Comfortaa Font & Dynamic Overrides for Navbar/Footer */}
+      {/* Inject Megrim Font & Dynamic Overrides for Navbar/Footer */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
-        .font-comfortaa {
-          font-family: 'Comfortaa', sans-serif !important;
+        @import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+        .font-comfortaa, .font-megrim {
+          font-family: 'Megrim', cursive !important;
+          letter-spacing: 0.04em;
         }
         nav {
           background-color: ${currentNavBg} !important;
@@ -422,9 +428,16 @@ export default function LandingPageClient() {
                   <span>Ver Nossos Cães</span>
                   <ArrowRight className="w-4 h-4" />
                 </a>
+                <a
+                  href="#agendar"
+                  className={`font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center gap-2 shadow-lg ${t.primaryAccent}`}
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>Agendar sua Visita</span>
+                </a>
                 <Link
                   href="/sobre"
-                  className="border border-white/20 bg-white/10 text-white hover:bg-white/20 font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs"
+                  className="border border-white/20 bg-white/10 text-white hover:bg-white/20 font-bold px-6 py-3.5 rounded-xl transition-all text-center text-xs flex items-center justify-center"
                 >
                   Conheça Nosso Trabalho
                 </Link>
@@ -500,59 +513,74 @@ export default function LandingPageClient() {
         </div>
       </section>
 
-      <section className="py-20 border-b" style={{ borderColor: borderHex }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section id="agendar" className="relative py-20 border-b overflow-hidden bg-black text-white" style={{ borderColor: borderHex }}>
+        {/* Background Video */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover object-center opacity-30"
+            poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+          >
+            <source src="/banner2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/45 to-black/80" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-20">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${t.tagBg} ${t.tagText}`}>
-              <Calendar className="w-3.5 h-3.5" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 border border-white/20 text-white">
+              <Calendar className="w-3.5 h-3.5 text-white" />
               <span>Visitas Presenciais</span>
             </span>
-            <h2 className="text-3xl font-extrabold font-comfortaa">Agende sua Visita</h2>
-            <p className={`text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans ${t.textMuted}`}>
+            <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
+            <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
               Venha conhecer de perto nossa estrutura de 10.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
             </p>
           </div>
 
-          <div className={`max-w-3xl mx-auto border rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden ${t.cardBg}`} style={{ borderColor: borderHex }}>
-            <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}0F` }} />
+          <div className="max-w-3xl mx-auto bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div className="md:col-span-5 space-y-6">
                 <div className="space-y-2">
-                  <h4 className="text-base font-bold font-comfortaa">Disponibilidade</h4>
-                  <p className={`text-xs font-sans ${t.textMuted}`}>Atendimento personalizado com os criadores.</p>
+                  <h4 className="text-base font-bold font-comfortaa text-white">Disponibilidade</h4>
+                  <p className="text-xs text-gray-400 font-sans">Atendimento personalizado com os criadores.</p>
                 </div>
 
-                <div className="space-y-4 font-sans text-xs">
+                <div className="space-y-4 font-sans text-xs text-gray-200">
                   <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${t.tagBg} ${t.tagText}`}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
                       <Calendar className="w-4 h-4" />
                     </div>
                     <div>
                       <p className="font-semibold">Segunda a Sexta-feira</p>
-                      <p className={`text-[10px] ${t.textMuted}`}>Dias de visitação</p>
+                      <p className="text-gray-400 text-[10px]">Dias de visitação</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${t.tagBg} ${t.tagText}`}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
                       <Clock className="w-4 h-4" />
                     </div>
                     <div>
                       <p className="font-semibold">10:00 às 18:00</p>
-                      <p className={`text-[10px] ${t.textMuted}`}>Horários disponíveis</p>
+                      <p className="text-gray-400 text-[10px]">Horários disponíveis</p>
                     </div>
                   </div>
                 </div>
 
-                <div className={`p-4 border rounded-2xl text-[10px] font-sans leading-relaxed ${t.bgForm}`} style={{ borderColor: borderHex }}>
+                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] text-gray-400 font-sans leading-relaxed">
                   <strong>Aviso Importante:</strong> Para segurança do canil e bem-estar dos cães, não realizamos visitas sem agendamento prévio.
                 </div>
               </div>
 
               <form onSubmit={handleScheduleSubmit} className="md:col-span-7 space-y-4">
                 <div className="space-y-1.5">
-                  <label htmlFor="visitor-name" className={`text-xs font-semibold block ${t.textMuted}`}>Nome Completo</label>
+                  <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
                   <input
                     id="visitor-name"
                     type="text"
@@ -560,33 +588,43 @@ export default function LandingPageClient() {
                     placeholder="Seu nome"
                     value={visitorName}
                     onChange={(e) => setVisitorName(e.target.value)}
-                    className={`w-full border rounded-xl px-4 py-3 text-xs placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-offset-0 font-sans transition-all ${t.bgForm}`}
-                    style={{ borderColor: borderHex, color: textColor }}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
+                  <input
+                    id="visitor-phone"
+                    type="tel"
+                    required
+                    placeholder="(XX) XXXXX-XXXX"
+                    value={visitorPhone}
+                    onChange={(e) => setVisitorPhone(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label htmlFor="visit-date" className={`text-xs font-semibold block ${t.textMuted}`}>Data da Visita</label>
+                    <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
                     <input
                       id="visit-date"
                       type="date"
                       required
                       value={visitDate}
                       onChange={handleDateChange}
-                      className={`w-full border rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-1 font-sans transition-all ${t.bgForm}`}
-                      style={{ borderColor: borderHex, color: textColor }}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="visit-time" className={`text-xs font-semibold block ${t.textMuted}`}>Horário</label>
+                    <label htmlFor="visit-time" className="text-xs font-semibold block text-gray-300">Horário</label>
                     <select
                       id="visit-time"
                       value={visitTime}
                       onChange={(e) => setVisitTime(e.target.value)}
-                      className={`w-full border rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-1 font-sans transition-all ${t.bgForm}`}
-                      style={{ borderColor: borderHex, color: textColor }}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
                     >
                       <option value="10:00">10:00</option>
                       <option value="11:00">11:00</option>
