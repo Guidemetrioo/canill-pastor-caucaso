@@ -13,12 +13,14 @@ type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
 export default function LandingPageClient() {
   const { filhotes } = useAura();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const agendaWrapperRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState<"exposicao" | "guarda">("exposicao");
   const [activeDogGender, setActiveDogGender] = useState<"fêmea" | "macho">("fêmea");
 
-  // Dynamic Theme Selection State
+  // Dynamic Theme & Font Selection State
   const [activeTheme, setActiveTheme] = useState<ThemeName>("eco-rustic");
+  const [activeFont, setActiveFont] = useState<"megrim" | "comfortaa">("megrim");
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
 
   // Booking Form State
@@ -30,6 +32,7 @@ export default function LandingPageClient() {
 
   // Dynamic Scroll & Animation State
   const [scrollY, setScrollY] = useState(0);
+  const [agendaScrollProgress, setAgendaScrollProgress] = useState(0);
 
   const themes: Record<ThemeName, {
     name: string;
@@ -136,6 +139,14 @@ export default function LandingPageClient() {
   const textTranslateY = (1 - progress) * 150;       // 150px to 0px
   const textOpacity = progress;                       // 0.00 to 1.00
 
+  // Scroll Agenda Calculations (video starts bright/clean, card rises and background darkens slightly)
+  const agendaVideoBrightness = 1.05 - (agendaScrollProgress * 0.35);
+  const agendaVideoContrast = 0.95 + (agendaScrollProgress * 0.15);
+  const agendaVideoOpacity = 0.85 + (agendaScrollProgress * 0.15);
+  const agendaOverlayOpacity = agendaScrollProgress * 0.65;
+  const agendaTextTranslateY = (1 - agendaScrollProgress) * 200;
+  const agendaTextOpacity = agendaScrollProgress;
+
   // Scroll Navbar Calculations
   const isHeroScrolled = scrollY > 80;
   const currentNavBg = isHeroScrolled ? `${navbarBg}EE` : 'transparent';
@@ -151,6 +162,16 @@ export default function LandingPageClient() {
 
     const handleScroll = () => {
       setScrollY(window.scrollY);
+      if (agendaWrapperRef.current) {
+        const rect = agendaWrapperRef.current.getBoundingClientRect();
+        const wrapperHeight = rect.height;
+        const scrolledOffset = -rect.top;
+        const totalTrack = wrapperHeight - window.innerHeight;
+        if (totalTrack > 0) {
+          const agendaProgress = Math.min(Math.max(scrolledOffset / totalTrack, 0), 1);
+          setAgendaScrollProgress(agendaProgress);
+        }
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -316,12 +337,12 @@ export default function LandingPageClient() {
     <div className={`min-h-screen pt-20 font-sans transition-colors duration-500 ${t.bg} ${t.textMain}`}>
       <PublicNavbar />
 
-      {/* Inject Megrim Font & Dynamic Overrides for Navbar/Footer */}
+      {/* Inject Megrim/Comfortaa Font & Dynamic Overrides for Navbar/Footer */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Megrim&family=Comfortaa:wght@400;700&display=swap');
         .font-comfortaa, .font-megrim {
-          font-family: 'Megrim', cursive !important;
-          letter-spacing: 0.04em;
+          font-family: ${activeFont === 'megrim' ? "'Megrim', cursive" : "'Comfortaa', sans-serif"} !important;
+          letter-spacing: ${activeFont === 'megrim' ? "0.04em" : "normal"};
         }
         nav {
           background-color: ${currentNavBg} !important;
@@ -513,148 +534,178 @@ export default function LandingPageClient() {
         </div>
       </section>
 
-      <section id="agendar" className="relative py-20 border-b overflow-hidden bg-black text-white" style={{ borderColor: borderHex }}>
-        {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover object-center opacity-30"
-            poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
-          >
-            <source src="/banner2.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/45 to-black/80" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-20">
-          <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 border border-white/20 text-white">
-              <Calendar className="w-3.5 h-3.5 text-white" />
-              <span>Visitas Presenciais</span>
-            </span>
-            <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
-            <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
-              Venha conhecer de perto nossa estrutura de 10.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
-            </p>
+      {/* Scroll-pinned Agenda Wrapper */}
+      <div ref={agendaWrapperRef} className="relative h-[145vh] bg-black">
+        <section 
+          id="agendar" 
+          className="sticky top-0 w-full h-screen overflow-hidden border-b flex flex-col justify-center items-center" 
+          style={{ borderColor: borderHex }}
+        >
+          {/* Background Video */}
+          <div className="absolute inset-0 w-full h-full pointer-events-none z-0 bg-black">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover object-center transition-all duration-75"
+              style={{ 
+                filter: `brightness(${agendaVideoBrightness}) contrast(${agendaVideoContrast})`,
+                opacity: agendaVideoOpacity 
+              }}
+              poster="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800"
+            >
+              <source src="/banner2.mp4" type="video/mp4" />
+            </video>
+            {/* Dark overlay: starts transparent (clean video) and gets darker as we scroll */}
+            <div 
+              className="absolute inset-0 z-10 transition-all duration-75" 
+              style={{ background: `linear-gradient(to right, rgba(0, 0, 0, ${agendaOverlayOpacity * 1.13}), rgba(0, 0, 0, ${agendaOverlayOpacity * 0.5}), transparent)` }} 
+            />
+            <div 
+              className="absolute inset-0 z-10 transition-all duration-75" 
+              style={{ background: `linear-gradient(to top, rgba(0, 0, 0, ${agendaOverlayOpacity * 0.9}), transparent)` }} 
+            />
           </div>
+          
+          <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none z-10" style={{ backgroundColor: `${accentHex}20` }} />
 
-          <div className="max-w-3xl mx-auto bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
-            <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
+          {/* Animated Header & Form Card */}
+          <div 
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full space-y-8 flex flex-col justify-center items-center transition-all duration-75"
+            style={{ 
+              transform: `translateY(${agendaTextTranslateY}px)`,
+              opacity: agendaTextOpacity
+            }}
+          >
+            <div className="text-center max-w-2xl mx-auto space-y-4">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 border border-white/20 text-white">
+                <Calendar className="w-3.5 h-3.5 text-white" />
+                <span>Visitas Presenciais</span>
+              </span>
+              <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
+              <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
+                Venha conhecer de perto nossa estrutura de 10.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
+              </p>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-              <div className="md:col-span-5 space-y-6">
-                <div className="space-y-2">
-                  <h4 className="text-base font-bold font-comfortaa text-white">Disponibilidade</h4>
-                  <p className="text-xs text-gray-400 font-sans">Atendimento personalizado com os criadores.</p>
-                </div>
+            <div className="max-w-3xl w-full bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+              <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
-                <div className="space-y-4 font-sans text-xs text-gray-200">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
-                      <Calendar className="w-4 h-4" />
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                {/* Disponibilidade Info */}
+                <div className="md:col-span-5 space-y-6 text-left">
+                  <div className="space-y-2">
+                    <h4 className="text-base font-bold font-comfortaa text-white">Disponibilidade</h4>
+                    <p className="text-xs text-gray-400 font-sans">Atendimento personalizado com os criadores.</p>
+                  </div>
+
+                  <div className="space-y-4 font-sans text-xs text-gray-200">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
+                        <Calendar className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">Segunda a Sexta-feira</p>
+                        <p className="text-gray-400 text-[10px]">Dias de visitação</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold">Segunda a Sexta-feira</p>
-                      <p className="text-gray-400 text-[10px]">Dias de visitação</p>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
+                        <Clock className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">10:00 às 18:00</p>
+                        <p className="text-gray-400 text-[10px]">Horários disponíveis</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/20 text-white shrink-0">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">10:00 às 18:00</p>
-                      <p className="text-gray-400 text-[10px]">Horários disponíveis</p>
-                    </div>
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] text-gray-400 font-sans leading-relaxed">
+                    <strong>Aviso Importante:</strong> Para segurança do canil e bem-estar dos cães, não realizamos visitas sem agendamento prévio.
                   </div>
                 </div>
 
-                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] text-gray-400 font-sans leading-relaxed">
-                  <strong>Aviso Importante:</strong> Para segurança do canil e bem-estar dos cães, não realizamos visitas sem agendamento prévio.
-                </div>
-              </div>
-
-              <form onSubmit={handleScheduleSubmit} className="md:col-span-7 space-y-4">
-                <div className="space-y-1.5">
-                  <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
-                  <input
-                    id="visitor-name"
-                    type="text"
-                    required
-                    placeholder="Seu nome"
-                    value={visitorName}
-                    onChange={(e) => setVisitorName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
-                  <input
-                    id="visitor-phone"
-                    type="tel"
-                    required
-                    placeholder="(XX) XXXXX-XXXX"
-                    value={visitorPhone}
-                    onChange={(e) => setVisitorPhone(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
+                {/* Form */}
+                <form onSubmit={handleScheduleSubmit} className="md:col-span-7 space-y-4 text-left">
                   <div className="space-y-1.5">
-                    <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
+                    <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
                     <input
-                      id="visit-date"
-                      type="date"
+                      id="visitor-name"
+                      type="text"
                       required
-                      value={visitDate}
-                      onChange={handleDateChange}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      placeholder="Seu nome"
+                      value={visitorName}
+                      onChange={(e) => setVisitorName(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="visit-time" className="text-xs font-semibold block text-gray-300">Horário</label>
-                    <select
-                      id="visit-time"
-                      value={visitTime}
-                      onChange={(e) => setVisitTime(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
-                    >
-                      <option value="10:00">10:00</option>
-                      <option value="11:00">11:00</option>
-                      <option value="12:00">12:00</option>
-                      <option value="13:00">13:00</option>
-                      <option value="14:00">14:00</option>
-                      <option value="15:00">15:00</option>
-                      <option value="16:00">16:00</option>
-                      <option value="17:00">17:00</option>
-                      <option value="18:00">18:00</option>
-                    </select>
+                    <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
+                    <input
+                      id="visitor-phone"
+                      type="tel"
+                      required
+                      placeholder="(XX) XXXXX-XXXX"
+                      value={visitorPhone}
+                      onChange={(e) => setVisitorPhone(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                    />
                   </div>
-                </div>
 
-                {visitError && (
-                  <p className="text-xs text-red-500 font-semibold mt-1 font-sans">{visitError}</p>
-                )}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
+                      <input
+                        id="visit-date"
+                        type="date"
+                        required
+                        value={visitDate}
+                        onChange={handleDateChange}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      />
+                    </div>
 
-                <button
-                  type="submit"
-                  className={`w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg ${t.secondaryAccent}`}
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Solicitar Agendamento via WhatsApp</span>
-                </button>
-              </form>
+                    <div className="space-y-1.5">
+                      <label htmlFor="visit-time" className="text-xs font-semibold block text-gray-300">Horário</label>
+                      <select
+                        id="visit-time"
+                        value={visitTime}
+                        onChange={(e) => setVisitTime(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                      >
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {visitError && (
+                    <p className="text-xs text-red-500 font-semibold mt-1 font-sans">{visitError}</p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className={`w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg ${t.secondaryAccent}`}
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Solicitar Agendamento via WhatsApp</span>
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section id="caes" className="py-20 border-b" style={{ borderColor: borderHex }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -971,8 +1022,38 @@ export default function LandingPageClient() {
               })}
             </div>
 
-            <p className="text-[10px] text-gray-400 leading-relaxed font-sans">
-              * Títulos renderizados com a fonte <strong>Comfortaa</strong>. Clique em uma das opções acima para alternar as cores do site, navegação e rodapé em tempo real!
+            <div className="space-y-2 border-t border-gray-100 pt-3">
+              <h4 className="text-[10px] font-bold font-comfortaa uppercase tracking-wider text-gray-500">
+                Fonte dos Títulos
+              </h4>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => setActiveFont("megrim")}
+                  className={`py-1.5 rounded-lg border text-[10px] font-bold transition-all ${
+                    activeFont === "megrim"
+                      ? "border-black bg-gray-50 text-black"
+                      : "border-gray-200 text-gray-500 hover:border-gray-400"
+                  }`}
+                  style={{ fontFamily: "'Megrim', cursive" }}
+                >
+                  Megrim
+                </button>
+                <button
+                  onClick={() => setActiveFont("comfortaa")}
+                  className={`py-1.5 rounded-lg border text-[10px] font-bold transition-all ${
+                    activeFont === "comfortaa"
+                      ? "border-black bg-gray-50 text-black"
+                      : "border-gray-200 text-gray-500 hover:border-gray-400"
+                  }`}
+                  style={{ fontFamily: "'Comfortaa', sans-serif" }}
+                >
+                  Comfortaa
+                </button>
+              </div>
+            </div>
+
+            <p className="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-gray-100">
+              * Clique em uma das opções acima para alternar as cores ou fontes do site em tempo real!
             </p>
           </div>
         )}
