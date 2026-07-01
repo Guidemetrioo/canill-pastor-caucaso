@@ -110,9 +110,6 @@ export default function PuppyDetailClient({ puppy }: { puppy: Puppy }) {
                 </div>
 
                 <h1 className="text-3xl md:text-4xl font-extrabold">{puppy.name}</h1>
-                <p className="text-2xl font-bold text-[#D97457]">
-                  R$ {puppy.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                </p>
 
                 <p className="text-gray-300 text-sm leading-relaxed">
                   {puppy.notes ||

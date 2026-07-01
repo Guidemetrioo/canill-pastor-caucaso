@@ -94,9 +94,6 @@ export default function FilhotesPage() {
                   <div className="p-6 space-y-4">
                     <div className="flex justify-between items-start">
                       <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{puppy.name}</h3>
-                      <span className="text-[#D97457] font-extrabold text-sm">
-                        R$ {puppy.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                      </span>
                     </div>
                     <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
                       {puppy.notes || "Excelente ninhada de Pastor do Cáucaso, com estrutura pesada, pelagem abundante e linhagem premiada."}
