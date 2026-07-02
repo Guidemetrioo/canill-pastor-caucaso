@@ -52,6 +52,26 @@ export default function PublicNavbar() {
           color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
         }
 
+        /* Text Color Overrides for light backgrounds (forcing white text to brand accent colors) */
+        h1:not(#hero-banner *):not(#agendar *),
+        h2:not(#hero-banner *):not(#agendar *),
+        h3:not(#hero-banner *):not(#agendar *),
+        h4:not(#hero-banner *):not(#agendar *),
+        h5:not(#hero-banner *):not(#agendar *),
+        h6:not(#hero-banner *):not(#agendar *),
+        .text-white:not(#hero-banner *):not(#agendar *):not(.whatsapp-theme-button *):not(#youtube-floating-button *):not(#instagram-floating-button *):not(#whatsapp-floating-button *):not(#youtube-floating-button):not(#instagram-floating-button):not(#whatsapp-floating-button) {
+          color: ${t.accentHex} !important;
+        }
+
+        /* Input fields and selects for forms on public pages */
+        input:not(#hero-banner *):not(#agendar *), 
+        select:not(#hero-banner *):not(#agendar *), 
+        textarea:not(#hero-banner *):not(#agendar *) {
+          background-color: ${t.bgForm.replace('bg-[', '').replace(']', '')} !important;
+          border-color: ${t.borderHex} !important;
+          color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
+        }
+
         /* Card and container background overrides */
         div.bg-\\[\\#1A1A1A\\], 
         section.bg-\\[\\#1A1A1A\\],
