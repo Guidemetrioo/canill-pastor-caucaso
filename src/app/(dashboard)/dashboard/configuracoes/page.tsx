@@ -111,6 +111,9 @@ export default function ConfiguracoesPage() {
   const [botLoading, setBotLoading] = useState(false);
   const [botPid, setBotPid] = useState<number | null>(null);
 
+  // Environment detection state
+  const [isProduction, setIsProduction] = useState(false);
+
   // Bot Daemon connection state
   const [botState, setBotState] = useState<{
     status: string;
@@ -147,6 +150,15 @@ export default function ConfiguracoesPage() {
     template_confirmacao: ""
   });
 
+  // Sync environment detection on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      const isProd = !hostname.includes("localhost") && !hostname.includes("127.0.0.1");
+      setIsProduction(isProd);
+    }
+  }, []);
+
   // Sync form state when whatsappConfig loads
   useEffect(() => {
     if (whatsappConfig) {
@@ -167,6 +179,12 @@ export default function ConfiguracoesPage() {
   // Check if bot process is running on mount and periodically
   const checkBotStatus = async () => {
     try {
+      // In Vercel, skip calling the local /api/bot to avoid connection errors
+      if (isProduction) {
+        setBotRunning(whatsappConfig?.status === "connected" || whatsappConfig?.status === "qr_ready" || whatsappConfig?.status === "connecting");
+        return;
+      }
+
       const res = await fetch("/api/bot");
       const data = await res.json();
       setBotRunning(data.running);
@@ -199,11 +217,11 @@ export default function ConfiguracoesPage() {
       refreshAllData().catch(() => {});
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isProduction, whatsappConfig]);
 
-  // Poll terminal logs periodically when bot is running and terminal is visible
+  // Poll terminal logs periodically when bot is running and terminal is visible (local only)
   useEffect(() => {
-    if (!botRunning || !showLogs) return;
+    if (isProduction || !botRunning || !showLogs) return;
 
     const fetchLogs = async () => {
       try {
@@ -220,7 +238,7 @@ export default function ConfiguracoesPage() {
     fetchLogs();
     const interval = setInterval(fetchLogs, 2500);
     return () => clearInterval(interval);
-  }, [botRunning, showLogs]);
+  }, [botRunning, showLogs, isProduction]);
 
   // Auto scroll logs container to bottom on change
   useEffect(() => {
@@ -260,21 +278,26 @@ export default function ConfiguracoesPage() {
     }
     setBotLoading(true);
     try {
-      // 1. Signal logout in bot daemon via proxy endpoint
-      const res = await fetch("/api/bot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "logout" })
-      });
-      const data = await res.json();
-
-      if (!data.success) {
-        // Fallback: stop process directly if logout fails
-        await fetch("/api/bot", {
+      if (isProduction) {
+        // In production, update Supabase directly
+        await updateWhatsappConfig({ status: "disconnect_requested" });
+      } else {
+        // In local, trigger logout callback via bot daemon
+        const res = await fetch("/api/bot", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "stop" })
+          body: JSON.stringify({ action: "logout" })
         });
+        const data = await res.json();
+
+        if (!data.success) {
+          // Fallback: stop process directly if logout fails
+          await fetch("/api/bot", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "stop" })
+          });
+        }
       }
 
       setTimeout(() => {
@@ -374,11 +397,25 @@ export default function ConfiguracoesPage() {
 
   // Determine current wizard connection step
   const getConnectionStep = () => {
+    if (isProduction) {
+      // In production/Vercel, status is synced only via Supabase
+      return whatsappConfig?.status || "disconnected";
+    }
     if (!botRunning) return "disconnected";
-    return botState.status; // 'connected' | 'qr_ready' | 'connecting' | 'disconnected'
+    return botState.status;
   };
 
   const step = getConnectionStep();
+
+  // Helper to detect if a string is a pairing code instead of a QR code
+  const isPairingCodeStr = (str: string | null) => {
+    if (!str) return false;
+    return str.length <= 12 && str.includes("-");
+  };
+
+  // Codes to display
+  const qrToDisplay = botState.qrCode || (!isPairingCodeStr(whatsappConfig?.qr_code || null) ? (whatsappConfig?.qr_code || null) : null);
+  const pairingCodeToDisplay = botState.pairingCode || (isPairingCodeStr(whatsappConfig?.qr_code || null) ? (whatsappConfig?.qr_code || null) : null);
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -414,28 +451,72 @@ export default function ConfiguracoesPage() {
               {/* STATE 1: DISCONNECTED */}
               {step === "disconnected" && (
                 <div className="text-center space-y-4 animate-in fade-in duration-200">
-                  <div className="w-16 h-16 rounded-full bg-salon-border flex items-center justify-center mx-auto border border-salon-border/60">
-                    <Smartphone className="w-8 h-8 text-salon-text-secondary" />
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="text-sm font-semibold text-white">Pronto para Conectar</h4>
-                    <p className="text-[10px] text-salon-text-secondary leading-relaxed px-4">
-                      Sincronize o sistema do canil com seu celular para enviar notificações automáticas de lembretes e agendamentos.
-                    </p>
-                  </div>
-                  
-                  <button
-                    type="button"
-                    onClick={handleStartBot}
-                    disabled={botLoading}
-                    className="w-full bg-[#D97457] hover:bg-[#C25F43] active:scale-[0.98] text-[#0F0F0F] text-xs font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(201,169,110,0.2)] disabled:opacity-50 mt-4"
-                  >
-                    {botLoading ? (
-                      <Loader className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <span>🔌 Conectar Número de Verdade</span>
-                    )}
-                  </button>
+                  {isProduction ? (
+                    // Vercel / Production instruction box (Highly intuitive step-by-step UX)
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-full bg-[#D97457]/10 flex items-center justify-center mx-auto border border-[#D97457]/20">
+                        <Smartphone className="w-6 h-6 text-[#D97457]" />
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="text-xs font-bold text-white uppercase tracking-wider">Ativação do Robô (Nuvem)</h4>
+                        <p className="text-[10px] text-salon-text-secondary leading-relaxed px-1">
+                          Como a Vercel usa servidores sem estado temporários, você deve rodar o robô localmente no computador do canil:
+                        </p>
+                      </div>
+
+                      <div className="bg-black/50 border border-salon-border rounded-lg p-3 text-left space-y-3 mt-2">
+                        <div className="space-y-1">
+                          <span className="text-[9px] text-[#D97457] font-semibold block uppercase">1. Comando para iniciar:</span>
+                          <div className="flex items-center gap-1.5 bg-black/40 px-2 py-1.5 rounded border border-salon-border">
+                            <code className="font-mono text-[10px] text-green-400 flex-1 break-all select-all">
+                              npm run bot
+                            </code>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                navigator.clipboard.writeText("npm run bot");
+                                alert("Comando 'npm run bot' copiado!");
+                              }}
+                              className="text-salon-text-secondary hover:text-[#D97457] transition-colors"
+                              title="Copiar comando"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                        <div className="space-y-1 text-[9px] leading-relaxed text-salon-text-secondary">
+                          <p>👉 <strong className="text-white">Passo 2:</strong> Deixe a janela do terminal aberta no seu computador.</p>
+                          <p>👉 <strong className="text-white">Passo 3:</strong> Esta página identificará a execução e exibirá o QR Code para pareamento automaticamente em instantes.</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    // Local / Development start button
+                    <>
+                      <div className="w-16 h-16 rounded-full bg-salon-border flex items-center justify-center mx-auto border border-salon-border/60">
+                        <Smartphone className="w-8 h-8 text-salon-text-secondary" />
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-semibold text-white">Pronto para Conectar</h4>
+                        <p className="text-[10px] text-salon-text-secondary leading-relaxed px-4">
+                          Sincronize o sistema do canil com seu celular para enviar notificações automáticas de lembretes e agendamentos.
+                        </p>
+                      </div>
+                      
+                      <button
+                        type="button"
+                        onClick={handleStartBot}
+                        disabled={botLoading}
+                        className="w-full bg-[#D97457] hover:bg-[#C25F43] active:scale-[0.98] text-[#0F0F0F] text-xs font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(201,169,110,0.2)] disabled:opacity-50 mt-4"
+                      >
+                        {botLoading ? (
+                          <Loader className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <span>🔌 Conectar Número de Verdade</span>
+                        )}
+                      </button>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -455,24 +536,26 @@ export default function ConfiguracoesPage() {
                     <div className="bg-[#D97457] h-full w-2/3 rounded-full animate-[shimmer_1.5s_infinite]" />
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={handleStopBot}
-                    disabled={botLoading}
-                    className="text-salon-error text-[10px] font-bold hover:underline transition-all mt-2"
-                  >
-                    Cancelar inicialização
-                  </button>
+                  {!isProduction && (
+                    <button
+                      type="button"
+                      onClick={handleStopBot}
+                      disabled={botLoading}
+                      className="text-salon-error text-[10px] font-bold hover:underline transition-all mt-2"
+                    >
+                      Cancelar inicialização
+                    </button>
+                  )}
                 </div>
               )}
 
               {/* STATE 3: QR READY */}
               {step === "qr_ready" && (
                 <div className="text-center space-y-4 animate-in zoom-in-95 duration-200">
-                  {botState.qrCode && !botState.pairingCode && (
+                  {qrToDisplay && (
                     <div className="inline-block p-3 bg-white rounded-xl shadow-2xl border-2 border-[#D97457]">
                       <img
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(botState.qrCode)}`}
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(qrToDisplay)}`}
                         alt="WhatsApp Web QR Code"
                         className="w-40 h-40"
                       />
@@ -482,24 +565,24 @@ export default function ConfiguracoesPage() {
                   <div className="space-y-1">
                     <h4 className="text-xs font-bold text-[#D97457] uppercase tracking-wider">Como Deseja Conectar?</h4>
                     <p className="text-[9px] text-salon-text-secondary px-2 leading-relaxed">
-                      Escaneie o QR Code acima usando <strong className="text-white">Aparelhos Conectados</strong> no WhatsApp, ou gere um código de 8 dígitos inserindo seu telefone abaixo:
+                      Escaneie o QR Code acima usando <strong className="text-white">Aparelhos Conectados</strong> no WhatsApp, ou use o código de pareamento de 8 dígitos abaixo:
                     </p>
                   </div>
 
-                  {/* Pairing Code Request Section */}
-                  {botState.pairingCode ? (
+                  {/* Pairing Code Display or Request Block */}
+                  {pairingCodeToDisplay ? (
                     <div className="bg-[#1A1A1A] border border-[#D97457]/30 rounded-xl p-3.5 text-center space-y-2.5 animate-in zoom-in-95">
                       <span className="text-[9px] text-salon-text-secondary uppercase tracking-wider block font-semibold">
                         🔑 Código de Pareamento:
                       </span>
                       <div className="flex items-center justify-center gap-2">
                         <span className="font-mono text-lg font-bold tracking-widest text-[#D97457] bg-black/40 px-3 py-1.5 rounded-lg border border-salon-border">
-                          {botState.pairingCode}
+                          {pairingCodeToDisplay}
                         </span>
                         <button
                           type="button"
                           onClick={() => {
-                            navigator.clipboard.writeText(botState.pairingCode || "");
+                            navigator.clipboard.writeText(pairingCodeToDisplay || "");
                             alert("Código de pareamento copiado!");
                           }}
                           className="p-1.5 bg-salon-border hover:bg-zinc-800 text-salon-text-primary rounded-lg transition-colors border border-salon-border"
@@ -509,38 +592,47 @@ export default function ConfiguracoesPage() {
                         </button>
                       </div>
                       <p className="text-[8px] text-salon-text-secondary leading-relaxed px-1">
-                        Vá em <strong>Aparelhos Conectados</strong> &gt; <strong>Conectar com número de telefone</strong> no seu celular e digite o código acima.
+                        No seu celular, vá em <strong>Aparelhos Conectados</strong> &gt; <strong>Conectar com número de telefone</strong> e digite o código acima.
                       </p>
                     </div>
                   ) : (
-                    <form onSubmit={handleRequestPairingCode} className="space-y-2 pt-2 border-t border-[#2A2A2A]">
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          placeholder="Ex: 5511999999999"
-                          value={phoneNumberInput}
-                          onChange={(e) => setPhoneNumberInput(e.target.value)}
-                          className="flex-1 bg-[#0F0F0F] border border-salon-border p-2 rounded-lg text-white text-[11px] focus:outline-none focus:border-[#D97457]"
-                        />
-                        <button
-                          type="submit"
-                          disabled={requestingCode || !phoneNumberInput.trim()}
-                          className="bg-[#D97457] text-[#0F0F0F] hover:bg-[#C25F43] font-bold text-[10px] px-3.5 py-2 rounded-lg transition-all disabled:opacity-50"
-                        >
-                          {requestingCode ? <Loader className="w-3.5 h-3.5 animate-spin" /> : "Gerar Código"}
-                        </button>
+                    // Only display pairing form when locally hosted
+                    !isProduction ? (
+                      <form onSubmit={handleRequestPairingCode} className="space-y-2 pt-2 border-t border-[#2A2A2A]">
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="Ex: 5511999999999"
+                            value={phoneNumberInput}
+                            onChange={(e) => setPhoneNumberInput(e.target.value)}
+                            className="flex-1 bg-[#0F0F0F] border border-salon-border p-2 rounded-lg text-white text-[11px] focus:outline-none focus:border-[#D97457]"
+                          />
+                          <button
+                            type="submit"
+                            disabled={requestingCode || !phoneNumberInput.trim()}
+                            className="bg-[#D97457] text-[#0F0F0F] hover:bg-[#C25F43] font-bold text-[10px] px-3.5 py-2 rounded-lg transition-all disabled:opacity-50"
+                          >
+                            {requestingCode ? <Loader className="w-3.5 h-3.5 animate-spin" /> : "Gerar Código"}
+                          </button>
+                        </div>
+                      </form>
+                    ) : (
+                      <div className="bg-[#1A1A1A]/40 border border-salon-border rounded-lg p-2.5 text-[9px] text-salon-text-secondary leading-normal">
+                        ℹ️ Para pareamento via código de texto, execute a inicialização pela primeira vez na sua máquina local (`localhost`). Em produção, recomendamos escanear o QR Code acima.
                       </div>
-                    </form>
+                    )
                   )}
 
-                  <button
-                    type="button"
-                    onClick={handleStopBot}
-                    disabled={botLoading}
-                    className="w-full bg-salon-error/10 border border-salon-error/30 text-salon-error hover:bg-salon-error/20 text-xs font-bold py-2 rounded-lg transition-all mt-2"
-                  >
-                    Cancelar Pareamento
-                  </button>
+                  {!isProduction && (
+                    <button
+                      type="button"
+                      onClick={handleStopBot}
+                      disabled={botLoading}
+                      className="w-full bg-salon-error/10 border border-salon-error/30 text-salon-error hover:bg-salon-error/20 text-xs font-bold py-2 rounded-lg transition-all mt-2"
+                    >
+                      Cancelar Pareamento
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -566,7 +658,7 @@ export default function ConfiguracoesPage() {
                       <span className="text-salon-text-secondary">Número:</span>
                       <span className="font-bold text-white">+{botState.phoneNumber || whatsappConfig?.phone || "Conectado"}</span>
                     </div>
-                    {botPid && (
+                    {botPid && !isProduction && (
                       <div className="flex justify-between">
                         <span className="text-salon-text-secondary">ID Processo:</span>
                         <span className="font-mono text-white">PID {botPid}</span>
@@ -927,8 +1019,8 @@ export default function ConfiguracoesPage() {
 
       </div>
 
-      {/* Bot Terminal Logs Section */}
-      {botRunning && (
+      {/* Bot Terminal Logs Section (Local only) */}
+      {!isProduction && botRunning && (
         <div className="bg-salon-surface border border-salon-border rounded-salon p-6 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-[#2A2A2A] pb-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#D97457] flex items-center gap-2">
