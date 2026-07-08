@@ -229,23 +229,7 @@ async function runSeed() {
     qualification_questions: [
       {
         id: "service_type",
-        question: "Olá! Seja bem-vindo ao Canil Vale da Kubera. Como podemos te ajudar hoje?\n\n1️⃣ Venda de Filhotes\n2️⃣ Serviço de Cobertura / Monta\n3️⃣ Hospedagem / Hotel Canino\n4️⃣ Adestramento\n5️⃣ Falar com o Criador (Rafael Avellar)"
-      },
-      {
-        id: "puppy_gender",
-        question: "Ótima escolha! Para ajudar você a encontrar o filhote ideal, qual gênero você prefere?\n\n1️⃣ Macho\n2️⃣ Fêmea\n3️⃣ Sem preferência"
-      },
-      {
-        id: "puppy_purpose",
-        question: "E qual será a principal finalidade do cão?\n\n1️⃣ Guarda Patrimonial\n2️⃣ Companhia Familiar\n3️⃣ Exposição ou Reprodução"
-      },
-      {
-        id: "dog_experience",
-        question: "Perfeito. Você já possui experiência prévia com cães de grande porte ou de guarda?\n\n1️⃣ Sim\n2️⃣ Não"
-      },
-      {
-        id: "lead_city",
-        question: "Por fim, nos informe sua cidade e estado para que possamos calcular as condições de entrega ou agendar uma visita:"
+        question: "Olá! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Informações sobre a raça\n2️⃣ Filhotes\n3️⃣ Nossos cachorros\n4️⃣ Agendar uma visita\n5️⃣ Outras dúvidas / falar com o tutor"
       }
     ],
     message_templates: {

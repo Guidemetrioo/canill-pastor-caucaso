@@ -3,7 +3,7 @@ import { getSupabase } from "./db";
 
 // State structure for incoming chats in memory
 interface ChatSession {
-  step: "WELCOME" | "PUPPY_GENDER" | "PUPPY_PURPOSE" | "DOG_EXPERIENCE" | "LEAD_CITY" | "STUD_PEDIGREE" | "CONVERSATIONAL";
+  step: "WELCOME" | "CONVERSATIONAL";
   leadId: number;
   answers: {
     service_type?: string;
@@ -88,16 +88,22 @@ export async function handleIncomingMessage(msg: Message, client: any) {
   // 3. Setup / restore session state
   let session = activeSessions.get(from);
   if (!session) {
+    // Standardize step naming for the new direct flow
+    let stepFromDb: any = lead.current_step;
+    if (stepFromDb !== "WELCOME" && stepFromDb !== "CONVERSATIONAL") {
+      stepFromDb = "WELCOME";
+    }
     session = {
-      step: (lead.current_step as any) || "WELCOME",
+      step: stepFromDb || "WELCOME",
       leadId: lead.id,
       answers: lead.data_qualificado || {},
     };
     activeSessions.set(from, session);
   }
 
-  // Fetch dynamic questions from whatsapp_config
-  let qualificationQuestions: any[] = [];
+  // Fetch dynamic welcome menu from database if configured, otherwise use standard fallback
+  let welcomeText = `Olá, ${contactName}! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Informações sobre a raça\n2️⃣ Filhotes\n3️⃣ Nossos cachorros\n4️⃣ Agendar uma visita\n5️⃣ Outras dúvidas / falar com o tutor`;
+
   try {
     const { data: config } = await supabase
       .from("whatsapp_config")
@@ -105,38 +111,12 @@ export async function handleIncomingMessage(msg: Message, client: any) {
       .eq("id", 1)
       .maybeSingle();
     if (config && Array.isArray(config.qualification_questions)) {
-      qualificationQuestions = config.qualification_questions;
+      const welcomeQ = config.qualification_questions.find((item: any) => item.id === "service_type");
+      if (welcomeQ) welcomeText = welcomeQ.question;
     }
   } catch (err) {
     console.error("Erro ao buscar qualification_questions de whatsapp_config:", err);
   }
-
-  // Question string getter with fallbacks
-  const getQuestionText = (id: string, fallback: string): string => {
-    const q = qualificationQuestions.find((item: any) => item.id === id);
-    return q ? q.question : fallback;
-  };
-
-  // Fallbacks definitions
-  const fallbackWelcome = `Olá, ${contactName}! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Quero comprar um filhote\n2️⃣ Quero contratar serviço de monta/cobertura\n3️⃣ Quero saber sobre hospedagem/creche\n4️⃣ Quero saber sobre adestramento\n5️⃣ Outras dúvidas / falar com o criador`;
-  
-  const fallbackPuppyGender = "Legal! Ficamos felizes com seu interesse em nossos cães. Para te indicar os filhotes ideais, você prefere macho ou fêmea?\n\n1️⃣ Macho\n2️⃣ Fêmea\n3️⃣ Sem preferência";
-  
-  const fallbackPuppyPurpose = "Qual será a finalidade principal do cão?\n\n1️⃣ Companhia da família\n2️⃣ Guarda / Proteção de propriedade\n3️⃣ Exposição ou reprodução futura";
-  
-  const fallbackDogExperience = "Você já possui experiência prévia com cães de grande porte ou de guarda?\n\n1️⃣ Sim, já tive cão grande/guarda\n2️⃣ Não, seria meu primeiro cão gigante";
-  
-  const fallbackLeadCity = "Por fim, digite a sua cidade e estado para podermos calcular a logística de entrega ou agendar uma visita (ex: São Paulo - SP):";
-
-  const fallbackStudPedigree = "Excelente. Para o serviço de monta/cobertura, sua fêmea possui pedigree CBKC/FCI e exames negativos de displasia?\n\n1️⃣ Sim, possui tudo\n2️⃣ Possui apenas pedigree\n3️⃣ Não possui registro";
-
-  // Dynamic texts mapped
-  const welcomeText = getQuestionText("service_type", fallbackWelcome);
-  const puppyGenderText = getQuestionText("puppy_gender", fallbackPuppyGender);
-  const puppyPurposeText = getQuestionText("puppy_purpose", fallbackPuppyPurpose);
-  const dogExperienceText = getQuestionText("dog_experience", fallbackDogExperience);
-  const leadCityText = getQuestionText("lead_city", fallbackLeadCity);
-  const studPedigreeText = getQuestionText("stud_pedigree", fallbackStudPedigree);
 
   const resetSession = async (message: string) => {
     session!.step = "WELCOME";
@@ -156,142 +136,100 @@ export async function handleIncomingMessage(msg: Message, client: any) {
   switch (session.step) {
     case "WELCOME": {
       if (body === "1") {
-        session.step = "PUPPY_GENDER";
-        session.answers.service_type = "Compra de Filhote";
-        activeSessions.set(from, session);
-        await updateLeadData(lead.id, "Qualificando", session.answers, "PUPPY_GENDER");
-        await msg.reply(puppyGenderText);
-      } else if (body === "2") {
-        session.step = "STUD_PEDIGREE";
-        session.answers.service_type = "Serviço de Cobertura";
-        activeSessions.set(from, session);
-        await updateLeadData(lead.id, "Qualificando", session.answers, "STUD_PEDIGREE");
-        await msg.reply(studPedigreeText);
-      } else if (body === "3") {
+        const breedText = `a raça Pastor do Cáucaso é uma raça primitiva, originalmente dos montes do Caucaso que abrange o sul da Rússia, Armênia, Azerbaijão, Geórgia e Turquia. Por fazerem parte do grupo molosso, junto com os mastins, Fila brasileiro e etc, possuem um porte gigante. São cães de trabalho, para segurança, por possuir características de dominância e territorialidade extrema, não se assustam com barulhos altos, e dificilmente latem, apenas quando veem algo fora do normal.
+
+Introduzidos na federação da cinofilia internacional em 1920, porém há relatos de cães que fizeram parte da criação da raça antes de Cristo. Os czares da Rússia utilizavam muito esta raça para guarda de prisões, um costume na qual continua até hoje. Fizeram a defesa do muro de Berlim por muitos anos, após sua queda ficaram sem utilização então as famílias da Alemanha adotaram-os.
+
+O pastor do Cáucaso é uma raça de trabalho, para guarda. Possui um temperamento forte e uma grande dominância em seu espaço e próximo a sua família. É necessário a implementação na vida do filhote desde cedo com aqueles que serão de seu convívio, como familiares, empregados ou outros animais, pois depois de adulto, não tolerará nenhum desconhecido em seu território! Não distingue entre idade, sexo ou cor, apenas quem é de sua família e quem não é.
+
+Com os donos e aqueles que acompanharam o crescimento do cão, ele será extremamente fiel e companheiro, amam a presença de seus donos. Não são cães que gostam de brincar com bolinhas e brinquedos, gostam de caminhar e explorar territórios, depois tendem a descansar próximo ao seu dono.
+
+Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tanto do frio, quanto do calor. Possui uma cana nasal e boca larga, o que facilita ainda mais a regulação. Isso não reduz a importância de prover ao cão um local arejado fora do sol com água fresca a vontade. Por estes motivos não é recomendável raspar o pelo do cão em épocas mais quentes, pois isso só atrapharia sua regulação da temperatura corporal.`;
+        
+        await msg.reply(breedText);
+      } 
+      else if (body === "2") {
+        const filhotesText = `No momento não temos filhotes disponíveis, porém temos uma ninhada prevista para Novembro. Caso queira conhecer nossos cães adultos e matrizes, digite *3* ou selecione a opção correspondente.`;
+        
+        await msg.reply(filhotesText);
+      } 
+      else if (body === "3") {
+        try {
+          const { data: dogs } = await supabase
+            .from("matrizes_machos")
+            .select("name, gender")
+            .eq("status", "disponível");
+
+          let dogsText = "🐾 *Nossos Cães Adultos e Matrizes:* \n\n";
+          if (dogs && dogs.length > 0) {
+            dogs.forEach((d: any) => {
+              dogsText += `• *${d.name}* (${d.gender === "macho" ? "Macho" : "Fêmea"})\n`;
+            });
+            dogsText += "\n";
+          } else {
+            dogsText += "• Symion da Kubera (Macho)\n• Vasilísia da Kubera (Fêmea)\n• Nero da Kubera (Macho)\n• Thara da Kubera (Fêmea)\n\n";
+          }
+          dogsText += `Você também pode ver fotos e detalhes da nossa criação na página de filhotes do nosso site:\nhttps://canill-vale-da-kureba-mc8fse3vm-h2wnjznr7j-8776s-projects.vercel.app/filhotes`;
+          await msg.reply(dogsText);
+        } catch (err) {
+          await msg.reply(
+            `🐾 *Nossos Cães Adultos e Matrizes:* \n• Symion da Kubera (Macho)\n• Vasilísia da Kubera (Fêmea)\n• Nero da Kubera (Macho)\n• Thara da Kubera (Fêmea)\n\nConheça mais e veja fotos no nosso site: https://canill-vale-da-kureba-mc8fse3vm-h2wnjznr7j-8776s-projects.vercel.app/filhotes`
+          );
+        }
+      } 
+      else if (body === "4") {
+        const visitaText = `Claro! Será um prazer receber você para conhecer nossos cães e filhotes. Nossas visitas ocorrem de Terça a Sábado, das 09h às 17h (sob agendamento prévio).\n\nQual o melhor dia e horário para você?`;
+        
         session.step = "CONVERSATIONAL";
-        session.answers.service_type = "Hospedagem";
         activeSessions.set(from, session);
-        await updateLeadData(lead.id, "Interessado", session.answers, "CONVERSATIONAL");
-        await msg.reply(
-          "Entendido! Oferecemos hospedagem canina com diárias a R$ 80, piquetes amplos individuais de 150m² e boxes climatizados.\n\nPara agendar uma reserva ou tirar dúvidas sobre vacinas exigidas, responda abaixo ou pergunte livremente."
-        );
-      } else if (body === "4") {
-        session.step = "CONVERSATIONAL";
-        session.answers.service_type = "Adestramento";
-        activeSessions.set(from, session);
-        await updateLeadData(lead.id, "Interessado", session.answers, "CONVERSATIONAL");
-        await msg.reply(
-          "Legal! Nossos adestradores são especialistas em comportamento de cães de guarda e grande porte.\n\nOferecemos obediência básica urbana, socialização e correção comportamental. Como posso ajudar com os treinos?"
-        );
-      } else if (body === "5") {
+        await updateLeadData(lead.id, "Em Negociação", session.answers, "CONVERSATIONAL");
+        await msg.reply(visitaText);
+      } 
+      else if (body === "5") {
+        const tutorText = `Certo! Sinalizei ao criador/tutor do canil. Ele está a sua espera e responderá diretamente nesta conversa em breve! 🐕`;
+        
         session.step = "CONVERSATIONAL";
         activeSessions.set(from, session);
-        await updateLeadData(lead.id, "Interessado", session.answers, "CONVERSATIONAL");
-        await msg.reply(
-          "Perfeito! Deixei seu chat sinalizado para o criador assumir. Você pode mandar sua dúvida por aqui que te responderemos em breve!"
-        );
-      } else {
-        await msg.reply(welcomeText);
-      }
-      break;
-    }
-
-    case "PUPPY_GENDER": {
-      let gender = "";
-      if (body === "1") gender = "Macho";
-      else if (body === "2") gender = "Fêmea";
-      else if (body === "3") gender = "Sem preferência";
+        // Disable auto_respond for this lead
+        await supabase
+          .from("leads")
+          .update({ auto_respond: false, status: "Em Negociação", current_step: "CONVERSATIONAL" })
+          .eq("id", lead.id);
+          
+        await msg.reply(tutorText);
+      } 
       else {
-        await msg.reply("Opção inválida. Digite 1 para Macho, 2 para Fêmea ou 3 para Sem preferência:");
-        return;
+        // Fallback or Conversational lookup directly
+        const query = body.toLowerCase();
+        if (query.includes("preço") || query.includes("preco") || query.includes("valor") || query.includes("quanto custa")) {
+          await msg.reply(
+            "Nossos filhotes de Pastor do Cáucaso têm preços a partir de R$ 6.000,00 (machos) e R$ 6.500,00 (fêmeas), com pedigree CBKC e vacinação inclusa. O serviço de monta custa R$ 3.500,00 e a hospedagem R$ 80/diária."
+          );
+        } else if (query.includes("localizacao") || query.includes("onde fica") || query.includes("endereço") || query.includes("endereco") || query.includes("cidade")) {
+          await msg.reply(
+            "Nosso canil fica localizado em Itatiba - SP. As visitas devem ser agendadas previamente."
+          );
+        } else if (query.includes("filhote") || query.includes("disponiveis") || query.includes("disponível") || query.includes("ninhada")) {
+          await msg.reply("No momento não temos filhotes disponíveis, porém temos uma ninhada prevista para Novembro. Caso queira conhecer nossos cães adultos e matrizes, digite *3*.");
+        } else if (query.includes("visita") || query.includes("agendar") || query.includes("conhecer") || query.includes("visitar")) {
+          await msg.reply(
+            "Nossas visitas ocorrem de Terça a Sábado das 09h às 17h. Por favor, nos informe qual o melhor dia e horário para você agendar!"
+          );
+        } else {
+          await msg.reply(welcomeText);
+        }
       }
-
-      session.answers.puppy_gender = gender;
-      session.step = "PUPPY_PURPOSE";
-      activeSessions.set(from, session);
-      await updateLeadData(lead.id, "Qualificando", session.answers, "PUPPY_PURPOSE");
-      await msg.reply(puppyPurposeText);
-      break;
-    }
-
-    case "PUPPY_PURPOSE": {
-      let purpose = "";
-      if (body === "1") purpose = "Companhia";
-      else if (body === "2") purpose = "Guarda";
-      else if (body === "3") purpose = "Exposição/Reprodução";
-      else {
-        await msg.reply("Opção inválida. Digite 1 para Companhia, 2 para Guarda ou 3 para Exposição:");
-        return;
-      }
-
-      session.answers.puppy_purpose = purpose;
-      session.step = "DOG_EXPERIENCE";
-      activeSessions.set(from, session);
-      await updateLeadData(lead.id, "Qualificando", session.answers, "DOG_EXPERIENCE");
-      await msg.reply(dogExperienceText);
-      break;
-    }
-
-    case "DOG_EXPERIENCE": {
-      let exp = "";
-      if (body === "1") exp = "Sim";
-      else if (body === "2") exp = "Não";
-      else {
-        await msg.reply("Opção inválida. Responda 1 para Sim ou 2 para Não:");
-        return;
-      }
-
-      session.answers.dog_experience = exp;
-      session.step = "LEAD_CITY";
-      activeSessions.set(from, session);
-      await updateLeadData(lead.id, "Qualificando", session.answers, "LEAD_CITY");
-      await msg.reply(leadCityText);
-      break;
-    }
-
-    case "LEAD_CITY": {
-      if (body.length < 3) {
-        await msg.reply("Por favor, digite a sua cidade e estado:");
-        return;
-      }
-
-      session.answers.lead_city = body;
-      session.step = "CONVERSATIONAL";
-      activeSessions.set(from, session);
-      await updateLeadData(lead.id, "Interessado", session.answers, "CONVERSATIONAL");
-
-      // Notify finalization
-      await msg.reply(
-        `Obrigado pelas informações! 👍\nVocê foi qualificado com sucesso. Nossos filhotes custam a partir de R$ 6.000,00.\n\nAgora você pode conversar livremente por aqui. Digite perguntas como:\n- "Preços"\n- "Localização do canil"\n- "Filhotes disponíveis"\n- "Agendar visita"`
-      );
-      break;
-    }
-
-    case "STUD_PEDIGREE": {
-      let reg = "";
-      if (body === "1") reg = "Sim, possui pedigree e exames";
-      else if (body === "2") reg = "Possui apenas pedigree";
-      else if (body === "3") reg = "Não possui registro";
-      else {
-        await msg.reply("Opção inválida. Selecione 1, 2 ou 3:");
-        return;
-      }
-
-      session.answers.stud_pedigree = reg;
-      session.step = "CONVERSATIONAL";
-      activeSessions.set(from, session);
-      await updateLeadData(lead.id, "Interessado", session.answers, "CONVERSATIONAL");
-
-      await msg.reply(
-        `Registrado! Nossos padreadores importados da Rússia e Europa (como Symion da Kubera) estão disponíveis para monta por R$ 3.500,00.\n\nVocê pode tirar suas dúvidas por aqui enviando qualquer mensagem. Se quiser agendar, basta avisar.`
-      );
       break;
     }
 
     case "CONVERSATIONAL": {
       const query = body.toLowerCase();
+      
+      if (query === "menu" || query === "sair" || query === "cancelar") {
+        await resetSession(welcomeText);
+        return;
+      }
 
-      // Conversational responses
       if (query.includes("preço") || query.includes("preco") || query.includes("valor") || query.includes("quanto custa")) {
         await msg.reply(
           "Nossos filhotes de Pastor do Cáucaso têm preços a partir de R$ 6.000,00 (machos) e R$ 6.500,00 (fêmeas), com pedigree CBKC e vacinação inclusa. O serviço de monta custa R$ 3.500,00 e a hospedagem R$ 80/diária."
@@ -301,39 +239,13 @@ export async function handleIncomingMessage(msg: Message, client: any) {
           "Nosso canil fica localizado em Itatiba - SP. As visitas devem ser agendadas previamente."
         );
       } else if (query.includes("filhote") || query.includes("disponiveis") || query.includes("disponível") || query.includes("ninhada")) {
-        try {
-          const { data: filhotes } = await supabase
-            .from("filhotes")
-            .select("name, price, gender")
-            .eq("status", "Disponível");
-
-          if (filhotes && filhotes.length > 0) {
-            let reply = "🐾 *Filhotes Disponíveis no Momento:* \n\n";
-            filhotes.forEach((f: any) => {
-              reply += `• *${f.name}* (${f.gender === "macho" ? "Macho" : "Fêmea"}) - R$ ${f.price.toLocaleString("pt-BR")}\n`;
-            });
-            reply += "\nSe quiser reservar ou agendar uma visita para vê-los, basta digitar 'Agendar visita'.";
-            await msg.reply(reply);
-          } else {
-            await msg.reply("No momento, não temos filhotes a pronta entrega, mas podemos incluir você na lista de espera para o cio da Vasilísia previsto para os próximos meses. Deseja entrar na lista?");
-          }
-        } catch {
-          await msg.reply("Temos filhotes machos (Buran) por R$ 6.000,00 e fêmeas (Aurora) por R$ 6.500,00 disponíveis no canil. Quer agendar uma visita?");
-        }
+        await msg.reply("No momento não temos filhotes disponíveis, porém temos uma ninhada prevista para Novembro. Caso queira conhecer nossos cães adultos e matrizes, digite *3*.");
       } else if (query.includes("visita") || query.includes("agendar") || query.includes("conhecer") || query.includes("visitar")) {
         await msg.reply(
-          "Claro! Será um prazer receber você para conhecer nossos cães e filhotes. Nossas visitas são agendadas de Terça a Sábado das 09h às 17h.\n\nQual o melhor dia e horário para você?"
+          "Nossas visitas ocorrem de Terça a Sábado das 09h às 17h. Por favor, nos informe qual o melhor dia e horário para você agendar!"
         );
-        // Elevate status to negotiation
-        await updateLeadData(lead.id, "Em Negociação", session.answers, "CONVERSATIONAL");
-      } else if (query.includes("humano") || query.includes("falar com criador") || query.includes("atendente") || query.includes("ajuda")) {
-        await msg.reply("Certo, sinalizei ao criador do canil. Ele falará com você diretamente nesta conversa em breve!");
-        // Suspend responses
-        await supabase.from("leads").update({ auto_respond: false, status: "Em Negociação" }).eq("id", lead.id);
       } else {
-        await msg.reply(
-          "Interessante! Não compreendi completamente a pergunta. Se quiser agendar uma visita para ver os cães, saber sobre preços ou falar diretamente com o criador (humano), digite abaixo."
-        );
+        await msg.reply("Entendido! Anotei a sua mensagem e o tutor do canil entrará em contato com você em breve por aqui. Se quiser voltar ao menu de opções principal, digite *menu*.");
       }
       break;
     }
