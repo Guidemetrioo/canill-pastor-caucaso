@@ -3,7 +3,7 @@ import { getSupabase } from "./db";
 
 // State structure for incoming chats in memory
 interface ChatSession {
-  step: "WELCOME" | "CONVERSATIONAL";
+  step: "WELCOME" | "VISIT_DATE" | "VISIT_TIME" | "CONVERSATIONAL";
   leadId: number;
   answers: {
     service_type?: string;
@@ -12,10 +12,75 @@ interface ChatSession {
     dog_experience?: string;
     lead_city?: string;
     stud_pedigree?: string;
+    visit_date?: string;
+    visit_time?: string;
   };
 }
 
 const activeSessions = new Map<string, ChatSession>();
+
+// Parse natural language date & time strings into a valid JavaScript Date object
+function parseDateTime(dateStr: string, timeStr: string): Date {
+  const now = new Date();
+  let targetYear = now.getFullYear();
+  let targetMonth = now.getMonth();
+  let targetDay = now.getDate();
+  let targetHour = 14;
+  let targetMin = 0;
+
+  // 1. Parse timeStr (e.g. "14:00", "14h", "10:30")
+  const timeMatch = timeStr.match(/(\d{1,2})[h:]?(\d{2})?/i);
+  if (timeMatch) {
+    targetHour = parseInt(timeMatch[1]);
+    if (timeMatch[2]) {
+      targetMin = parseInt(timeMatch[2]);
+    }
+  }
+
+  // 2. Parse dateStr (e.g. "23/06", "23/06/2026", "sabado", "sábado")
+  const dateParts = dateStr.match(/(\d{1,2})\/(\d{1,2})\/?(\d{4})?/);
+  if (dateParts) {
+    targetDay = parseInt(dateParts[1]);
+    targetMonth = parseInt(dateParts[2]) - 1; // 0-indexed month
+    if (dateParts[3]) {
+      targetYear = parseInt(dateParts[3]);
+    }
+  } else {
+    // Check for day of the week strings
+    const weekdayMap: { [key: string]: number } = {
+      domingo: 0, dom: 0,
+      segunda: 1, seg: 1,
+      terca: 2, ter: 2, terça: 2,
+      quarta: 3, qua: 3,
+      quinta: 4, qui: 4,
+      sexta: 5, sex: 5,
+      sabado: 6, sab: 6, sábado: 6
+    };
+    
+    const cleanDate = dateStr.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let targetDayOfWeek = -1;
+    for (const key in weekdayMap) {
+      if (cleanDate.includes(key)) {
+        targetDayOfWeek = weekdayMap[key];
+        break;
+      }
+    }
+
+    if (targetDayOfWeek !== -1) {
+      const currentDayOfWeek = now.getDay();
+      let daysToAdd = targetDayOfWeek - currentDayOfWeek;
+      if (daysToAdd <= 0) {
+        daysToAdd += 7; // next week
+      }
+      const futureDate = new Date(now.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+      targetDay = futureDate.getDate();
+      targetMonth = futureDate.getMonth();
+      targetYear = futureDate.getFullYear();
+    }
+  }
+
+  return new Date(targetYear, targetMonth, targetDay, targetHour, targetMin);
+}
 
 async function getOrCreateLead(phone: string, name: string): Promise<any> {
   const cleanPhone = phone.replace(/\D/g, "");
@@ -88,9 +153,9 @@ export async function handleIncomingMessage(msg: Message, client: any) {
   // 3. Setup / restore session state
   let session = activeSessions.get(from);
   if (!session) {
-    // Standardize step naming for the new direct flow
     let stepFromDb: any = lead.current_step;
-    if (stepFromDb !== "WELCOME" && stepFromDb !== "CONVERSATIONAL") {
+    const validSteps = ["WELCOME", "VISIT_DATE", "VISIT_TIME", "CONVERSATIONAL"];
+    if (!validSteps.includes(stepFromDb)) {
       stepFromDb = "WELCOME";
     }
     session = {
@@ -101,7 +166,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
     activeSessions.set(from, session);
   }
 
-  // Fetch dynamic welcome menu from database if configured, otherwise use standard fallback
+  // Fetch dynamic welcome menu from database if configured
   let welcomeText = `Olá, ${contactName}! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Informações sobre a raça\n2️⃣ Filhotes\n3️⃣ Nossos cachorros\n4️⃣ Agendar uma visita\n5️⃣ Outras dúvidas / falar com o tutor`;
 
   try {
@@ -126,7 +191,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
     await msg.reply(message);
   };
 
-  // Sair/Restart Command
+  // Cancel/Restart Commands
   if (body.toLowerCase() === "sair" || body.toLowerCase() === "cancelar" || body.toLowerCase() === "menu") {
     await resetSession(welcomeText);
     return;
@@ -178,11 +243,11 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
         }
       } 
       else if (body === "4") {
-        const visitaText = `Claro! Será um prazer receber você para conhecer nossos cães e filhotes. Nossas visitas ocorrem de Terça a Sábado, das 09h às 17h (sob agendamento prévio).\n\nQual o melhor dia e horário para você?`;
+        const visitaText = `Claro! Será um prazer receber você para conhecer nossos cães e filhotes. Nossas visitas ocorrem de Terça a Sábado, das 09h às 17h (sob agendamento prévio).\n\nPor favor, digite a *data* desejada para a sua visita (Ex: *23/06* ou *Sábado*):`;
         
-        session.step = "CONVERSATIONAL";
+        session.step = "VISIT_DATE";
         activeSessions.set(from, session);
-        await updateLeadData(lead.id, "Em Negociação", session.answers, "CONVERSATIONAL");
+        await updateLeadData(lead.id, "Em Negociação", session.answers, "VISIT_DATE");
         await msg.reply(visitaText);
       } 
       else if (body === "5") {
@@ -199,7 +264,6 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
         await msg.reply(tutorText);
       } 
       else {
-        // Fallback or Conversational lookup directly
         const query = body.toLowerCase();
         if (query.includes("preço") || query.includes("preco") || query.includes("valor") || query.includes("quanto custa")) {
           await msg.reply(
@@ -219,6 +283,66 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
           await msg.reply(welcomeText);
         }
       }
+      break;
+    }
+
+    case "VISIT_DATE": {
+      session.answers.visit_date = body;
+      session.step = "VISIT_TIME";
+      activeSessions.set(from, session);
+      await updateLeadData(lead.id, "Em Negociação", session.answers, "VISIT_TIME");
+      await msg.reply("Perfeito! Agora informe o *horário* desejado (Ex: *14:00* ou *10h*):");
+      break;
+    }
+
+    case "VISIT_TIME": {
+      session.answers.visit_time = body;
+      const visitDateStr = session.answers.visit_date || "";
+      const visitTimeStr = body;
+      
+      const parsedDate = parseDateTime(visitDateStr, visitTimeStr);
+      
+      // Save appointment in public.agenda table
+      try {
+        await supabase.from("agenda").insert({
+          type: "visita",
+          title: `Visita de ${contactName}`,
+          description: `Agendado via WhatsApp. Contato: ${cleanPhone}`,
+          datetime: parsedDate.toISOString(),
+          lead_id: lead.id,
+          status: "Agendado"
+        });
+      } catch (err) {
+        console.error("Erro ao registrar agendamento no Supabase:", err);
+      }
+
+      // Update lead to Visita Agendada
+      await updateLeadData(lead.id, "Visita Agendada", session.answers, "CONVERSATIONAL");
+      session.step = "CONVERSATIONAL";
+      activeSessions.set(from, session);
+
+      // Fetch message template from config
+      let confirmationText = `Olá, *{nome}*! Seu agendamento no *Canil Vale da Kubera* foi confirmado com sucesso! 🎉\n\n📅 *Data:* {data}\n⏰ *Horário:* {hora}h\n📝 *Atividade:* {atividade}\n\nTe aguardamos! 🐾`;
+      try {
+        const { data: config } = await supabase
+          .from("whatsapp_config")
+          .select("message_templates")
+          .eq("id", 1)
+          .maybeSingle();
+        if (config && config.message_templates && config.message_templates.confirmacao) {
+          confirmationText = config.message_templates.confirmacao;
+        }
+      } catch (err) {
+        console.error("Erro ao carregar template de confirmacao:", err);
+      }
+
+      const finalMsg = confirmationText
+        .replace(/{nome}/g, contactName)
+        .replace(/{data}/g, visitDateStr)
+        .replace(/{hora}/g, visitTimeStr)
+        .replace(/{atividade}/g, "Visita Técnica ao Canil");
+
+      await msg.reply(finalMsg);
       break;
     }
 
