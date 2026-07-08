@@ -288,10 +288,52 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
 
     case "VISIT_DATE": {
       session.answers.visit_date = body;
+      
+      // Parse the date to find the target day
+      const targetDate = parseDateTime(body, "12:00");
+      
+      // Default slots: Tuesday to Saturday, 09h to 17h
+      let availableSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+      
+      try {
+        const startOfDay = new Date(targetDate);
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(targetDate);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        // Fetch booked events on that date
+        const { data: booked } = await supabase
+          .from("agenda")
+          .select("datetime")
+          .gte("datetime", startOfDay.toISOString())
+          .lte("datetime", endOfDay.toISOString())
+          .neq("status", "Cancelado");
+
+        if (booked && booked.length > 0) {
+          const bookedHours = booked.map((b: any) => {
+            const date = new Date(b.datetime);
+            const h = String(date.getHours()).padStart(2, "0");
+            const m = String(date.getMinutes()).padStart(2, "0");
+            return `${h}:${m}`;
+          });
+          
+          availableSlots = availableSlots.filter(slot => !bookedHours.includes(slot));
+        }
+      } catch (err) {
+        console.error("Erro ao buscar horários ocupados no banco:", err);
+      }
+
+      if (availableSlots.length === 0) {
+        await msg.reply("Desculpe, todos os horários de visita para este dia já estão preenchidos. Por favor, informe outra data:");
+        return;
+      }
+
       session.step = "VISIT_TIME";
       activeSessions.set(from, session);
       await updateLeadData(lead.id, "Em Negociação", session.answers, "VISIT_TIME");
-      await msg.reply("Perfeito! Agora informe o *horário* desejado (Ex: *14:00* ou *10h*):");
+
+      const formattedSlots = availableSlots.map(s => `• *${s}*`).join("\n");
+      await msg.reply(`Perfeito! Para o dia solicitado, temos estes horários disponíveis:\n\n${formattedSlots}\n\nPor favor, digite o horário desejado (Ex: *14:00*):`);
       break;
     }
 

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
 import { useAura } from "@/context/AuraContext";
-import { Menu, Bell, User, LogOut, ShieldAlert } from "lucide-react";
+import { Menu, Bell, User, LogOut, ShieldAlert, CalendarDays } from "lucide-react";
 import { sidebarItems } from "./Sidebar";
 
 interface HeaderProps {
@@ -202,6 +203,14 @@ export default function Header({ onMenuOpen }: HeaderProps) {
                 <p className="text-xs font-semibold">{profile?.name}</p>
                 <p className="text-[9px] text-primary uppercase tracking-wider font-medium">{profile?.role}</p>
               </div>
+              <Link
+                href="/dashboard/agenda"
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-salon-text-secondary hover:text-primary hover:bg-white/5 transition-all mb-1 border-b border-salon-border/40 pb-2"
+              >
+                <CalendarDays className="w-4 h-4 text-[#D97457]" />
+                <span>Agendamentos</span>
+              </Link>
               <button
                 onClick={handleLogout}
                 className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-salon-text-secondary hover:text-salon-error hover:bg-salon-error/10 transition-all"

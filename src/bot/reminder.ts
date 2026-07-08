@@ -84,14 +84,13 @@ export async function checkAndSendReminders(client: WhatsAppClient) {
     
     const now = getLocalAsUtc(new Date(), "America/Sao_Paulo");
     
-    // Check events scheduled around reminderHours from now (+/- 15 minutes window)
-    const minTime = new Date(now.getTime() + (reminderHours * 60 - 15) * 60 * 1000).toISOString();
-    const maxTime = new Date(now.getTime() + (reminderHours * 60 + 15) * 60 * 1000).toISOString();
+    // Check all events scheduled between now and (now + reminderHours) to prevent missing any due to polling intervals
+    const maxTime = new Date(now.getTime() + reminderHours * 60 * 60 * 1000).toISOString();
     
     const { data: agendaEvents, error } = await supabase
       .from("agenda")
       .select("*")
-      .gte("datetime", minTime)
+      .gt("datetime", now.toISOString())
       .lte("datetime", maxTime)
       .eq("reminder_sent", false)
       .in("status", ["Agendado", "Confirmado"]);
