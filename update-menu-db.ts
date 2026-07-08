@@ -42,7 +42,7 @@ async function run() {
     .eq("id", 1);
 
   if (error) {
-    console.error("❌ Erro ao atualizar no Supabase:", error.message);
+    console.error("❌ Erro ao atualizar no Supabase:", error);
   } else {
     console.log("✅ Sucesso! Perguntas de qualificação atualizadas no Supabase.");
   }
