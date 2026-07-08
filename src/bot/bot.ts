@@ -5,6 +5,15 @@ import path from "path";
 import { startReminderLoop } from "./reminder";
 import { getSupabase } from "./db";
 import { handleIncomingMessage } from "./flow";
+import { 
+  startDaemon, 
+  setBotStatus, 
+  setPairingCode, 
+  setQrCode, 
+  setPhoneNumber, 
+  registerRequestCodeCallback, 
+  registerLogoutCallback 
+} from "./daemon";
 
 // 1. Load .env.local variables
 function loadEnv() {
@@ -54,16 +63,6 @@ function cleanupPid() {
   }
 }
 
-process.on("exit", cleanupPid);
-process.on("SIGINT", () => {
-  cleanupPid();
-  process.exit(0);
-});
-process.on("SIGTERM", () => {
-  cleanupPid();
-  process.exit(0);
-});
-
 // 2. Locate Chrome/Edge executable
 function getChromeExecutablePath(): string | undefined {
   if (process.platform === "win32") {
@@ -103,6 +102,11 @@ const executablePath = getChromeExecutablePath();
 
 // Helper to update connection status
 async function updateBotStatus(status: string, qrCode: string | null = null, phone: string | null = null) {
+  // Sync state to local daemon
+  setBotStatus(status);
+  if (qrCode) setQrCode(qrCode);
+  if (phone) setPhoneNumber(phone);
+
   try {
     const supabase = getSupabase();
     if (!supabase) return;
@@ -141,6 +145,7 @@ const client = new Client({
   authStrategy: new LocalAuth({
     dataPath: path.resolve(process.cwd(), ".wwebjs_auth"),
   }),
+  pairWithPhoneNumber: true as any,
   puppeteer: {
     executablePath: executablePath,
     headless: true,
@@ -158,6 +163,7 @@ const client = new Client({
 
 // 4. Register Event Listeners
 client.on("qr", (qr) => {
+  setQrCode(qr);
   console.log("\n=============================================================");
   console.log("📲 ESCANEIE O QR CODE ABAIXO COM SEU WHATSAPP:");
   console.log("=============================================================\n");
@@ -276,7 +282,7 @@ client.on("message_create", async (msg) => {
           status: "sent",
           created_at: new Date().toISOString()
         });
-      console.log(`📤 [Chat Sync] Resposta pelo celular sincronizada para ${msg.to}.`);
+      console.log(`📤 [Chat Sync] Resposta pelo celular/bot sincronizada para ${msg.to}.`);
     } catch (err: any) {
       // Fail silently
     }
@@ -344,15 +350,15 @@ function startDisconnectListener(client: Client) {
       if (data && data.status === "disconnect_requested") {
         console.log("🔌 [WhatsApp Bot] Solicitação de desconexão recebida. Efetuando logout...");
         try {
-          await client.logout();
+          await logoutWhatsAppSession();
         } catch (logoutErr) {
           console.warn("⚠️ Falha ao deslogar limpo, limpando diretório da sessão...");
           const authPath = path.resolve(process.cwd(), ".wwebjs_auth");
           if (fs.existsSync(authPath)) {
             fs.rmSync(authPath, { recursive: true, force: true });
           }
+          await updateBotStatus("disconnected");
         }
-        await updateBotStatus("disconnected");
         console.log("👋 Processo do bot encerrado após solicitação de desconexão.");
         process.exit(0);
       }
@@ -362,7 +368,72 @@ function startDisconnectListener(client: Client) {
   }, 3000);
 }
 
-// Start Client Process
+// Functions for on-demand actions via API Daemon
+export async function logoutWhatsAppSession(): Promise<void> {
+  console.log("👋 Solicitando desconexão da sessão do WhatsApp...");
+  try {
+    await client.logout();
+    await updateBotStatus("disconnected");
+    setPairingCode(null);
+    setQrCode(null);
+    setPhoneNumber(null);
+    console.log("✅ Sessão desconectada com sucesso!");
+  } catch (err: any) {
+    console.error("❌ Erro ao fazer logout da sessão do WhatsApp:", err.message || err);
+    throw err;
+  }
+}
+
+export async function requestPairingCodeFromClient(phone: string): Promise<string> {
+  const page = (client as any).pupPage;
+  if (!page) {
+    throw new Error("O robô está desconectado ou inicializando o navegador. Por favor, aguarde o QR Code aparecer na tela antes de solicitar o código.");
+  }
+
+  let cleanPhone = phone.replace(/\D/g, "");
+  if (!cleanPhone) throw new Error("Número de telefone inválido.");
+  
+  if ((cleanPhone.length === 10 || cleanPhone.length === 11) && !cleanPhone.startsWith("55")) {
+    cleanPhone = "55" + cleanPhone;
+  }
+  
+  console.log(`\n📲 Solicitando código de pareamento sob demanda para: ${cleanPhone}...`);
+  try {
+    const code = await client.requestPairingCode(cleanPhone);
+    console.log(`🔑 CÓDIGO DE PAREAMENTO GERADO SOB DEMANDA: ${code}`);
+    setPairingCode(code);
+    await updateBotStatus("qr_ready", code); // Code acts as QR Code container when pairing code is used
+    return code;
+  } catch (err: any) {
+    console.error("❌ Erro ao solicitar código de pareamento sob demanda:", err.message || err);
+    throw err;
+  }
+}
+
+// Clean browser close on process termination
+async function cleanExit() {
+  console.log("\n👋 Encerrando o cliente WhatsApp de forma limpa...");
+  cleanupPid();
+  try {
+    await client.destroy();
+  } catch (err) {}
+  process.exit(0);
+}
+
+process.on("SIGINT", cleanExit);
+process.on("SIGTERM", cleanExit);
+process.on("exit", () => {
+  cleanupPid();
+  try {
+    (client as any).pupBrowser?.close();
+  } catch (err) {}
+});
+
+// Start Client Process and API Daemon
+startDaemon();
+registerRequestCodeCallback(requestPairingCodeFromClient);
+registerLogoutCallback(logoutWhatsAppSession);
+
 updateBotStatus("connecting");
 startDisconnectListener(client);
 client.initialize().catch((err) => {

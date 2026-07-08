@@ -74,6 +74,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
   const chat = await msg.getChat();
   const contact = await msg.getContact();
   const contactName = chat.name || contact.pushname || contact.name || "Interessado Canil";
+  const supabase = getSupabase();
 
   // 1. Get or create lead
   const lead = await getOrCreateLead(cleanPhone, contactName);
@@ -95,6 +96,48 @@ export async function handleIncomingMessage(msg: Message, client: any) {
     activeSessions.set(from, session);
   }
 
+  // Fetch dynamic questions from whatsapp_config
+  let qualificationQuestions: any[] = [];
+  try {
+    const { data: config } = await supabase
+      .from("whatsapp_config")
+      .select("qualification_questions")
+      .eq("id", 1)
+      .maybeSingle();
+    if (config && Array.isArray(config.qualification_questions)) {
+      qualificationQuestions = config.qualification_questions;
+    }
+  } catch (err) {
+    console.error("Erro ao buscar qualification_questions de whatsapp_config:", err);
+  }
+
+  // Question string getter with fallbacks
+  const getQuestionText = (id: string, fallback: string): string => {
+    const q = qualificationQuestions.find((item: any) => item.id === id);
+    return q ? q.question : fallback;
+  };
+
+  // Fallbacks definitions
+  const fallbackWelcome = `Olá, ${contactName}! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Quero comprar um filhote\n2️⃣ Quero contratar serviço de monta/cobertura\n3️⃣ Quero saber sobre hospedagem/creche\n4️⃣ Quero saber sobre adestramento\n5️⃣ Outras dúvidas / falar com o criador`;
+  
+  const fallbackPuppyGender = "Legal! Ficamos felizes com seu interesse em nossos cães. Para te indicar os filhotes ideais, você prefere macho ou fêmea?\n\n1️⃣ Macho\n2️⃣ Fêmea\n3️⃣ Sem preferência";
+  
+  const fallbackPuppyPurpose = "Qual será a finalidade principal do cão?\n\n1️⃣ Companhia da família\n2️⃣ Guarda / Proteção de propriedade\n3️⃣ Exposição ou reprodução futura";
+  
+  const fallbackDogExperience = "Você já possui experiência prévia com cães de grande porte ou de guarda?\n\n1️⃣ Sim, já tive cão grande/guarda\n2️⃣ Não, seria meu primeiro cão gigante";
+  
+  const fallbackLeadCity = "Por fim, digite a sua cidade e estado para podermos calcular a logística de entrega ou agendar uma visita (ex: São Paulo - SP):";
+
+  const fallbackStudPedigree = "Excelente. Para o serviço de monta/cobertura, sua fêmea possui pedigree CBKC/FCI e exames negativos de displasia?\n\n1️⃣ Sim, possui tudo\n2️⃣ Possui apenas pedigree\n3️⃣ Não possui registro";
+
+  // Dynamic texts mapped
+  const welcomeText = getQuestionText("service_type", fallbackWelcome);
+  const puppyGenderText = getQuestionText("puppy_gender", fallbackPuppyGender);
+  const puppyPurposeText = getQuestionText("puppy_purpose", fallbackPuppyPurpose);
+  const dogExperienceText = getQuestionText("dog_experience", fallbackDogExperience);
+  const leadCityText = getQuestionText("lead_city", fallbackLeadCity);
+  const studPedigreeText = getQuestionText("stud_pedigree", fallbackStudPedigree);
+
   const resetSession = async (message: string) => {
     session!.step = "WELCOME";
     session!.answers = {};
@@ -105,9 +148,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
 
   // Sair/Restart Command
   if (body.toLowerCase() === "sair" || body.toLowerCase() === "cancelar" || body.toLowerCase() === "menu") {
-    await resetSession(
-      "Atendimento reiniciado. 🐕\nComo posso ajudar você hoje?\n\n1️⃣ Quero comprar um filhote\n2️⃣ Quero contratar serviço de monta/cobertura\n3️⃣ Quero saber sobre hospedagem/creche\n4️⃣ Quero saber sobre adestramento\n5️⃣ Outras dúvidas / falar com o criador"
-    );
+    await resetSession(welcomeText);
     return;
   }
 
@@ -119,17 +160,13 @@ export async function handleIncomingMessage(msg: Message, client: any) {
         session.answers.service_type = "Compra de Filhote";
         activeSessions.set(from, session);
         await updateLeadData(lead.id, "Qualificando", session.answers, "PUPPY_GENDER");
-        await msg.reply(
-          "Legal! Ficamos felizes com seu interesse em nossos cães. Para te indicar os filhotes ideais, você prefere macho ou fêmea?\n\n1️⃣ Macho\n2️⃣ Fêmea\n3️⃣ Sem preferência"
-        );
+        await msg.reply(puppyGenderText);
       } else if (body === "2") {
         session.step = "STUD_PEDIGREE";
         session.answers.service_type = "Serviço de Cobertura";
         activeSessions.set(from, session);
         await updateLeadData(lead.id, "Qualificando", session.answers, "STUD_PEDIGREE");
-        await msg.reply(
-          "Excelente. Para o serviço de monta/cobertura, sua fêmea possui pedigree CBKC/FCI e exames negativos de displasia?\n\n1️⃣ Sim, possui tudo\n2️⃣ Possui apenas pedigree\n3️⃣ Não possui registro"
-        );
+        await msg.reply(studPedigreeText);
       } else if (body === "3") {
         session.step = "CONVERSATIONAL";
         session.answers.service_type = "Hospedagem";
@@ -154,9 +191,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
           "Perfeito! Deixei seu chat sinalizado para o criador assumir. Você pode mandar sua dúvida por aqui que te responderemos em breve!"
         );
       } else {
-        await msg.reply(
-          `Olá, ${contactName}! Seja bem-vindo ao Canil Vale da Kubera (Pastor do Cáucaso). 🐕\nComo posso ajudar você hoje? Digite o número correspondente:\n\n1️⃣ Quero comprar um filhote\n2️⃣ Quero contratar serviço de monta/cobertura\n3️⃣ Quero saber sobre hospedagem/creche\n4️⃣ Quero saber sobre adestramento\n5️⃣ Outras dúvidas / falar com o criador`
-        );
+        await msg.reply(welcomeText);
       }
       break;
     }
@@ -175,9 +210,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
       session.step = "PUPPY_PURPOSE";
       activeSessions.set(from, session);
       await updateLeadData(lead.id, "Qualificando", session.answers, "PUPPY_PURPOSE");
-      await msg.reply(
-        "Qual será a finalidade principal do cão?\n\n1️⃣ Companhia da família\n2️⃣ Guarda / Proteção de propriedade\n3️⃣ Exposição ou reprodução futura"
-      );
+      await msg.reply(puppyPurposeText);
       break;
     }
 
@@ -195,9 +228,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
       session.step = "DOG_EXPERIENCE";
       activeSessions.set(from, session);
       await updateLeadData(lead.id, "Qualificando", session.answers, "DOG_EXPERIENCE");
-      await msg.reply(
-        "Você já possui experiência prévia com cães de grande porte ou de guarda?\n\n1️⃣ Sim, já tive cão grande/guarda\n2️⃣ Não, seria meu primeiro cão gigante"
-      );
+      await msg.reply(dogExperienceText);
       break;
     }
 
@@ -214,7 +245,7 @@ export async function handleIncomingMessage(msg: Message, client: any) {
       session.step = "LEAD_CITY";
       activeSessions.set(from, session);
       await updateLeadData(lead.id, "Qualificando", session.answers, "LEAD_CITY");
-      await msg.reply("Por fim, digite a sua cidade e estado para podermos calcular a logística de entrega ou agendar uma visita (ex: São Paulo - SP):");
+      await msg.reply(leadCityText);
       break;
     }
 
@@ -271,7 +302,6 @@ export async function handleIncomingMessage(msg: Message, client: any) {
         );
       } else if (query.includes("filhote") || query.includes("disponiveis") || query.includes("disponível") || query.includes("ninhada")) {
         try {
-          const supabase = getSupabase();
           const { data: filhotes } = await supabase
             .from("filhotes")
             .select("name, price, gender")
@@ -299,7 +329,6 @@ export async function handleIncomingMessage(msg: Message, client: any) {
       } else if (query.includes("humano") || query.includes("falar com criador") || query.includes("atendente") || query.includes("ajuda")) {
         await msg.reply("Certo, sinalizei ao criador do canil. Ele falará com você diretamente nesta conversa em breve!");
         // Suspend responses
-        const supabase = getSupabase();
         await supabase.from("leads").update({ auto_respond: false, status: "Em Negociação" }).eq("id", lead.id);
       } else {
         await msg.reply(

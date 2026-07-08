@@ -35,7 +35,7 @@ function parseWhatsAppMarkdown(text: string) {
   // Replace _italic_ with <em>
   parsed = parsed.replace(/_(.*?)_/g, "<em>$1</em>");
   // Replace ~strikethrough~ with <del>
-  parsed = parsed.replace(/~(.*?)~/g, "<del>$1</del>");
+  parsed = parsed.replace(/~(.*?)_/g, "<del>$1</del>");
   // Replace newlines with <br />
   parsed = parsed.replace(/\n/g, "<br />");
   
@@ -110,6 +110,27 @@ export default function ConfiguracoesPage() {
   const [botRunning, setBotRunning] = useState(false);
   const [botLoading, setBotLoading] = useState(false);
   const [botPid, setBotPid] = useState<number | null>(null);
+
+  // Bot Daemon connection state
+  const [botState, setBotState] = useState<{
+    status: string;
+    qrCode: string | null;
+    pairingCode: string | null;
+    phoneNumber: string | null;
+  }>({
+    status: "disconnected",
+    qrCode: null,
+    pairingCode: null,
+    phoneNumber: null
+  });
+
+  // Pairing code request form state
+  const [phoneNumberInput, setPhoneNumberInput] = useState("");
+  const [requestingCode, setRequestingCode] = useState(false);
+
+  // Terminal logs state
+  const [logs, setLogs] = useState("");
+  const [showLogs, setShowLogs] = useState(false);
   
   // Tabs for messages editing: 'visita' | 'adestramento' | 'hospedagem' | 'confirmacao'
   const [activeTab, setActiveTab] = useState<"visita" | "adestramento" | "hospedagem" | "confirmacao">("visita");
@@ -150,6 +171,21 @@ export default function ConfiguracoesPage() {
       const data = await res.json();
       setBotRunning(data.running);
       setBotPid(data.pid || null);
+      if (data.running) {
+        setBotState({
+          status: data.status || "connecting",
+          qrCode: data.qrCode || null,
+          pairingCode: data.pairingCode || null,
+          phoneNumber: data.phoneNumber || null
+        });
+      } else {
+        setBotState({
+          status: "disconnected",
+          qrCode: null,
+          pairingCode: null,
+          phoneNumber: null
+        });
+      }
     } catch (err) {
       console.error("Erro ao checar status do processo do bot:", err);
     }
@@ -164,6 +200,37 @@ export default function ConfiguracoesPage() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Poll terminal logs periodically when bot is running and terminal is visible
+  useEffect(() => {
+    if (!botRunning || !showLogs) return;
+
+    const fetchLogs = async () => {
+      try {
+        const res = await fetch("/api/bot?action=logs");
+        const data = await res.json();
+        if (data.success) {
+          setLogs(data.logs);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar logs:", err);
+      }
+    };
+
+    fetchLogs();
+    const interval = setInterval(fetchLogs, 2500);
+    return () => clearInterval(interval);
+  }, [botRunning, showLogs]);
+
+  // Auto scroll logs container to bottom on change
+  useEffect(() => {
+    if (showLogs) {
+      const el = document.getElementById("terminal-logs");
+      if (el) {
+        el.scrollTop = el.scrollHeight;
+      }
+    }
+  }, [logs, showLogs]);
 
   const handleStartBot = async () => {
     setBotLoading(true);
@@ -188,27 +255,33 @@ export default function ConfiguracoesPage() {
   };
 
   const handleDisconnect = async () => {
-    if (!confirm("Tem certeza que deseja desconectar este número de WhatsApp? Isso removerá a sessão atual e exigirá um novo QR Code.")) {
+    if (!confirm("Tem certeza que deseja desconectar este número de WhatsApp? Isso removerá a sessão atual e exigirá um novo pareamento.")) {
       return;
     }
     setBotLoading(true);
     try {
-      // 1. Signal logout in db
-      await updateWhatsappConfig({ status: "disconnect_requested" });
-      
-      // 2. Wait a moment and forcefully kill the process so it re-initializes clean next time
-      setTimeout(async () => {
-        try {
-          await fetch("/api/bot", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "stop" })
-          });
-        } catch (e) {}
+      // 1. Signal logout in bot daemon via proxy endpoint
+      const res = await fetch("/api/bot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "logout" })
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        // Fallback: stop process directly if logout fails
+        await fetch("/api/bot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "stop" })
+        });
+      }
+
+      setTimeout(() => {
         checkBotStatus();
         refreshAllData();
         setBotLoading(false);
-      }, 3500);
+      }, 2000);
       
     } catch (err) {
       alert("Falha ao solicitar desconexão.");
@@ -236,6 +309,30 @@ export default function ConfiguracoesPage() {
     } finally {
       setBotLoading(false);
       checkBotStatus();
+    }
+  };
+
+  const handleRequestPairingCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!phoneNumberInput.trim()) return;
+    setRequestingCode(true);
+
+    try {
+      const res = await fetch("/api/bot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "request-code", phoneNumber: phoneNumberInput })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBotState(prev => ({ ...prev, pairingCode: data.pairingCode }));
+      } else {
+        alert(data.message || "Erro ao solicitar código de pareamento.");
+      }
+    } catch (err) {
+      alert("Falha ao conectar para solicitar código de pareamento.");
+    } finally {
+      setRequestingCode(false);
     }
   };
 
@@ -275,14 +372,10 @@ export default function ConfiguracoesPage() {
     }));
   };
 
-  // Determine current wizard status
+  // Determine current wizard connection step
   const getConnectionStep = () => {
-    const status = whatsappConfig?.status || "disconnected";
-    
-    if (status === "connected") return "connected";
-    if (botRunning && status === "qr_ready") return "qr_ready";
-    if (botRunning && (status === "connecting" || status === "disconnected")) return "connecting";
-    return "disconnected";
+    if (!botRunning) return "disconnected";
+    return botState.status; // 'connected' | 'qr_ready' | 'connecting' | 'disconnected'
   };
 
   const step = getConnectionStep();
@@ -295,7 +388,7 @@ export default function ConfiguracoesPage() {
           <span>Configurações do Robô WhatsApp</span>
         </h2>
         <p className="text-salon-text-secondary text-xs mt-1">
-          Gerencie a conexão com o WhatsApp de verdade, visualize o QR Code e personalize as mensagens automáticas.
+          Gerencie a conexão com o WhatsApp de verdade, visualize o QR Code ou gere códigos de pareamento e personalize as mensagens.
         </p>
       </div>
 
@@ -303,7 +396,7 @@ export default function ConfiguracoesPage() {
         
         {/* Left Column: Intuitve Connection Card */}
         <div className="space-y-6">
-          <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-6 flex flex-col justify-between min-h-[420px] shadow-lg relative overflow-hidden">
+          <div className="bg-salon-surface border border-salon-border rounded-salon p-6 space-y-6 flex flex-col justify-between min-h-[460px] shadow-lg relative overflow-hidden">
             
             {/* Elegant header */}
             <div className="space-y-1">
@@ -355,7 +448,7 @@ export default function ConfiguracoesPage() {
                   <div className="space-y-1.5">
                     <h4 className="text-sm font-semibold text-white">Inicializando o Robô...</h4>
                     <p className="text-[10px] text-salon-text-secondary leading-relaxed px-3">
-                      Abrindo canal seguro no servidor local. Isso levará alguns segundos. O QR Code aparecerá automaticamente aqui.
+                      Abrindo canal seguro no servidor local. Isso levará alguns segundos. O QR Code ou pareamento aparecerá automaticamente aqui.
                     </p>
                   </div>
                   <div className="w-full bg-salon-border h-1 rounded-full overflow-hidden">
@@ -374,21 +467,71 @@ export default function ConfiguracoesPage() {
               )}
 
               {/* STATE 3: QR READY */}
-              {step === "qr_ready" && whatsappConfig?.qr_code && (
+              {step === "qr_ready" && (
                 <div className="text-center space-y-4 animate-in zoom-in-95 duration-200">
-                  <div className="inline-block p-3 bg-white rounded-xl shadow-2xl border-2 border-[#D97457]">
-                    <img
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(whatsappConfig.qr_code)}`}
-                      alt="WhatsApp Web QR Code"
-                      className="w-40 h-40"
-                    />
-                  </div>
+                  {botState.qrCode && !botState.pairingCode && (
+                    <div className="inline-block p-3 bg-white rounded-xl shadow-2xl border-2 border-[#D97457]">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(botState.qrCode)}`}
+                        alt="WhatsApp Web QR Code"
+                        className="w-40 h-40"
+                      />
+                    </div>
+                  )}
+
                   <div className="space-y-1">
-                    <h4 className="text-xs font-bold text-[#D97457] uppercase tracking-wider">Escaneie o QR Code</h4>
+                    <h4 className="text-xs font-bold text-[#D97457] uppercase tracking-wider">Como Deseja Conectar?</h4>
                     <p className="text-[9px] text-salon-text-secondary px-2 leading-relaxed">
-                      Abra o WhatsApp no celular, vá em <strong className="text-white">Aparelhos Conectados</strong>, toque em <strong className="text-white">Conectar Aparelho</strong> e escaneie o código.
+                      Escaneie o QR Code acima usando <strong className="text-white">Aparelhos Conectados</strong> no WhatsApp, ou gere um código de 8 dígitos inserindo seu telefone abaixo:
                     </p>
                   </div>
+
+                  {/* Pairing Code Request Section */}
+                  {botState.pairingCode ? (
+                    <div className="bg-[#1A1A1A] border border-[#D97457]/30 rounded-xl p-3.5 text-center space-y-2.5 animate-in zoom-in-95">
+                      <span className="text-[9px] text-salon-text-secondary uppercase tracking-wider block font-semibold">
+                        🔑 Código de Pareamento:
+                      </span>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="font-mono text-lg font-bold tracking-widest text-[#D97457] bg-black/40 px-3 py-1.5 rounded-lg border border-salon-border">
+                          {botState.pairingCode}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(botState.pairingCode || "");
+                            alert("Código de pareamento copiado!");
+                          }}
+                          className="p-1.5 bg-salon-border hover:bg-zinc-800 text-salon-text-primary rounded-lg transition-colors border border-salon-border"
+                          title="Copiar Código"
+                        >
+                          <Copy className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                      <p className="text-[8px] text-salon-text-secondary leading-relaxed px-1">
+                        Vá em <strong>Aparelhos Conectados</strong> &gt; <strong>Conectar com número de telefone</strong> no seu celular e digite o código acima.
+                      </p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleRequestPairingCode} className="space-y-2 pt-2 border-t border-[#2A2A2A]">
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          placeholder="Ex: 5511999999999"
+                          value={phoneNumberInput}
+                          onChange={(e) => setPhoneNumberInput(e.target.value)}
+                          className="flex-1 bg-[#0F0F0F] border border-salon-border p-2 rounded-lg text-white text-[11px] focus:outline-none focus:border-[#D97457]"
+                        />
+                        <button
+                          type="submit"
+                          disabled={requestingCode || !phoneNumberInput.trim()}
+                          className="bg-[#D97457] text-[#0F0F0F] hover:bg-[#C25F43] font-bold text-[10px] px-3.5 py-2 rounded-lg transition-all disabled:opacity-50"
+                        >
+                          {requestingCode ? <Loader className="w-3.5 h-3.5 animate-spin" /> : "Gerar Código"}
+                        </button>
+                      </div>
+                    </form>
+                  )}
 
                   <button
                     type="button"
@@ -421,7 +564,7 @@ export default function ConfiguracoesPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-salon-text-secondary">Número:</span>
-                      <span className="font-bold text-white">{whatsappConfig?.phone || "Conectado"}</span>
+                      <span className="font-bold text-white">+{botState.phoneNumber || whatsappConfig?.phone || "Conectado"}</span>
                     </div>
                     {botPid && (
                       <div className="flex justify-between">
@@ -771,7 +914,7 @@ export default function ConfiguracoesPage() {
                   className="bg-[#D97457] hover:bg-[#C25F43] active:scale-[0.98] text-[#0F0F0F] font-bold px-6 py-2.5 rounded-salon flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)] disabled:opacity-50 text-xs"
                 >
                   {loading ? (
-                    <Loader className="w-4 h-4 animate-spin" />
+                     <Loader className="w-4 h-4 animate-spin" />
                   ) : (
                     <Save className="w-4 h-4" />
                   )}
@@ -783,6 +926,33 @@ export default function ConfiguracoesPage() {
         </div>
 
       </div>
+
+      {/* Bot Terminal Logs Section */}
+      {botRunning && (
+        <div className="bg-salon-surface border border-salon-border rounded-salon p-6 shadow-lg space-y-4">
+          <div className="flex items-center justify-between border-b border-[#2A2A2A] pb-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#D97457] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-salon-success animate-pulse" />
+              <span>Console de Logs em Tempo Real</span>
+            </h3>
+            <button
+              type="button"
+              onClick={() => setShowLogs(!showLogs)}
+              className="text-[#D97457] hover:underline text-[10px] font-bold uppercase flex items-center gap-1"
+            >
+              {showLogs ? "📴 Ocultar Terminal" : "📺 Mostrar Terminal"}
+            </button>
+          </div>
+
+          {showLogs && (
+            <div className="bg-black/80 rounded-xl border border-salon-border p-4 shadow-inner">
+              <pre className="font-mono text-[10px] md:text-xs text-green-400 overflow-y-auto max-h-60 leading-normal whitespace-pre-wrap break-all h-48 select-text" style={{ scrollBehavior: 'smooth' }} id="terminal-logs">
+                {logs || "Aguardando logs do console..."}
+              </pre>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
