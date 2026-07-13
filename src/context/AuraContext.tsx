@@ -266,6 +266,16 @@ export interface WhatsAppConfig {
   updated_at?: string;
 }
 
+export interface TrafficEvent {
+  id: number;
+  event_type: string;
+  page_path: string;
+  session_id: string;
+  device_type: string;
+  referrer?: string;
+  created_at: string;
+}
+
 interface AuraContextProps {
   clients: Client[];
   leads: Lead[];
@@ -280,6 +290,7 @@ interface AuraContextProps {
   blogPosts: BlogPost[];
   notifications: Notification[];
   whatsappConfig: WhatsAppConfig | null;
+  trafficEvents: TrafficEvent[];
 
   // Dynamic Theme & Font Selection
   activeTheme: ThemeName;
@@ -315,6 +326,7 @@ interface AuraContextProps {
   updateWhatsappConfig: (data: Partial<WhatsAppConfig>) => Promise<void>;
   markNotificationRead: (id: number) => Promise<void>;
   refreshAllData: () => Promise<void>;
+  trackEvent: (eventType: string, pagePath?: string, referrer?: string) => Promise<void>;
 }
 
 const AuraContext = createContext<AuraContextProps | undefined>(undefined);
@@ -336,6 +348,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [whatsappConfig, setWhatsappConfig] = useState<WhatsAppConfig | null>(null);
+  const [trafficEvents, setTrafficEvents] = useState<TrafficEvent[]>([]);
 
   // Dynamic Theme & Font Selection States
   const [activeTheme, setActiveTheme] = useState<ThemeName>("eco-rustic");
@@ -624,6 +637,84 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
     setNotifications([
       { id: 1, type: "sistema", message: "Sistema do Canil Vale da Kubera iniciado em modo local.", read: false, created_at: new Date().toISOString() }
     ]);
+
+    generateMockTraffic();
+  };
+
+  const generateMockTraffic = () => {
+    const mockEvents: TrafficEvent[] = [];
+    const paths = ["/", "/sobre", "/filhotes", "/a-raca-pastor-do-caucaso"];
+    const devices = ["desktop", "mobile", "tablet"];
+    const referrers = ["instagram.com", "google.com", "facebook.com", "direct"];
+    
+    let eventId = 1;
+    for (let d = 15; d >= 0; d--) {
+      const date = new Date();
+      date.setDate(date.getDate() - d);
+      const dateStr = date.toISOString().split("T")[0];
+      
+      const dailyViews = 40 + Math.floor(Math.random() * 40);
+      for (let i = 0; i < dailyViews; i++) {
+        const sessionNum = Math.floor(i * 0.7);
+        const session_id = `sess_${dateStr}_${sessionNum}`;
+        const path = paths[Math.floor(Math.random() * paths.length)];
+        const device = devices[Math.random() < 0.75 ? 1 : (Math.random() < 0.95 ? 0 : 2)];
+        const referrer = referrers[Math.floor(Math.random() * referrers.length)];
+        
+        mockEvents.push({
+          id: eventId++,
+          event_type: "page_view",
+          page_path: path,
+          session_id,
+          device_type: device,
+          referrer,
+          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
+        });
+      }
+      
+      const dailyWpp = 3 + Math.floor(Math.random() * 8);
+      for (let i = 0; i < dailyWpp; i++) {
+        const session_id = `sess_${dateStr}_${Math.floor(Math.random() * dailyViews * 0.7)}`;
+        mockEvents.push({
+          id: eventId++,
+          event_type: "whatsapp_click",
+          page_path: "/",
+          session_id,
+          device_type: devices[Math.random() < 0.75 ? 1 : 0],
+          referrer: referrers[Math.floor(Math.random() * referrers.length)],
+          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
+        });
+      }
+
+      const dailySocial = 2 + Math.floor(Math.random() * 5);
+      for (let i = 0; i < dailySocial; i++) {
+        const session_id = `sess_${dateStr}_${Math.floor(Math.random() * dailyViews * 0.7)}`;
+        mockEvents.push({
+          id: eventId++,
+          event_type: Math.random() > 0.5 ? "instagram_click" : "youtube_click",
+          page_path: "/",
+          session_id,
+          device_type: devices[Math.random() < 0.75 ? 1 : 0],
+          referrer: referrers[Math.floor(Math.random() * referrers.length)],
+          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
+        });
+      }
+      
+      const dailyBooking = Math.random() > 0.5 ? 1 + Math.floor(Math.random() * 2) : 0;
+      for (let i = 0; i < dailyBooking; i++) {
+        const session_id = `sess_${dateStr}_${Math.floor(Math.random() * dailyViews * 0.7)}`;
+        mockEvents.push({
+          id: eventId++,
+          event_type: "booking_click",
+          page_path: "/",
+          session_id,
+          device_type: devices[Math.random() < 0.75 ? 1 : 0],
+          referrer: referrers[Math.floor(Math.random() * referrers.length)],
+          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
+        });
+      }
+    }
+    setTrafficEvents(mockEvents);
   };
 
   const fetchAllData = async () => {
@@ -672,6 +763,13 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
       const { data: dbNotifications } = await supabase.from("notifications").select("*").order("created_at", { ascending: false });
       if (dbNotifications) setNotifications(dbNotifications);
+
+      const { data: dbTraffic, error: trafficErr } = await supabase.from("traffic_events").select("*").order("created_at", { ascending: false });
+      if (dbTraffic && dbTraffic.length > 0) {
+        setTrafficEvents(dbTraffic);
+      } else {
+        generateMockTraffic();
+      }
 
     } catch (e) {
       console.error("Error loading data from Supabase:", e);
@@ -1026,6 +1124,61 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
     await fetchAllData();
   };
 
+  const trackEvent = async (eventType: string, pagePath?: string, referrer?: string) => {
+    let sessionId = "";
+    if (typeof window !== "undefined") {
+      sessionId = localStorage.getItem("aura_session_id") || "";
+      if (!sessionId) {
+        sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem("aura_session_id", sessionId);
+      }
+    }
+    
+    let deviceType = "desktop";
+    if (typeof window !== "undefined" && window.navigator) {
+      const ua = window.navigator.userAgent.toLowerCase();
+      if (ua.includes("mobi") || ua.includes("android") || ua.includes("iphone")) {
+        deviceType = "mobile";
+      } else if (ua.includes("tablet") || ua.includes("ipad")) {
+        deviceType = "tablet";
+      }
+    }
+
+    const pathVal = pagePath || (typeof window !== "undefined" ? window.location.pathname : "/");
+    const refVal = referrer || (typeof document !== "undefined" ? document.referrer : "direct") || "direct";
+
+    if (!isSupabaseConfigured()) {
+      console.log(`[Traffic Mock] Tracked ${eventType} on ${pathVal}`);
+      const mockEvent: TrafficEvent = {
+        id: trafficEvents.length > 0 ? Math.max(...trafficEvents.map(e => e.id)) + 1 : 1,
+        event_type: eventType,
+        page_path: pathVal,
+        session_id: sessionId,
+        device_type: deviceType,
+        referrer: refVal,
+        created_at: new Date().toISOString()
+      };
+      setTrafficEvents(prev => [mockEvent, ...prev]);
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.from("traffic_events").insert({
+        event_type: eventType,
+        page_path: pathVal,
+        session_id: sessionId,
+        device_type: deviceType,
+        referrer: refVal
+      }).select();
+      
+      if (data && data[0]) {
+        setTrafficEvents(prev => [data[0], ...prev]);
+      }
+    } catch (err) {
+      console.error("Error tracking event in Supabase:", err);
+    }
+  };
+
   return (
     <AuraContext.Provider
       value={{
@@ -1072,7 +1225,9 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         updateBlogPost,
         updateWhatsappConfig,
         markNotificationRead,
-        refreshAllData
+        refreshAllData,
+        trafficEvents,
+        trackEvent
       }}
     >
       {children}

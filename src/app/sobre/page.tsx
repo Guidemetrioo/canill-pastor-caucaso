@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import SocialFloatingButtons from "@/components/SocialFloatingButtons";
+import TrafficTracker from "@/components/TrafficTracker";
 import { Shield, MapPin, Award, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Quem Somos | Canil Pastor do Cáucaso Vale da Kubera",
-  description: "Conheça a história do Canil Vale da Kubera, especializado na criação e seleção genética de Pastor do Cáucaso em Itatiba - SP. Laudos negativos de displasia e pedigree CBKC.",
+  description: "Conheça a história do Canil Vale da Kubera, especializado na criação e seleção genética de Pastor do Cáucaso in Itatiba - SP. Laudos negativos de displasia e pedigree CBKC.",
   keywords: ["canil pastor do caucaso", "criacao responsavel causo", "pastor do caucaso itatiba", "criador pastor do caucaso valedakubera"],
 };
 
@@ -21,6 +22,7 @@ export default function SobrePage() {
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
+      <TrafficTracker path="/sobre" />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         

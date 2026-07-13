@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import SocialFloatingButtons from "@/components/SocialFloatingButtons";
+import TrafficTracker from "@/components/TrafficTracker";
 import { Shield, BookOpen, Star, AlertTriangle, Activity, Award } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -45,6 +46,7 @@ export default function RacaPage() {
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
+      <TrafficTracker path="/a-raca-pastor-do-caucaso" />
 
       {/* JSON-LD Schema */}
       <script

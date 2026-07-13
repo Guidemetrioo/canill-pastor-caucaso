@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAura } from "@/context/AuraContext";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
@@ -9,8 +9,12 @@ import Link from "next/link";
 import { Shield, Check, ArrowRight, Heart } from "lucide-react";
 
 export default function FilhotesPage() {
-  const { filhotes } = useAura();
+  const { filhotes, trackEvent } = useAura();
   const [genderFilter, setGenderFilter] = useState<"todos" | "macho" | "fêmea">("todos");
+
+  useEffect(() => {
+    trackEvent("page_view", "/filhotes");
+  }, [trackEvent]);
 
   const availablePuppies = filhotes.filter(
     (f) => f.status === "Disponível" && (genderFilter === "todos" || f.gender === genderFilter)

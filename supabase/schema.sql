@@ -313,3 +313,20 @@ CREATE TABLE IF NOT EXISTS public.whatsapp_messages (
 ALTER TABLE public.whatsapp_messages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read" ON public.whatsapp_messages FOR SELECT USING (true);
 CREATE POLICY "Allow public write" ON public.whatsapp_messages FOR ALL USING (true);
+
+
+-- Traffic Events table
+CREATE TABLE IF NOT EXISTS public.traffic_events (
+  id SERIAL PRIMARY KEY,
+  event_type TEXT NOT NULL,
+  page_path TEXT NOT NULL,
+  session_id TEXT NOT NULL,
+  device_type TEXT NOT NULL,
+  referrer TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.traffic_events ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public insert" ON public.traffic_events FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public read" ON public.traffic_events FOR SELECT USING (true);
+

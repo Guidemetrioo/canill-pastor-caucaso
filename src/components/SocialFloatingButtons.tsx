@@ -1,6 +1,10 @@
 "use client";
 
+import { useAura } from "@/context/AuraContext";
+
 export default function SocialFloatingButtons() {
+  const { trackEvent } = useAura();
+
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
       {/* YouTube */}
@@ -10,6 +14,7 @@ export default function SocialFloatingButtons() {
         rel="noopener noreferrer"
         aria-label="Vídeos no YouTube"
         id="youtube-floating-button"
+        onClick={() => trackEvent("youtube_click", window.location.pathname)}
         className="bg-[#FF0000] hover:bg-[#CC0000] text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
         title="Vídeos no YouTube"
       >
@@ -30,6 +35,7 @@ export default function SocialFloatingButtons() {
         rel="noopener noreferrer"
         aria-label="Nosso Instagram"
         id="instagram-floating-button"
+        onClick={() => trackEvent("instagram_click", window.location.pathname)}
         className="text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
         style={{
           background:
@@ -61,6 +67,7 @@ export default function SocialFloatingButtons() {
         rel="noopener noreferrer"
         aria-label="Fale conosco no WhatsApp"
         id="whatsapp-floating-button"
+        onClick={() => trackEvent("whatsapp_click", window.location.pathname)}
         className="bg-[#25D366] hover:bg-[#20BA56] text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
         title="Fale no WhatsApp"
       >

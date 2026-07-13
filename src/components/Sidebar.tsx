@@ -16,6 +16,7 @@ import {
   Settings,
   LogOut,
   X,
+  BarChart3,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -33,6 +34,7 @@ export const sidebarItems = [
   { href: "/dashboard/adestramento", label: "Adestramento", icon: Award },
   { href: "/dashboard/clientes", label: "Clientes / Tutores", icon: Users },
   { href: "/dashboard/financeiro", label: "Financeiro", icon: DollarSign },
+  { href: "/dashboard/trafego", label: "Controle de Tráfego", icon: BarChart3 },
   { href: "/dashboard/configuracoes", label: "Configurações Bot", icon: Settings },
 ];
 

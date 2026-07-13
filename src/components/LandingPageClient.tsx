@@ -11,7 +11,7 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Messag
 type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
 
 export default function LandingPageClient() {
-  const { filhotes, animals, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent } = useAura();
+  const { filhotes, animals, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent, trackEvent } = useAura();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const agendaWrapperRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -67,6 +67,7 @@ export default function LandingPageClient() {
   const currentNavText = isHeroScrolled ? textColor : '#ffffff';
 
   useEffect(() => {
+    trackEvent("page_view", "/");
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -173,6 +174,7 @@ export default function LandingPageClient() {
         datetime: eventDateTime,
         status: "Agendado"
       });
+      trackEvent("booking_click", "/");
     } catch (err) {
       console.error("Erro ao registrar agendamento na agenda:", err);
     }
@@ -180,6 +182,7 @@ export default function LandingPageClient() {
     // 2. Open WhatsApp link as fallback/instant notification
     const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()} e meu telefone/WhatsApp é ${visitorPhone.trim()}.`;
     const url = `https://wa.me/5511974992059?text=${encodeURIComponent(text)}`;
+    trackEvent("whatsapp_click", "/");
     window.open(url, "_blank");
 
     // 3. Clear fields
