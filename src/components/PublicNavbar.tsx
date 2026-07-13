@@ -99,6 +99,16 @@ export default function PublicNavbar() {
           color: ${t.accentHex} !important;
         }
 
+        /* Active Tab Buttons overrides to ensure high contrast white text and icons */
+        .active-tab-btn,
+        .active-tab-btn * {
+          color: #FFFFFF !important;
+        }
+        .active-tab-btn svg {
+          color: #FFFFFF !important;
+          stroke: #FFFFFF !important;
+        }
+
         /* Force high contrast light text colors in dark video sections (Hero & Agendar) */
         #hero-banner p,
         #hero-banner h1,

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "bot": "tsx --watch src/bot/bot.ts"
+    "bot": "tsx src/bot/bot.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
