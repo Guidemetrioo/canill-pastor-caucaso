@@ -11,7 +11,7 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Messag
 type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
 
 export default function LandingPageClient() {
-  const { filhotes, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent } = useAura();
+  const { filhotes, animals, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent } = useAura();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const agendaWrapperRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -243,13 +243,13 @@ export default function LandingPageClient() {
     },
   ];
 
-  // Use context data if loaded, otherwise use static dogs
-  const baseDogs = filhotes.filter((f) => f.status === "Disponível").length > 0
-    ? filhotes.filter((f) => f.status === "Disponível")
+  // Use context animals (plantel) if loaded, otherwise use static dogs
+  const baseDogs = animals.length > 0
+    ? animals
     : staticDogs;
 
   // Enrich data for known dogs to ensure fields (weight, age) are fully populated
-  const allDogs = baseDogs.map(dog => {
+  const allDogs = (baseDogs as any[]).map(dog => {
     const nameUpper = dog.name.toUpperCase();
     if (nameUpper.includes("VENÛS") || nameUpper.includes("VENUS")) {
       return { ...dog, weight: dog.weight || "70kg", age: dog.age || "3 anos" };
