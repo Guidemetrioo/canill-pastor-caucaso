@@ -40,7 +40,7 @@ next-env.d.ts
 .wwebjs_cache/
 
 # local raw media folders
-/fotos canil/
-/imagens/
+# /fotos canil/
+# /imagens/
 
 
