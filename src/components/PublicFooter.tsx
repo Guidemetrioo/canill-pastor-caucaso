@@ -5,58 +5,56 @@ export default function PublicFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1A1A1A] border-t border-[#2A2A2A] text-gray-400 py-12">
+    <footer className="bg-[#E9EAE7] border-t border-[#E2E8F0] text-[#222521] py-12 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Col 1: Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#D97457]/10 border border-[#D97457]/20 rounded-full flex items-center justify-center text-[#D97457]">
-                <Shield className="w-4 h-4" />
-              </div>
-              <span className="font-bold tracking-wider text-white text-lg leading-none">VALE DA KUBERA</span>
+              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-8 h-8 object-contain rounded-lg border border-black/10 shadow-sm bg-black" />
+              <span className="font-bold tracking-wider text-[#222521] text-lg leading-none">VALE DA KUBERA</span>
             </Link>
-            <p className="text-xs leading-relaxed">
+            <p className="text-xs leading-relaxed text-[#555E54]">
               Canil especializado em Pastor do Cáucaso com padrão de exposição. Genética importada da Rússia, Ucrânia, Romênia e Espanha. Estrutura e saúde comprovadas.
             </p>
           </div>
 
           {/* Col 2: Links */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Links Rápidos</h4>
-            <ul className="space-y-2 text-xs">
-              <li><Link href="/sobre" className="hover:text-[#D97457] transition-colors">O Canil</Link></li>
-              <li><Link href="/filhotes" className="hover:text-[#D97457] transition-colors">Filhotes Disponíveis</Link></li>
-              <li><Link href="/a-raca-pastor-do-caucaso" className="hover:text-[#D97457] transition-colors">A Raça</Link></li>
-              <li><Link href="/galeria" className="hover:text-[#D97457] transition-colors">Galeria de Fotos</Link></li>
-              <li><Link href="/blog" className="hover:text-[#D97457] transition-colors">Blog &amp; Dicas</Link></li>
+            <h4 className="text-sm font-semibold text-[#222521] uppercase tracking-wider mb-4 font-comfortaa">Links Rápidos</h4>
+            <ul className="space-y-2 text-xs text-[#555E54]">
+              <li><Link href="/sobre" className="hover:text-[#0F6B2E] transition-colors">O Canil</Link></li>
+              <li><Link href="/filhotes" className="hover:text-[#0F6B2E] transition-colors">Filhotes Disponíveis</Link></li>
+              <li><Link href="/a-raca-pastor-do-caucaso" className="hover:text-[#0F6B2E] transition-colors">A Raça</Link></li>
+              <li><Link href="/galeria" className="hover:text-[#0F6B2E] transition-colors">Galeria de Fotos</Link></li>
+              <li><Link href="/blog" className="hover:text-[#0F6B2E] transition-colors">Blog &amp; Dicas</Link></li>
             </ul>
           </div>
 
           {/* Col 3: Serviços */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Serviços</h4>
-            <ul className="space-y-2 text-xs">
-              <li><Link href="/servicos/cobertura" className="hover:text-[#D97457] transition-colors">Cobertura / Monta</Link></li>
+            <h4 className="text-sm font-semibold text-[#222521] uppercase tracking-wider mb-4 font-comfortaa">Serviços</h4>
+            <ul className="space-y-2 text-xs text-[#555E54]">
+              <li><Link href="/servicos/cobertura" className="hover:text-[#0F6B2E] transition-colors">Cobertura / Monta</Link></li>
             </ul>
           </div>
 
           {/* Col 4: Contato (Consistent NAP) */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Contato (NAP)</h4>
-            <ul className="space-y-2.5 text-xs">
+            <h4 className="text-sm font-semibold text-[#222521] uppercase tracking-wider mb-4 font-comfortaa">Contato (NAP)</h4>
+            <ul className="space-y-2.5 text-xs text-[#555E54]">
               <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 shrink-0 text-[#D97457] mt-0.5" />
+                <MapPin className="w-4 h-4 shrink-0 text-[#0F6B2E] mt-0.5" />
                 <span>
                   <strong>Endereço:</strong> Itatiba - SP, CEP 13250-000
                 </span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#D97457]" />
+                <Phone className="w-4 h-4 text-[#0F6B2E]" />
                 <span><strong>Telefone:</strong> +55 (11) 97499-2059</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#D97457]" />
+                <Mail className="w-4 h-4 text-[#0F6B2E]" />
                 <span><strong>E-mail:</strong> canilvaledakubera@gmail.com</span>
               </li>
             </ul>
@@ -65,7 +63,7 @@ export default function PublicFooter() {
                 href="https://maps.google.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D97457] hover:underline"
+                className="text-[#0F6B2E] hover:underline font-semibold"
               >
                 Ver no Google Maps (Google Business Profile)
               </a>
@@ -73,9 +71,9 @@ export default function PublicFooter() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-[#2A2A2A] text-center text-[10px] space-y-1">
+        <div className="mt-8 pt-8 border-t border-[#E2E8F0] text-center text-[10px] text-[#555E54] space-y-1">
           <p>&copy; {currentYear} Canil Vale da Kubera Pastor do Cáucaso. Todos os direitos reservados. Registrado no CBKC / FCI.</p>
-          <p className="opacity-50">Desenvolvido com foco em SEO técnico e performance.</p>
+          <p className="opacity-75">Desenvolvido com foco em SEO técnico e performance.</p>
         </div>
       </div>
     </footer>

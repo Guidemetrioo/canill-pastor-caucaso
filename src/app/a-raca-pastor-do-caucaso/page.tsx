@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import SocialFloatingButtons from "@/components/SocialFloatingButtons";
-import { Shield, BookOpen, Star, AlertTriangle, Activity } from "lucide-react";
+import { Shield, BookOpen, Star, AlertTriangle, Activity, Award } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Tudo Sobre a Raça Pastor do Cáucaso | Guia Completo Canil Vale da Kubera",
@@ -69,7 +69,7 @@ export default function RacaPage() {
           </p>
         </div>
 
-        <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+        <div className="relative h-96 w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
           <img
             src="/dogs/nero_4.jpg"
             alt="Pastor do Cáucaso - Canil Vale da Kubera"
@@ -80,31 +80,10 @@ export default function RacaPage() {
             <p className="text-xs text-white font-semibold">Canil Vale da Kubera &bull; Pastor do Cáucaso Legítimo</p>
           </div>
         </div>
-        {/* Featured Video Section */}
-        <section className="space-y-4 bg-[#1A1A1A] border border-[#2A2A2A] p-6 sm:p-8 rounded-2xl">
-          <div className="space-y-2">
-            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Documentário Exclusivo</span>
-            <h3 className="text-lg md:text-xl font-bold text-white">
-              Padrão de Guarda e Movimentação da Raça
-            </h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Assista à apresentação detalhada sobre a funcionalidade, o temperamento de guarda territorial e a estrutura física ideal do cão Pastor do Cáucaso.
-            </p>
-          </div>
-          <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-[#2A2A2A] shadow-lg bg-gray-950">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/LNFTv6pZqEk"
-              title="Apresentação da Raça Pastor do Cáucaso"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-        </section>
 
         {/* Content Body */}
-        <article className="space-y-8 text-sm text-gray-300">
-          
+        <article className="space-y-10 text-sm text-gray-300">
+
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
               <Shield className="w-5 h-5 text-[#D97457]" />
@@ -114,11 +93,35 @@ export default function RacaPage() {
               Originário da cordilheira do Cáucaso, região que abrange países como Geórgia, Armênia, Azerbaijão e Rússia, o Pastor do Cáucaso (também conhecido como <i>Caucasian Ovcharka</i> ou <i>Kavkazskaya Ovcharka</i>) é uma das raças de cães de guarda mais antigas e rústicas do planeta. Por séculos, esses cães foram utilizados por pastores para proteger rebanhos contra predadores temíveis, como lobos e ursos, além de guardar propriedades rurais de invasores.
             </p>
             <p>
-              Sua seleção natural priorizou animais de altíssima resistência física, tolerância a temperaturas congelantes e uma coragem indomável. Essa seleção resultou em um cão de estrutura óssea maciça, musculatura vigorosa e uma pelagem dupla densa, capaz de suportar as condições climáticas mais adversas das montanhas.
+              Sua seleção natural priorizou animais de altíssima resistência física, tolerância a temperaturas congelantes e uma coragem indomável. Essa seleção resultou em um cão de estrutura óssea maciça, musculatura vigorosa e uma pelagem dupla densa. O exército soviético chegou a utilizar a raça para patrulhar bases e prisões, tamanha a imponência e coragem desses animais.
             </p>
+          </section>
+
+          <section className="space-y-5">
+            <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+              <Award className="w-5 h-5 text-[#D97457]" />
+              <span>Os Três Pilares de um Cáucaso de Excelência</span>
+            </h2>
             <p>
-              Para assegurar a excelência genética da raça em solo brasileiro, a seleção do Canil Vale da Kubera baseia-se em três pilares fundamentais, descritos como os requisitos indispensáveis para um cão ideal: <strong>Temperamento</strong> (guarda equilibrada e autoconfiança), <strong>Qualidade Genética</strong> (cães saudáveis e livres de doenças hereditárias) e <strong>Estrutura</strong> (conformidade perfeita com o padrão oficial anatômico da raça).
+              Criadores experientes que trabalham diretamente com linhagens importadas da Rússia, Romênia, Ucrânia e Espanha são unânimes: existem três requisitos inegociáveis para um exemplar de alta qualidade.
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div className="bg-[#1A1A1A] border border-[#D97457]/20 rounded-xl p-5 text-center space-y-2">
+                <Shield className="w-6 h-6 text-[#D97457] mx-auto" />
+                <h4 className="font-bold text-white text-sm">Temperamento</h4>
+                <p className="text-gray-400 text-[11px] leading-relaxed">Equilibrado com a família, territorialista e explosivo com estranhos. Controlado, mas eficaz na guarda real.</p>
+              </div>
+              <div className="bg-[#1A1A1A] border border-[#D97457]/20 rounded-xl p-5 text-center space-y-2">
+                <Star className="w-6 h-6 text-[#D97457] mx-auto" />
+                <h4 className="font-bold text-white text-sm">Qualidade Genética</h4>
+                <p className="text-gray-400 text-[11px] leading-relaxed">Linhagens selecionadas, laudos negativos de displasia e genealogia rastreável com pedigree CBKC/FCI.</p>
+              </div>
+              <div className="bg-[#1A1A1A] border border-[#D97457]/20 rounded-xl p-5 text-center space-y-2">
+                <Activity className="w-6 h-6 text-[#D97457] mx-auto" />
+                <h4 className="font-bold text-white text-sm">Estrutura</h4>
+                <p className="text-gray-400 text-[11px] leading-relaxed">Ossatura robusta, peso proporcional, movimentação equilibrada e compatível com o padrão oficial da raça.</p>
+              </div>
+            </div>
           </section>
 
           <section className="space-y-4">
@@ -127,26 +130,29 @@ export default function RacaPage() {
               <span>Temperamento e Instinto de Proteção</span>
             </h2>
             <p>
-              O temperamento do Pastor do Cáucaso é marcado por dois extremos muito bem definidos: lealdade incondicional com sua família e uma desconfiança natural de estranhos. Em casa, é um cão calmo, dócil, extremamente apegado aos seus tutores e surpreendentemente protetor com crianças. É um gigante gentil na presença das pessoas que ama.
+              O temperamento do Pastor do Cáucaso é marcado por dois extremos muito bem definidos: lealdade incondicional com sua família e uma desconfiança natural de estranhos. Em casa, é um cão calmo, dócil, extremamente apegado aos seus tutores e surpreendentemente protetor com crianças.
             </p>
-            <div className="bg-[#1A1A1A] border-l-4 border-[#D97457] p-5 rounded-r-xl my-6">
+            <div className="bg-[#1A1A1A] border-l-4 border-[#D97457] p-5 rounded-r-xl my-4">
               <p className="font-semibold text-white text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <AlertTriangle className="w-4.5 h-4.5 text-[#D97457]" />
+                <AlertTriangle className="w-4 h-4 text-[#D97457]" />
                 <span>Nota Importante sobre a Guarda</span>
               </p>
               <p className="text-xs text-gray-400">
-                O Pastor do Cáucaso não é um cão de guarda esportivo; seu instinto territorial é natural e ativo. Ele não precisa ser treinado para morder ou atacar: seu discernimento de território é inato. Por isso, a socialização precoce é obrigatória para que o cão aprenda a tolerar visitantes sob a supervisão do tutor.
+                O Pastor do Cáucaso não é um cão de guarda esportivo; seu instinto territorial é natural e ativo. Ele não precisa ser treinado para morder: seu discernimento de território é inato. A socialização precoce é obrigatória para que o cão aprenda a tolerar visitantes sob supervisão do tutor.
               </p>
             </div>
             <p>
-              Ele possui uma postura de guarda calma e observadora. Geralmente se posiciona em locais altos onde pode monitorar todo o perímetro. Sua reação a invasões é imediata e feroz, tornando-o o guardião residencial definitivo contra qualquer tipo de ameaça.
+              Uma característica impressionante é a <strong className="text-white">inteligência contextual</strong> do Cáucaso. O cão distingue facilmente quando está numa exposição (onde precisa se comportar) e quando está no seu território (onde exerce a guarda plena). Criadores relatam que o cão reconhece inclusive o tipo de guia — com uma guia fina de adestramento, já sabe que está em treino; com uma guia mais larga e confortável, entende que é hora de passear.
             </p>
             <p>
-              <strong>Unificação de Exposição e Trabalho (Pistas e Guarda):</strong> O Canil Vale da Kubera segue o padrão tradicional europeu, onde o conceito de cão de guarda e cão de beleza morfológica caminham juntos. Rejeitamos a divisão polarizada: um Pastor do Cáucaso de elite deve ter as proporções anatômicas corretas avaliadas em grandes provas de cinofilia (como o nosso romeno **Boran**, vencedor de dois <i>Best in Shows</i> na Europa) e, ao mesmo tempo, ser um guardião rústico e protetor implacável de sua família e território. A estrutura física correta é o que garante a força, a movimentação leve e a funcionalidade para a segurança diária.
+              Ele possui uma postura de guarda <strong className="text-white">calculada e econômica</strong>. Por conhecer o próprio tamanho e capacidade, o Cáucaso não gasta energia à toa. Geralmente se posiciona em locais estratégicos para monitorar o perímetro. Sua reação a invasões é imediata e feroz.
             </p>
-            <p>
-              <strong>Maturidade Tardia:</strong> Ao contrário de raças de trabalho esportivas como o Pastor Belga Malinois, o desenvolvimento comportamental do Cáucaso ocorre de forma mais lenta e tardia. Cães com 3 ou 4 meses de idade mostram-se muito independentes e tranquilos. A consolidação do instinto ativo de guarda e proteção se completa de fato após o cão atingir os 2 anos de idade.
-            </p>
+            <div className="bg-[#1A1A1A] border border-[#2A2A2A] p-5 rounded-xl space-y-2">
+              <h4 className="text-sm font-bold text-white">⏳ Maturação Tardia: O Que Esperar do Filhote</h4>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                O Pastor do Cáucaso fica completamente adulto somente <strong className="text-white">após os 2 anos de idade</strong>. Diferente de raças como o Malinois Belga, um filhote de Cáucaso com 3 a 4 meses é naturalmente calmo e observador — não vai buscar bola com entusiasmo nem demonstrar explosividade imediata. Jogue a bolinha para um filhote de Cáucaso e ele vai olhar para você como se perguntasse: &ldquo;o que você quer que eu faça?&rdquo; Isso é completamente normal. Não confunda tranquilidade com falta de potencial.
+              </p>
+            </div>
           </section>
 
           <section className="space-y-4">
@@ -157,14 +163,35 @@ export default function RacaPage() {
             <p>
               O Pastor do Cáucaso é classificado como uma raça gigante de cães de guarda. Seguem as características principais de porte:
             </p>
-            <ul className="list-disc pl-5 space-y-2 text-xs text-gray-400">
-              <li><strong>Machos:</strong> Altura na cernelha mínima de 72 cm (idealmente entre 75 cm e 82 cm) e peso mínimo de 50 kg, frequentemente ultrapassando os 75 kg quando adultos.</li>
-              <li><strong>Fêmeas:</strong> Altura na cernelha mínima de 67 cm (idealmente entre 70 cm e 75 cm) e peso mínimo de 45 kg.</li>
-              <li><strong>Pelagem:</strong> Dupla, muito espessa, com subpelo denso e lanoso. Existem três variedades de comprimento de pelo: longo (com juba distinta no pescoço), médio e curto.</li>
-              <li><strong>Cores:</strong> Vários tons de cinza (do claro ao escuro carvão), avermelhado, palha, branco e manchado. Máscara preta é comum e valorizada.</li>
+            <ul className="list-disc pl-5 space-y-2.5 text-xs text-gray-400">
+              <li><strong className="text-gray-200">Machos:</strong> Altura mínima de 72 cm na cernelha (idealmente entre 75 e 82 cm) e peso mínimo de 50 kg, frequentemente ultrapassando os 75 kg quando adultos. Exemplares excepcionais atingem 100 kg no auge.</li>
+              <li><strong className="text-gray-200">Fêmeas:</strong> Altura mínima de 67 cm (idealmente entre 70 e 75 cm) e peso mínimo de 45 kg.</li>
+              <li><strong className="text-gray-200">Cabeça:</strong> Extraordinariamente larga e massiva — exemplares adultos possuem uma cabeça facilmente maior do que uma bola de basquete. Uma das características mais marcantes e imponentes da raça.</li>
+              <li><strong className="text-gray-200">Canal Nasal:</strong> Forte e largo, permitindo respiração eficiente. Essa característica permite que o cão suporte tanto o frio extremo das montanhas caucasianas quanto momentos de calor elevado com surpreendente conforto.</li>
+              <li><strong className="text-gray-200">Pelagem:</strong> Dupla, muito espessa, com subpelo denso e lanoso. Três variedades: longa (com juba distinta no pescoço), média e curta.</li>
+              <li><strong className="text-gray-200">Cores:</strong> Tons de cinza (do claro ao carvão), avermelhado, palha, branco e manchado. Máscara preta é comum e valorizada.</li>
             </ul>
+            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-5 space-y-2">
+              <h4 className="text-sm font-bold text-white">⚖️ Peso Não É Sinônimo de Qualidade</h4>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                No mundo do Cáucaso existe um equívoco perigoso: &ldquo;quanto maior e mais pesado, melhor&rdquo;. Isso aconteceu tragicamente com o Mastim Tibetano, onde a seleção exagerada resultou em cães letárgicos e sem saúde. Um Cáucaso de qualidade deve mostrar <strong className="text-white">vitalidade, movimentação equilibrada e saúde</strong> — não apenas massa. O padrão da raça estabelece margens; o que se avalia é o conjunto completo.
+              </p>
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+              <Award className="w-5 h-5 text-[#D97457]" />
+              <span>Exposição e Guarda: Não É Um Ou Outro</span>
+            </h2>
             <p>
-              <strong>Equilíbrio Estrutural (Vitalidade vs. Peso Exagerado):</strong> O Pastor do Cáucaso é um gigante ativo e rústico. Defendemos a preservação da funcionalidade e da saúde em detrimento do peso excessivo sem mobilidade (uma deformidade seletiva que infelizmente afetou raças como o Mastim Tibetano). Um Cáucaso equilibrado deve movimentar-se com leveza e apresentar vitalidade, mesmo atingindo marcas próximas de 100 kg no auge físico. Exige-se também uma cabeça limpa, livre de rugas excessivas que afetem a saúde ocular (olhos pendentes) ou barbelas hipertrofiadas.
+              No Brasil, existe um equívoco muito difundido: a ideia de que um cachorro de <em>&ldquo;linha de trabalho&rdquo;</em> e um de <em>&ldquo;linha de exposição&rdquo;</em> são categorias opostas e excludentes. Na Europa, onde a cinofilia tem raízes geracionais, criadores de renome simplesmente não reconhecem essa dicotomia.
+            </p>
+            <p>
+              <strong className="text-white">Cáucaso é Cáucaso.</strong> A exposição não é vaidade — é uma prova técnica conduzida por especialistas que avalia estrutura, saúde, dentição, angulações, movimentação e vitalidade do cão. Um campeão de exposição comprova que seu corpo é compatível com o padrão da raça. Esse mesmo cão, ao chegar no seu território, exerce a guarda com naturalidade — porque o instinto territorial é genético, não treinado.
+            </p>
+            <p>
+              O que alguns criadores chamam de &ldquo;linha de trabalho&rdquo; é, com frequência, apenas uma justificativa para cães com pouca estrutura e fora do padrão. Um Cáucaso de qualidade genuína tem estrutura para exposição <em>e</em> temperamento para guarda real. Esses dois atributos não apenas coexistem — eles se complementam.
             </p>
           </section>
 
@@ -174,58 +201,62 @@ export default function RacaPage() {
               <span>Cuidados e Saúde Essenciais</span>
             </h2>
             <p>
-              Devido ao seu tamanho massivo, o Pastor do Cáucaso tem propensão a problemas articulares comuns em raças gigantes, com destaque para a <strong>Displasia Coxofemoral</strong> e a <strong>Displasia de Cotovelo</strong>. A melhor prevenção é adquirir filhotes de criadores que realizam o controle radiográfico rígido das matrizes e padreadores.
+              Devido ao seu tamanho massivo, o Pastor do Cáucaso tem propensão a problemas articulares comuns em raças gigantes, com destaque para a <strong>Displasia Coxofemoral</strong> e a <strong>Displasia de Cotovelo</strong>. A melhor prevenção é adquirir filhotes de criadores que realizam o controle radiográfico das matrizes e padreadores antes de qualquer acasalamento.
             </p>
             <p>
-              Além disso, a raça exige atenção especial para o diagnóstico preventivo de disfunções como o <strong>Hipotireoidismo</strong> (que prejudica a pelagem e o metabolismo dos cães gigantes). Um acompanhamento veterinário cuidadoso e a escolha de linhagens saudáveis são fundamentais para o desenvolvimento de exemplares fortes e com alta expectativa de vida. Escovações semanais são necessárias para remover pelos mortos, principalmente durante as épocas de muda na primavera e no outono.
+              O <strong>Hipotiroidismo</strong> é outra condição a se atentar: é um agravo que pode ser transmitido geneticamente na raça. Criadores responsáveis monitoram a saúde tireoidiana dos seus reprodutores como parte do protocolo de seleção genética.
+            </p>
+            <p>
+              Além disso, a alimentação de alta qualidade super premium durante o primeiro ano de vida é crucial para apoiar o crescimento rápido da estrutura óssea sem sobrecarga. Escovações semanais são necessárias para remover pelos mortos, principalmente nas épocas de muda.
             </p>
           </section>
+
         </article>
-
-        {/* Plantel Premiado Section */}
-        <section className="space-y-6 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6 md:p-8">
-          <div className="space-y-2">
-            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Linhagem de Pista</span>
-            <h3 className="text-xl font-bold text-white border-b border-[#2A2A2A] pb-3">Plantel Premiado em Exposições Internacionais</h3>
-            <p className="text-xs text-gray-400 leading-relaxed font-sans pt-1">
-              Nosso plantel reúne exemplares da Rússia, Ucrânia, Romênia e Espanha com histórico comprovado em exposições — incluindo cães campeões e premiados com Best in Show na Europa. Cada cão é selecionado primeiro pelo padrão de exposição da raça (estrutura, peso, movimentação) e, a partir dessa base, desenvolve naturalmente o instinto de guarda — formando o que consideramos a linhagem mais completa do Pastor do Cáucaso no Brasil.
-            </p>
-          </div>
-
-          <div className="bg-[#121212] border border-[#2A2A2A] rounded-xl p-5 md:p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#2A2A2A] pb-3">
-              <h4 className="text-base font-bold text-[#D97457] sm:text-lg">Goran (Boran) — Campeão na Europa</h4>
-              <span className="bg-[#D97457]/10 text-[#D97457] text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-[#D97457]/20 uppercase">Destaque do Plantel</span>
-            </div>
-            <p className="text-xs text-gray-300 leading-relaxed font-sans">
-              Trazido da Romênia em 2023, o Goran (Boran) é duas vezes Best in Show e considerado o primeiro Pastor do Cáucaso a chegar ao Brasil com esse histórico de exposição na Europa. Possui uma estrutura robusta, padrão de raça impecável e já é reprodutor confirmado no plantel do Canil Vale da Kubera.
-            </p>
-          </div>
-        </section>
 
         {/* FAQs */}
         <section className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6 md:p-8 space-y-6">
           <h3 className="text-xl font-bold text-white border-b border-[#2A2A2A] pb-3">Perguntas Frequentes</h3>
           
-          <div className="space-y-4 text-xs">
+          <div className="space-y-5 text-xs">
             <div className="space-y-1.5">
-              <h5 className="font-bold text-white">1. O Pastor do Cáucaso convive bem com outros animais?</h5>
+              <h5 className="font-bold text-white">1. O Pastor do Cáucaso é dócil com a família?</h5>
+              <p className="text-gray-400">
+                Sim. É extremamente leal, protetor e carinhoso com os membros da sua família — inclusive com crianças e idosos. Cães bem criados convivem pacificamente com todos da casa e são explosivos apenas com pessoas de fora do seu círculo de confiança.
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <h5 className="font-bold text-white">2. O Pastor do Cáucaso convive bem com outros animais?</h5>
               <p className="text-gray-400">
                 Se for socializado desde filhote, pode conviver pacificamente com outros cães da casa e animais de estimação. No entanto, costuma ser intolerante com cães estranhos do mesmo sexo que invadam seu território.
               </p>
             </div>
             
             <div className="space-y-1.5">
-              <h5 className="font-bold text-white">2. Qual a expectativa de vida média?</h5>
+              <h5 className="font-bold text-white">3. Qual a expectativa de vida média?</h5>
               <p className="text-gray-400">
-                A expectativa de vida média da raça varia de 10 a 12 anos, o que é excelente para um cão de porte gigante.
+                A expectativa de vida varia de 10 a 12 anos, o que é excelente para um cão de porte gigante. Exemplares saudáveis, sem displasia e com alimentação adequada, costumam ser ativos e saudáveis até idades avançadas.
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <h5 className="font-bold text-white">3. É um cão fácil de adestrar?</h5>
+              <h5 className="font-bold text-white">4. É um cão fácil de adestrar?</h5>
               <p className="text-gray-400">
-                O Pastor do Cáucaso é inteligente, mas muito independente e obstinado. Ele necessita de um tutor firme, experiente e consistente que estabeleça liderança de forma tranquila e respeitosa. Não responde bem a métodos de adestramento punitivos.
+                O Pastor do Cáucaso é muito inteligente, porém independente e obstinado. Ele necessita de um tutor firme, experiente e consistente. Não responde bem a métodos punitivos. O segredo está em estabelecer liderança com respeito e clareza — e entender que ele aprende o que quer, quando quer, no seu próprio ritmo.
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <h5 className="font-bold text-white">5. Essa raça pode ser de exposição E de guarda ao mesmo tempo?</h5>
+              <p className="text-gray-400">
+                Sim, e essa é a proposta de criadores sérios. Na Europa, criadores de renome não distinguem &ldquo;linha de trabalho&rdquo; de &ldquo;linha de exposição&rdquo; — um bom Cáucaso faz as duas coisas. A exposição prova estrutura, saúde e vitalidade; o instinto de guarda é genético e não se perde com o pedigree.
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <h5 className="font-bold text-white">6. Essa raça pode viver em apartamento?</h5>
+              <p className="text-gray-400">
+                Não. Devido ao porte gigante e ao instinto territorial ativo, o Pastor do Cáucaso precisa de espaço amplo — chácaras, sítios ou casas com pátios grandes — para exercer seu papel de guardião e se movimentar com conforto.
               </p>
             </div>
           </div>

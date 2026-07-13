@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
 import SocialFloatingButtons from "@/components/SocialFloatingButtons";
-import { Shield, MapPin, Award, CheckCircle, Star } from "lucide-react";
+import { Shield, MapPin, Award, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Quem Somos | Canil Pastor do Cáucaso Vale da Kubera",
@@ -15,7 +15,7 @@ export default function SobrePage() {
     { label: "Área Verde", value: "10.000m²" },
     { label: "Anos de Seleção", value: "8+ Anos" },
     { label: "Matrizes Selecionadas", value: "100% CBKC" },
-    { label: "Cães Saudáveis", value: "Laudo Displasia" },
+    { label: "Best in Show Europa", value: "² Títulos" },
   ];
 
   return (
@@ -36,10 +36,13 @@ export default function SobrePage() {
               <span className="text-[#D97457]">Pastor do Cáucaso</span>
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
-              O Canil Vale da Kubera é especializado na criação do Pastor do Cáucaso (Kavkazskaya Ovcharka), com plantel formado por linhagens importadas da Rússia, Ucrânia, Romênia e Espanha. Nosso trabalho é guiado por três pilares: genética de qualidade, estrutura compatível com o padrão da raça e temperamento equilibrado. Selecionamos exemplares com histórico comprovado — incluindo cães premiados em exposições na Europa — para formar uma linhagem brasileira sólida, livre de problemas como displasia e hipotireoidismo, e funcional tanto para exposição quanto para guarda residencial.
+              O Canil Vale da Kubera foi fundado por <strong>Rafael Avellar</strong> — estudante de medicina veterinária e criador dedicado — em parceria com <strong>Zé Carlos</strong>, colecionar apaixonado pela raça. Juntos, impulsionados pela admiração pela robustez, lealdade e instinto de guarda inigualável do Pastor do Cáucaso, construíram um dos plantéis mais representativos e geneticamente ricos da raça no Brasil. Localizado em Itatiba - SP, o compromisso é produzir cães de altíssima qualidade genética, com temperamento equilibrado e saúde certificada.
+            </p>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Trabalhamos com linhagens selecionadas e importadas diretamente dos países de referência da raça: <strong>Rússia, Ucrânia, Romênia e Espanha</strong>. Em 2023, trouxemos ao Brasil o <strong>Goran</strong> — o primeiro Pastor do Cáucaso a chegar ao país com dois títulos de <em>Best in Show</em> conquistados na Europa, uma conquista histórica para a cinofilia brasileira.
             </p>
           </div>
-          <div className="relative h-64 sm:h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
+          <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
             <img
               src="/dogs/vasilisia_1.jpg"
               alt="Vasilísia - Fêmea importada da Rússia - Canil Vale da Kubera"
@@ -62,128 +65,102 @@ export default function SobrePage() {
           ))}
         </section>
 
-        {/* Video / Documentary Section */}
-        <section className="space-y-8 py-4">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Documentário em Vídeo</span>
-            <h2 className="text-2xl md:text-4xl font-extrabold">Nossa Estrutura em Ação</h2>
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-              Confira a infraestrutura do Canil Vale da Kubera em nosso documentário em vídeo. Conheça nossa chácara de 10.000m², os piquetes de exercício e veja nosso plantel real em ação, conforme registrado em visita especial conduzida pelo canal Cinofilia Digital.
+        {/* Plantel Internacional */}
+        <section className="space-y-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 md:p-10">
+          <div className="text-center max-w-lg mx-auto space-y-2">
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Importáveis de Excelência</span>
+            <h2 className="text-2xl md:text-3xl font-bold">Plantél de Linhagens Internacionais</h2>
+            <p className="text-gray-400 text-xs leading-relaxed">
+              Nossos reprodutores foram selecionados nos países de origem mais respeitados da raça, garantindo genética de nível mundial.
             </p>
           </div>
-          
-          <div className="max-w-4xl mx-auto relative aspect-video w-full rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl bg-gray-950">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/UgnjXPSdQTY"
-              title="Canil Vale da Kubera | Pastor do Cáucaso | Cinofilia Digital"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            {[
+              {
+                flag: "🇷🇺",
+                country: "Rússia",
+                description: "Linhagens com foco em temperamento equilibrado e estrutura robusta. Importamos de canis de exposição de alto nível, incluindo o renomado Canil Baraik Azskaz.",
+                highlight: "Afár, Symion, Vénus"
+              },
+              {
+                flag: "🇺🇦",
+                country: "Ucrânia",
+                description: "Cães com porte excepcional, ossatura massiva e temperamento explosivo. Preferidos por criadores que buscam tamanho e presença imponente.",
+                highlight: "Nero (40kg aos 4 meses)"
+              },
+              {
+                flag: "🇷🇴",
+                country: "Romênia",
+                description: "Casa do Goran — campeão europeu com dois títulos de Best in Show. O primeiro Pastor do Cáucaso com essa conquista a chegar ao Brasil.",
+                highlight: "🏆 Goran — 2x Best in Show Europa"
+              },
+              {
+                flag: "🇪🇸",
+                country: "Espanha",
+                description: "Cães mais altos, com estrutura elegante e caráter forte e explosivo. O Canil Nirvana (Espanha) é referência mundial para a raça.",
+                highlight: "Apolo (Canil Nirvana)"
+              },
+            ].map((item, idx) => (
+              <div key={idx} className="flex gap-4 bg-[#0F0F0F] border border-[#2A2A2A] p-5 rounded-xl hover:border-[#D97457]/30 transition-colors">
+                <span className="text-3xl shrink-0">{item.flag}</span>
+                <div className="space-y-1.5">
+                  <h4 className="font-bold text-white text-sm">{item.country}</h4>
+                  <p className="text-gray-400 text-[11px] leading-relaxed">{item.description}</p>
+                  <span className="inline-block text-[10px] font-bold text-[#D97457] border border-[#D97457]/20 bg-[#D97457]/5 px-2 py-0.5 rounded-full">{item.highlight}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* Features / Differentials */}
         <section className="space-y-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 md:p-12">
           <div className="text-center max-w-lg mx-auto space-y-2">
-            <h2 className="text-2xl md:text-3xl font-bold">Nossa Filosofia de Criação</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">Nossos Diferenciais</h2>
             <p className="text-gray-400 text-xs leading-relaxed">
-              Trabalhamos com os mais rígidos critérios técnicos internacionais para criar exemplares saudáveis e fiéis ao padrão.
+              Como criadores responsáveis, seguimos protocolos rigorosos para entregar o melhor companheiro de guarda.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
             <div className="flex gap-4">
               <Award className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5 font-sans">
-                <h4 className="text-sm font-bold">Padrão de Exposição com Funcionalidade</h4>
+              <div className="space-y-1.5">
+                <h4 className="text-sm font-bold">Laudos de Saúde</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  No Canil Vale da Kubera, o cão de exposição é a base de toda a nossa seleção genética. Trabalhamos com exemplares avaliados por especialistas e aprovados no padrão oficial da raça — estrutura, peso, pelagem, dentição e movimentação — e que, ao mesmo tempo, exercem naturalmente a guarda territorial da família. Não enxergamos &quot;linha de exposição&quot; e &quot;linha de trabalho&quot; como conceitos opostos: um cão bem estruturado e aprovado em exposição é, por definição, um cão saudável e funcional.
+                  Todas as nossas matrizes e padreadores realizam exames radiográficos para atestar a ausência de Displasia Coxofemoral antes de qualquer acasalamento.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
               <Shield className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5 font-sans">
-                <h4 className="text-sm font-bold">Genética Selecionada para Padrão de Exposição</h4>
+              <div className="space-y-1.5">
+                <h4 className="text-sm font-bold">Temperamento Equilibrado</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Cada cruzamento no Canil Vale da Kubera é pensado para atender ao padrão de exposição da raça: estrutura óssea robusta, angulações corretas, dentição completa e vitalidade comprovada — sempre livres de displasia e hipotireoidismo. Nosso plantel inclui exemplares com tatuagem de identificação e procedência documentada da Rússia, Ucrânia, Romênia e Espanha, selecionados por critérios técnicos avaliados em exposições internacionais.
+                  Realizamos socialização precoce com estímulos ambientais e humanos para desenvolver cães seguros, autoconfiantes e territorialistas no nível correto.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
               <MapPin className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5 font-sans">
-                <h4 className="text-sm font-bold">Conheça o Temperamento do Pastor do Cáucaso</h4>
+              <div className="space-y-1.5">
+                <h4 className="text-sm font-bold">Instalações Premium</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  O Pastor do Cáucaso é uma raça de guarda territorial, com temperamento controlado e maturação tardia — atinge a fase adulta após os 2 anos de idade. É um cão dócil com a família e protetor com estranhos, equilibrando instinto de guarda com comportamento estável em ambientes de exposição.
+                  Mais de 10.000m² com piquetes gramados espaçosos, boxes higienizados diariamente e maternidade climatizada para o conforto absoluto das fêmeas e filhotes.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
               <CheckCircle className="w-10 h-10 text-[#D97457] shrink-0" />
-              <div className="space-y-1.5 font-sans">
-                <h4 className="text-sm font-bold">O Que Define um Cão de Exposição</h4>
+              <div className="space-y-1.5">
+                <h4 className="text-sm font-bold">Suporte Vitalício</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Um cão de exposição é avaliado por especialistas quanto à conformidade com o padrão oficial da raça: estrutura, peso, pelagem, dentição, formato de cabeça, angulações e movimentação. No Canil Vale da Kubera, esse é o ponto de partida de toda a nossa seleção — só avançamos com exemplares que comprovam saúde, vitalidade e fidelidade ao padrão do Pastor do Cáucaso, características que se traduzem diretamente em cães mais equilibrados também como guardiões da família.
+                  Ao adquirir um de nossos filhotes, você terá canal aberto permanente com o criador para tirar dúvidas de alimentação, manejo, adestramento e desenvolvimento.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials (Migrated from Home) */}
-        <section className="py-20 bg-[#121212]/50 border border-[#2A2A2A] rounded-2xl">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            <div className="text-center space-y-2 max-w-lg mx-auto">
-              <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Depoimentos</span>
-              <h2 className="text-3xl font-extrabold text-white">O que dizem os tutores</h2>
-              <p className="text-gray-400 text-xs leading-relaxed">
-                Confiança e transparência que resultam em parcerias duradouras com nossos clientes.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {[
-                {
-                  name: "Rodrigo Almeida",
-                  location: "São Paulo - SP",
-                  dog: "Thor (Macho, 2 anos)",
-                  text: "Excelente cão de guarda. O Thor é extremamente dócil com as minhas filhas, mas um guardião implacável na propriedade. O suporte pós-venda do canil foi nota 10.",
-                  stars: 5,
-                },
-                {
-                  name: "Mariana Costa",
-                  location: "Curitiba - PR",
-                  dog: "Athena (Fêmea, 1 ano e meio)",
-                  text: "Fêmea atenta, muito equilibrada e rústica. Veio com pedigree CBKC completo e laudos negativos de displasia dos pais. Indico o canil de olhos fechados.",
-                  stars: 5,
-                },
-              ].map((test, index) => (
-                <div
-                  key={index}
-                  className="bg-[#1A1A1A] border border-[#2A2A2A] p-6 rounded-2xl space-y-4 hover:border-gray-800 transition-colors shadow-lg relative flex flex-col justify-between"
-                >
-                  <div className="space-y-3">
-                    <div className="flex gap-1 text-[#D97457]">
-                      {[...Array(test.stars)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 text-[#D97457] fill-[#D97457]" />
-                      ))}
-                    </div>
-                    <p className="text-gray-300 text-xs italic leading-relaxed font-sans">&ldquo;{test.text}&rdquo;</p>
-                  </div>
-                  <div className="flex justify-between items-center pt-3 border-t border-[#2A2A2A]/50">
-                    <div className="flex flex-col">
-                      <span className="text-white text-xs font-bold">{test.name}</span>
-                      <span className="text-gray-500 text-[10px]">{test.location}</span>
-                    </div>
-                    <span className="text-xs text-[#D97457] font-semibold">{test.dog}</span>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>

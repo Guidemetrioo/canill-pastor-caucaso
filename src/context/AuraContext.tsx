@@ -368,11 +368,12 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
     // 3. Animals
     setAnimals([
-      { id: 1, name: "Symion da Kubera", gender: "macho", birthdate: "2021-04-12", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Importado da Rússia (Canil Baraik Azskaz). Gigante de 100kg com excelente estrutura e guarda implacável.", avatar_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400" },
-      { id: 2, name: "Vasilísia da Kubera", gender: "fêmea", birthdate: "2022-01-20", pedigree_url: "#", registry: "CBKC-54321", status: "disponível", notes: "Importada da Rússia. Fêmea de temperamento explosivo, dominante e excelente guardiã.", avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" },
-      { id: 3, name: "Nero da Kubera", gender: "macho", birthdate: "2020-08-15", pedigree_url: "#", registry: "CBKC-22341", status: "disponível", breed_price: 3500.00, notes: "Importado da Ucrânia. Reprodutor de grande porte, temperamento equilibrado e excelente pigmentação.", avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400" },
-      { id: 4, name: "Thara da Kubera", gender: "fêmea", birthdate: "2021-11-03", pedigree_url: "#", registry: "CBKC-22342", status: "disponível", notes: "Importada da Romênia. Matriz de excelente temperamento de proteção e instinto maternal impecável.", avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400" },
-      { id: 5, name: "Ozzy da Kubera", gender: "macho", birthdate: "2022-05-19", pedigree_url: "#", registry: "CBKC-22343", status: "disponível", breed_price: 3500.00, notes: "Importado da Espanha. Reprodutor jovem de excelente movimentação e estrutura compacta.", avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" }
+      { id: 1, name: "Symeon da Kubera", gender: "macho", birthdate: "2020-01-01", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor do plantel Vale da Kubera.", avatar_url: "/dogs/symeon_1.jpg" },
+      { id: 2, name: "Nero da Kubera", gender: "macho", birthdate: "2020-08-15", pedigree_url: "#", registry: "CBKC-22341", status: "disponível", breed_price: 3500.00, notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.", avatar_url: "/dogs/nero_new_1.jpg" },
+      { id: 3, name: "Apolo da Kubera", gender: "macho", birthdate: "2021-03-10", pedigree_url: "#", registry: "CBKC-22344", status: "disponível", breed_price: 3500.00, notes: "Macho imponente do plantel, com excelente conformação e instinto de guarda apurado.", avatar_url: "/dogs/apolo_1.jpg" },
+      { id: 4, name: "Orham da Kubera", gender: "macho", birthdate: "2021-06-20", pedigree_url: "#", registry: "CBKC-22345", status: "disponível", breed_price: 3500.00, notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.", avatar_url: "/dogs/orham_1.jpg" },
+      { id: 5, name: "Putin da Kubera", gender: "macho", birthdate: "2021-09-05", pedigree_url: "#", registry: "CBKC-22346", status: "disponível", breed_price: 3500.00, notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.", avatar_url: "/dogs/putin_1.jpg" },
+      { id: 6, name: "Burham da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", breed_price: 3500.00, notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/burham_1.jpg" }
     ]);
 
     // 4. Ninhadas
@@ -380,7 +381,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
       { id: 1, mother_id: 2, father_id: 1, birth_date: "2026-04-15", puppy_count_male: 3, puppy_count_female: 4, status: "Nascida", notes: "Ninhada excelente. Todos os filhotes fortes e amamentando." }
     ]);
 
-    // 5. Filhotes
+    // 5. Filhotes / Cães do Plantel
     setFilhotes([
       {
         id: 1,
