@@ -179,7 +179,7 @@ export default function PublicNavbar() {
           {/* Left: Logo */}
           <div className="flex-1 flex justify-start">
             <Link href="/" className="flex items-center gap-3">
-              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
+              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-16 h-16 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
             </Link>
           </div>
 
@@ -202,7 +202,7 @@ export default function PublicNavbar() {
           {/* Mobile Layout */}
           <div className="lg:hidden flex items-center justify-between w-full">
             <Link href="/" className="flex items-center gap-3">
-              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-9 h-9 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
+              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-12 h-12 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
