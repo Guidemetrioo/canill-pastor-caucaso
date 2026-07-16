@@ -22,7 +22,7 @@ export default function HospedagemPage() {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Hospedagem & Creche Canina para Grande Porte",
-    "description": "Hotel canino e hospedagem com boxes higienizados, climatizados e piquetes gramados individuais de 150m² em chácara de 10.000m² em Itatiba - SP.",
+    "description": "Hotel canino e hospedagem com boxes higienizados, climatizados e piquetes gramados individuais de 150m² em chácara de 20.000m² em Itatiba - SP.",
     "provider": {
       "@type": "LocalBusiness",
       "name": "Canil Vale da Kubera",

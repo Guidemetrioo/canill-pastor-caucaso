@@ -27,7 +27,6 @@ export default function PublicNavbar() {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/sobre", label: "O Canil" },
-    { href: "/filhotes", label: "Filhotes" },
     { href: "/a-raca-pastor-do-caucaso", label: "A Raça" },
     { href: "/servicos/cobertura", label: "Coberturas" },
     { href: "/blog", label: "Blog" },

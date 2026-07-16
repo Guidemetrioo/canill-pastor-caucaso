@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function SobrePage() {
   const stats = [
-    { label: "Área Verde", value: "10.000m²" },
+    { label: "Área Verde", value: "20.000m²" },
     { label: "Anos de Seleção", value: "8+ Anos" },
     { label: "Matrizes Selecionadas", value: "100% CBKC" },
     { label: "Best in Show Europa", value: "² Títulos" },
@@ -190,7 +190,7 @@ export default function SobrePage() {
               <div className="space-y-1.5">
                 <h4 className="text-sm font-bold">Instalações Premium</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">
-                  Mais de 10.000m² com piquetes gramados espaçosos, boxes higienizados diariamente e maternidade climatizada para o conforto absoluto das fêmeas e filhotes.
+                  Mais de 20.000m² com piquetes gramados espaçosos, boxes higienizados diariamente e maternidade climatizada para o conforto absoluto das fêmeas e filhotes.
                 </p>
               </div>
             </div>

@@ -396,7 +396,7 @@ export default function LandingPageClient() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/10 text-white">
-                <p className="text-xs font-bold" style={{ color: "#E5A880" }}>10.000m² de Área Verde</p>
+                <p className="text-xs font-bold" style={{ color: "#E5A880" }}>20.000m² de Área Verde</p>
                 <p className="text-[10px] text-gray-300">Estrutura projetada para o bem-estar animal</p>
               </div>
             </div>
@@ -465,7 +465,7 @@ export default function LandingPageClient() {
                 </div>
                 <h3 className="text-2xl font-bold font-comfortaa">O Lugar</h3>
                 <p className={`text-sm sm:text-base leading-relaxed font-sans ${t.textMuted}`}>
-                  Localizado em Itatiba - SP, o canil conta com uma chácara verde de mais de 10.000m² totalmente estruturada, com piquetes espaçosos, área de solário e maternidade climatizada, proporcionando espaço de sobra para exercises e sociabilidade.
+                  Localizado em Itatiba - SP, o canil conta com uma chácara verde de mais de 20.000m² totalmente estruturada, com piquetes espaçosos, área de solário e maternidade climatizada, proporcionando espaço de sobra para exercises e sociabilidade.
                 </p>
               </div>
             )}
@@ -547,7 +547,7 @@ export default function LandingPageClient() {
               </span>
               <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
               <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
-                Venha conhecer de perto nossa estrutura de 10.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
+                Venha conhecer de perto nossa estrutura de 20.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
               </p>
             </div>
 
