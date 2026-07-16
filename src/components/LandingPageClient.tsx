@@ -546,16 +546,12 @@ export default function LandingPageClient() {
               </span>
               <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
               <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
-                Venha conhecer de perto nossa estrutura de 20.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
-              </p>
-            </div>
-
-            <div className="max-w-3xl w-full bg-black/35 border border-white/10 rounded-3xl p-6 sm:p-10 pb-10 sm:pb-14 shadow-2xl relative overflow-hidden backdrop-blur-md">
+                Venha conhecer de perto nossa estrutura de 20.000m² e o temperamento dos nossos reprodutores. As visitas            <div className="max-w-2xl w-full bg-black/35 border border-white/10 rounded-3xl p-5 sm:p-6 pb-6 sm:pb-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
               <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Header availability row */}
-                <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 border-b border-white/10 pb-6 text-xs text-gray-200">
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 border-b border-white/10 pb-4 text-xs text-gray-200">
                   <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
                     <Calendar className="w-4 h-4 text-gray-400" />
                     <span><strong>Todos os dias</strong> (Visitação)</span>
@@ -566,86 +562,89 @@ export default function LandingPageClient() {
                   </div>
                 </div>
 
-                {/* Form */}
-                <form onSubmit={handleScheduleSubmit} className="max-w-md mx-auto w-full space-y-5">
-                  <div className="space-y-1.5 text-left">
-                    <label htmlFor="visitor-name" className="text-xs font-semibold block text-gray-300">Nome Completo</label>
-                    <input
-                      id="visitor-name"
-                      type="text"
-                      required
-                      placeholder="Seu nome"
-                      value={visitorName}
-                      onChange={(e) => setVisitorName(e.target.value)}
-                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                    />
+                <form onSubmit={handleScheduleSubmit} className="mx-auto w-full space-y-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div className="space-y-1 text-left">
+                      <label htmlFor="visitor-name" className="text-[10px] font-bold uppercase tracking-wider block text-gray-300">Nome Completo</label>
+                      <input
+                        id="visitor-name"
+                        type="text"
+                        required
+                        placeholder="Seu nome"
+                        value={visitorName}
+                        onChange={(e) => setVisitorName(e.target.value)}
+                        className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      />
+                    </div>
+
+                    <div className="space-y-1 text-left">
+                      <label htmlFor="visitor-phone" className="text-[10px] font-bold uppercase tracking-wider block text-gray-300">Telefone / WhatsApp</label>
+                      <input
+                        id="visitor-phone"
+                        type="tel"
+                        required
+                        placeholder="(XX) XXXXX-XXXX"
+                        value={visitorPhone}
+                        onChange={(e) => setVisitorPhone(e.target.value)}
+                        className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-1.5 text-left">
-                    <label htmlFor="visitor-phone" className="text-xs font-semibold block text-gray-300">Telefone / WhatsApp</label>
-                    <input
-                      id="visitor-phone"
-                      type="tel"
-                      required
-                      placeholder="(XX) XXXXX-XXXX"
-                      value={visitorPhone}
-                      onChange={(e) => setVisitorPhone(e.target.value)}
-                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div className="space-y-1 text-left">
+                      <label htmlFor="visit-date" className="text-[10px] font-bold uppercase tracking-wider block text-gray-300">Data da Visita</label>
+                      <input
+                        id="visit-date"
+                        type="text"
+                        placeholder="Escolha a data da visita"
+                        onFocus={(e) => {
+                          e.currentTarget.type = "date";
+                          if ('showPicker' in e.currentTarget) {
+                            try {
+                              e.currentTarget.showPicker();
+                            } catch (err) {}
+                          }
+                        }}
+                        onBlur={(e) => {
+                          if (!e.currentTarget.value) e.currentTarget.type = "text";
+                        }}
+                        required
+                        min={todayStr}
+                        value={visitDate}
+                        onChange={handleDateChange}
+                        className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
+                      />
+                    </div>
+
+                    <div className="space-y-1 text-left">
+                      <label htmlFor="visit-time" className="text-[10px] font-bold uppercase tracking-wider block text-gray-300">Horário</label>
+                      <select
+                        id="visit-time"
+                        value={visitTime}
+                        onChange={(e) => setVisitTime(e.target.value)}
+                        className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
+                        style={{ minWidth: 0, width: '100%', boxSizing: 'border-box' }}
+                      >
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                      </select>
+                    </div>
                   </div>
 
-                  <div className="space-y-1.5 text-left">
-                    <label htmlFor="visit-date" className="text-xs font-semibold block text-gray-300">Data da Visita</label>
-                    <input
-                      id="visit-date"
-                      type="text"
-                      placeholder="Escolha a data da visita"
-                      onFocus={(e) => {
-                        e.currentTarget.type = "date";
-                        if ('showPicker' in e.currentTarget) {
-                          try {
-                            e.currentTarget.showPicker();
-                          } catch (err) {}
-                        }
-                      }}
-                      onBlur={(e) => {
-                        if (!e.currentTarget.value) e.currentTarget.type = "text";
-                      }}
-                      required
-                      min={todayStr}
-                      value={visitDate}
-                      onChange={handleDateChange}
-                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5 text-left">
-                    <label htmlFor="visit-time" className="text-xs font-semibold block text-gray-300">Horário</label>
-                    <select
-                      id="visit-time"
-                      value={visitTime}
-                      onChange={(e) => setVisitTime(e.target.value)}
-                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
-                      style={{ minWidth: 0, width: '100%', boxSizing: 'border-box' }}
-                    >
-                      <option value="08:00">08:00</option>
-                      <option value="08:30">08:30</option>
-                      <option value="09:00">09:00</option>
-                      <option value="09:30">09:30</option>
-                      <option value="10:00">10:00</option>
-                      <option value="10:30">10:30</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-1.5 text-left">
-                    <label htmlFor="visit-intention" className="text-xs font-semibold block text-gray-300">Intenção da Visita</label>
+                  <div className="space-y-1 text-left">
+                    <label htmlFor="visit-intention" className="text-[10px] font-bold uppercase tracking-wider block text-gray-300">Intenção da Visita</label>
                     <textarea
                       id="visit-intention"
                       placeholder="Qual o motivo ou intenção da visita? (Ex: conhecer filhotes, ver matrizes, etc.)"
                       value={visitIntention}
                       onChange={(e) => setVisitIntention(e.target.value)}
-                      rows={3}
-                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans resize-none"
+                      rows={2}
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans resize-none"
                     />
                   </div>
 
@@ -655,7 +654,7 @@ export default function LandingPageClient() {
 
                   <button
                     type="submit"
-                    className="w-full font-bold py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-4 shadow-lg text-white font-sans hover:opacity-90 active:scale-95"
+                    className="w-full font-bold py-3 rounded-xl transition-all text-xs flex items-center justify-center gap-2 mt-2 shadow-lg text-white font-sans hover:opacity-90 active:scale-95"
                     style={{ backgroundColor: t.accentHex }}
                   >
                     <Calendar className="w-4 h-4" />
