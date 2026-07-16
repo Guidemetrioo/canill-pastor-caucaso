@@ -176,8 +176,15 @@ export default function PublicNavbar() {
       <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Desktop Nav on the Left */}
-          <div className="hidden lg:flex items-center gap-6">
+          {/* Left: Logo */}
+          <div className="flex-1 flex justify-start">
+            <Link href="/" className="flex items-center gap-3">
+              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
+            </Link>
+          </div>
+
+          {/* Center: Nav Items */}
+          <div className="hidden lg:flex items-center justify-center gap-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -189,20 +196,20 @@ export default function PublicNavbar() {
             ))}
           </div>
 
-          {/* Desktop Right Side: Logo Only */}
-          <div className="hidden lg:flex items-center">
-            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
-          </div>
+          {/* Right: Empty spacer to balance layout */}
+          <div className="hidden lg:flex flex-1 justify-end" />
 
           {/* Mobile Layout */}
           <div className="lg:hidden flex items-center justify-between w-full">
+            <Link href="/" className="flex items-center gap-3">
+              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-9 h-9 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
+            </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white hover:text-gray-300 transition-colors focus:outline-none"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
-            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-9 h-9 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
           </div>
         </div>
       </div>

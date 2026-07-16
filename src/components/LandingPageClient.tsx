@@ -328,7 +328,7 @@ export default function LandingPageClient() {
               opacity: textOpacity
             }}
           >
-            <div className="max-w-2xl space-y-6">
+            <div className="max-w-5xl space-y-6">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/60 border border-white/20 text-white">
                 <Shield className="w-3.5 h-3.5 text-white" />
                 <span>Criação Selecionada CBKC/FCI</span>
