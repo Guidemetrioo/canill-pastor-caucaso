@@ -201,9 +201,22 @@ client.on("message", async (msg) => {
     const supabase = getSupabase();
     if (!supabase) return;
     
-    const chat = await msg.getChat();
-    const contact = await msg.getContact();
-    const contactName = chat.name || contact.pushname || contact.name || "Cliente WhatsApp";
+    let contactName = "Cliente WhatsApp";
+    try {
+      const chat = await msg.getChat();
+      if (chat && chat.name) contactName = chat.name;
+    } catch (chatErr: any) {
+      console.warn("⚠️ [Chat Inbox] Falha ao obter chat (getChat):", chatErr.message || chatErr);
+    }
+    
+    try {
+      const contact = await msg.getContact();
+      if (contact && contactName === "Cliente WhatsApp") {
+        contactName = contact.pushname || contact.name || "Cliente WhatsApp";
+      }
+    } catch (contactErr: any) {
+      console.warn("⚠️ [Chat Inbox] Falha ao obter contato (getContact):", contactErr.message || contactErr);
+    }
     
     // Insert incoming message
     const { error } = await supabase
@@ -271,12 +284,19 @@ client.on("message_create", async (msg) => {
         return; // Already logged, exit!
       }
 
-      const chat = await msg.getChat();
+      let contactName = "Cliente WhatsApp";
+      try {
+        const chat = await msg.getChat();
+        if (chat && chat.name) contactName = chat.name;
+      } catch (chatErr: any) {
+        // Fail silently
+      }
+
       await supabase
         .from("whatsapp_messages")
         .insert({
           chat_jid: msg.to,
-          contact_name: chat.name || "Cliente WhatsApp",
+          contact_name: contactName,
           body: msg.body,
           from_me: true,
           status: "sent",

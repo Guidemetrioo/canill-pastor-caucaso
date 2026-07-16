@@ -136,9 +136,23 @@ export async function handleIncomingMessage(msg: Message, client: any) {
   const from = msg.from;
   const body = msg.body.trim();
   const cleanPhone = from.split("@")[0];
-  const chat = await msg.getChat();
-  const contact = await msg.getContact();
-  const contactName = chat.name || contact.pushname || contact.name || "Interessado Canil";
+  let contactName = "Interessado Canil";
+  try {
+    const chat = await msg.getChat();
+    if (chat && chat.name) contactName = chat.name;
+  } catch (chatErr: any) {
+    console.warn("⚠️ [Chatbot Flow] Falha ao obter chat (getChat):", chatErr.message || chatErr);
+  }
+
+  try {
+    const contact = await msg.getContact();
+    if (contact && contactName === "Interessado Canil") {
+      contactName = contact.pushname || contact.name || "Interessado Canil";
+    }
+  } catch (contactErr: any) {
+    console.warn("⚠️ [Chatbot Flow] Falha ao obter contato (getContact):", contactErr.message || contactErr);
+  }
+
   const supabase = getSupabase();
 
   // 1. Get or create lead
