@@ -34,7 +34,8 @@ export default function PublicFooter() {
           <div>
             <h4 className="text-sm font-semibold text-[#222521] uppercase tracking-wider mb-4 font-comfortaa">Serviços</h4>
             <ul className="space-y-2 text-xs text-[#555E54]">
-              <li><Link href="/servicos/cobertura" className="hover:text-[#0F6B2E] transition-colors">Cobertura / Monta</Link></li>
+              <li><Link href="/servicos/hospedagem" className="hover:text-[#0F6B2E] transition-colors">Hospedagem &amp; Hotel</Link></li>
+              <li><Link href="/servicos/adestramento" className="hover:text-[#0F6B2E] transition-colors">Adestramento Canino</Link></li>
             </ul>
           </div>
 
@@ -70,9 +71,15 @@ export default function PublicFooter() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-[#E2E8F0] text-center text-[10px] text-[#555E54] space-y-1">
+        <div className="mt-8 pt-8 border-t border-[#E2E8F0] text-center text-[10px] text-[#555E54] space-y-2 flex flex-col items-center">
           <p>&copy; {currentYear} Canil Vale da Kubera Pastor do Cáucaso. Todos os direitos reservados. Registrado no CBKC / FCI.</p>
           <p className="opacity-75">Desenvolvido com foco em SEO técnico e performance.</p>
+          <Link
+            href="/login"
+            className="mt-2 bg-[#B24F18]/10 hover:bg-[#B24F18]/25 text-[#B24F18] border border-[#B24F18]/30 px-3 py-1.5 rounded-md text-[10px] font-comfortaa font-bold transition-all shadow-sm"
+          >
+            Painel do Admin
+          </Link>
         </div>
       </div>
     </footer>

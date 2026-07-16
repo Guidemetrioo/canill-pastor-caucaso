@@ -189,17 +189,9 @@ export default function PublicNavbar() {
             ))}
           </div>
 
-          {/* Desktop Right Side: Painel Admin + Logo */}
-          <div className="hidden lg:flex items-center gap-6">
-            <Link
-              href="/login"
-              className="bg-[#B24F18] hover:bg-[#964213] text-white px-4 py-2 rounded-lg text-sm font-comfortaa font-bold transition-all shadow-md"
-            >
-              Painel Admin
-            </Link>
-            <div className="border-l border-gray-700/30 pl-4 h-10 flex items-center">
-              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
-            </div>
+          {/* Desktop Right Side: Logo Only */}
+          <div className="hidden lg:flex items-center">
+            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
           </div>
 
           {/* Mobile Layout */}

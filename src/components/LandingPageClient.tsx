@@ -335,8 +335,7 @@ export default function LandingPageClient() {
               </span>
 
               <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight font-comfortaa text-white">
-                Canil <br className="sm:hidden" />
-                <span style={{ color: t.accentHex }}>Vale da Kubera</span>
+                Canil <span style={{ color: t.accentHex }}>Vale da Kubera</span>
               </h1>
 
               <p className="text-sm sm:text-base leading-relaxed max-w-xl font-sans text-gray-200">
