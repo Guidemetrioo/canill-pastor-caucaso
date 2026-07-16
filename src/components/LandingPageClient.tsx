@@ -716,7 +716,7 @@ export default function LandingPageClient() {
               </div>
               <div className="flex justify-center mt-10">
                 <Link
-                  href="/galeria"
+                  href="/plantel"
                   className="font-bold px-8 py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 shadow-lg hover:opacity-90 active:scale-95 text-white"
                   style={{ backgroundColor: t.accentHex }}
                 >

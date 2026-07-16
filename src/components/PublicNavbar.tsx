@@ -28,8 +28,9 @@ export default function PublicNavbar() {
     { href: "/", label: "Home" },
     { href: "/sobre", label: "O Canil" },
     { href: "/a-raca-pastor-do-caucaso", label: "A Raça" },
+    { href: "/plantel", label: "Nossos Cães" },
+    { href: "/galeria", label: "Galeria" },
     { href: "/blog", label: "Blog" },
-    { href: "/galeria", label: "Nossos Cães" },
     { href: "/contato", label: "Contato" },
   ];
 
