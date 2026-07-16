@@ -381,12 +381,12 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
     // 3. Animals
     setAnimals([
-      { id: 1, name: "Symeon da Kubera", gender: "macho", birthdate: "2020-01-01", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor do plantel Vale da Kubera.", avatar_url: "/dogs/symeon_1.jpg" },
+      { id: 1, name: "Symion da Kubera", gender: "macho", birthdate: "2020-01-01", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor do plantel Vale da Kubera.", avatar_url: "/dogs/symeon_1.jpg" },
       { id: 2, name: "Nero da Kubera", gender: "macho", birthdate: "2020-08-15", pedigree_url: "#", registry: "CBKC-22341", status: "disponível", breed_price: 3500.00, notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.", avatar_url: "/dogs/nero_new_1.jpg" },
       { id: 3, name: "Apolo da Kubera", gender: "macho", birthdate: "2021-03-10", pedigree_url: "#", registry: "CBKC-22344", status: "disponível", breed_price: 3500.00, notes: "Macho imponente do plantel, com excelente conformação e instinto de guarda apurado.", avatar_url: "/dogs/apolo_1.jpg" },
       { id: 4, name: "Orham da Kubera", gender: "macho", birthdate: "2021-06-20", pedigree_url: "#", registry: "CBKC-22345", status: "disponível", breed_price: 3500.00, notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.", avatar_url: "/dogs/orham_1.jpg" },
       { id: 5, name: "Putin da Kubera", gender: "macho", birthdate: "2021-09-05", pedigree_url: "#", registry: "CBKC-22346", status: "disponível", breed_price: 3500.00, notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.", avatar_url: "/dogs/putin_1.jpg" },
-      { id: 6, name: "Burham da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", breed_price: 3500.00, notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/burham_1.jpg" }
+      { id: 6, name: "Buran da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", breed_price: 3500.00, notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/buran_1.jpg" }
     ]);
 
     // 4. Ninhadas
@@ -449,24 +449,24 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
       },
       {
         id: 4,
-        name: "BURHAM",
+        name: "BURAN",
         gender: "macho",
         status: "Disponível",
         price: 0,
         health_records: [],
         weight_history: [],
-        avatar_url: "/dogs/burham_1.jpg",
-        photos: ["/dogs/burham_1.jpg", "/dogs/burham_2.jpg", "/dogs/burham_3.jpg", "/dogs/burham_4.jpg", "/dogs/burham_5.jpg", "/dogs/burham_6.jpg"],
+        avatar_url: "/dogs/buran_1.jpg",
+        photos: ["/dogs/buran_1.jpg", "/dogs/buran_2.jpg", "/dogs/buran_3.jpg", "/dogs/buran_4.jpg", "/dogs/buran_5.jpg", "/dogs/buran_6.jpg", "/dogs/buran_7.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "Rússia",
         weight: "",
-        notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.",
-        history: "Burham demonstra desde cedo o temperamento característico da raça: dócil com a família e vigilante com estranhos."
+        notes: "Macho importado da Rússia. Excelente estrutura óssea e temperamento de guarda.",
+        history: "Buran é um macho jovem importado da Rússia, com excelente linhagem e temperamento vigilante."
       },
       {
         id: 5,
-        name: "SYMEON",
+        name: "SYMION",
         gender: "macho",
         status: "Disponível",
         price: 0,
@@ -476,10 +476,10 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/symeon_1.jpg", "/dogs/symeon_2.jpg", "/dogs/symeon_3.jpg", "/dogs/symeon_4.jpg", "/dogs/symeon_5.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "Rússia",
         weight: "",
-        notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor principal do plantel Vale da Kubera.",
-        history: "Symeon é o patriarca do plantel, com estrutura massiva e instinto de guarda territorial implacável."
+        notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor importado da Rússia.",
+        history: "Symion é o patriarca do plantel, importado da Rússia com estrutura massiva e temperamento excelente."
       },
       {
         id: 6,
@@ -507,13 +507,13 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         health_records: [],
         weight_history: [],
         avatar_url: "/dogs/jara_1.jpg",
-        photos: ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg"],
+        photos: ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg", "/dogs/jara_3.jpg", "/dogs/jara_4.jpg", "/dogs/jara_5.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "Romênia",
         weight: "",
-        notes: "Fêmea do plantel Vale da Kubera. Temperamento dócil com a família e instinto de guarda apurado.",
-        history: "J-Ara é uma fêmea de destaque do plantel, com temperamento equilibrado e excelente instinto de guarda."
+        notes: "Fêmea importada da Romênia. Temperamento dócil com a família e instinto de guarda apurado.",
+        history: "J-Ara é uma fêmea importada da Romênia, destacando-se pela excelente conformação e instinto de guarda."
       },
       {
         id: 8,
@@ -524,13 +524,13 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         health_records: [],
         weight_history: [],
         avatar_url: "/dogs/pandora_1.jpg",
-        photos: ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg"],
+        photos: ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "Espanha",
         weight: "",
-        notes: "Fêmea de excelente conformação morfológica e pelagem densa característica da raça.",
-        history: "Pandora possui estrutura morfológica impecável e temperamento equilibrado, sendo uma das matrizes mais promissoras do canil."
+        notes: "Fêmea importada da Espanha. Excelente conformação morfológica e pelagem densa característica da raça.",
+        history: "Pandora é uma fêmea importada da Espanha, com estrutura morfológica impecável e temperamento exemplar."
       },
       {
         id: 9,
