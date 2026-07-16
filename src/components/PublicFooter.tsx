@@ -11,7 +11,6 @@ export default function PublicFooter() {
           {/* Col 1: Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-8 h-8 object-contain rounded-lg border border-black/10 shadow-sm bg-black" />
               <span className="font-bold tracking-wider text-[#222521] text-lg leading-none">VALE DA KUBERA</span>
             </Link>
             <p className="text-xs leading-relaxed text-[#555E54]">
