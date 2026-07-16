@@ -257,7 +257,7 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
         }
       } 
       else if (body === "4") {
-        const visitaText = `Claro! Será um prazer receber você para conhecer nossos cães e filhotes. Nossas visitas ocorrem de Terça a Sábado, das 09h às 17h (sob agendamento prévio).\n\nPor favor, digite a *data* desejada para a sua visita (Ex: *23/06* ou *Sábado*):`;
+        const visitaText = `Claro! Será um prazer receber você para conhecer nossos cães e filhotes. Nossas visitas ocorrem todos os dias, das 08h às 10h30 (apenas 1 visita por dia, sob agendamento prévio).\n\nPor favor, digite a *data* desejada para a sua visita (Ex: *23/06* ou *Sábado*):`;
         
         session.step = "VISIT_DATE";
         activeSessions.set(from, session);
@@ -291,7 +291,7 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
           await msg.reply("No momento não temos filhotes disponíveis, porém temos uma ninhada prevista para Novembro. Caso queira conhecer nossos cães adultos e matrizes, digite *3*.");
         } else if (query.includes("visita") || query.includes("agendar") || query.includes("conhecer") || query.includes("visitar")) {
           await msg.reply(
-            "Nossas visitas ocorrem de Terça a Sábado das 09h às 17h. Por favor, nos informe qual o melhor dia e horário para você agendar!"
+            "Nossas visitas ocorrem todos os dias das 08h às 10h30. Por favor, nos informe qual o melhor dia e horário para você agendar!"
           );
         } else {
           await msg.reply(welcomeText);
@@ -306,8 +306,8 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
       // Parse the date to find the target day
       const targetDate = parseDateTime(body, "12:00");
       
-      // Default slots: Tuesday to Saturday, 09h to 17h
-      let availableSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+      // Default slots: Every day, 08h to 10:30
+      let availableSlots = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30"];
       
       try {
         const startOfDay = new Date(targetDate);
@@ -324,14 +324,8 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
           .neq("status", "Cancelado");
 
         if (booked && booked.length > 0) {
-          const bookedHours = booked.map((b: any) => {
-            const date = new Date(b.datetime);
-            const h = String(date.getHours()).padStart(2, "0");
-            const m = String(date.getMinutes()).padStart(2, "0");
-            return `${h}:${m}`;
-          });
-          
-          availableSlots = availableSlots.filter(slot => !bookedHours.includes(slot));
+          // If there is already a visit scheduled for this day, block the whole day (1 visit per day limit)
+          availableSlots = [];
         }
       } catch (err) {
         console.error("Erro ao buscar horários ocupados no banco:", err);

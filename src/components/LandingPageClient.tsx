@@ -24,7 +24,7 @@ export default function LandingPageClient() {
 
   // Booking Form State
   const [visitDate, setVisitDate] = useState("");
-  const [visitTime, setVisitTime] = useState("10:00");
+  const [visitTime, setVisitTime] = useState("08:00");
   const [visitorName, setVisitorName] = useState("");
   const [visitorPhone, setVisitorPhone] = useState("");
   const [visitError, setVisitError] = useState("");
@@ -128,27 +128,13 @@ export default function LandingPageClient() {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setVisitDate(val);
-    if (!val) return;
-
-    const d = new Date(val + "T00:00:00");
-    const day = d.getDay(); // 0 Sunday, 6 Saturday
-    if (day === 0 || day === 6) {
-      setVisitError("Visitas presenciais disponíveis apenas de Segunda a Sexta-feira.");
-    } else {
-      setVisitError("");
-    }
+    setVisitError("");
   };
 
   const handleScheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!visitDate) {
       setVisitError("Por favor, selecione uma data.");
-      return;
-    }
-    const d = new Date(visitDate + "T00:00:00");
-    const day = d.getDay();
-    if (day === 0 || day === 6) {
-      setVisitError("Visitas presenciais disponíveis apenas de Segunda a Sexta-feira.");
       return;
     }
     if (!visitorName.trim()) {
@@ -547,11 +533,11 @@ export default function LandingPageClient() {
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 border-b border-white/10 pb-6 text-xs text-gray-200">
                   <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
                     <Calendar className="w-4 h-4 text-gray-400" />
-                    <span><strong>Segunda a Sexta-feira</strong> (Visitação)</span>
+                    <span><strong>Todos os dias</strong> (Visitação)</span>
                   </div>
                   <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
                     <Clock className="w-4 h-4 text-gray-400" />
-                    <span><strong>10:00 às 18:00</strong> (Horários)</span>
+                    <span><strong>08:00 às 10:30</strong> (Horários)</span>
                   </div>
                 </div>
 
@@ -616,15 +602,12 @@ export default function LandingPageClient() {
                       className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white transition-all font-sans"
                       style={{ minWidth: 0, width: '100%', boxSizing: 'border-box' }}
                     >
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
                       <option value="10:00">10:00</option>
-                      <option value="11:00">11:00</option>
-                      <option value="12:00">12:00</option>
-                      <option value="13:00">13:00</option>
-                      <option value="14:00">14:00</option>
-                      <option value="15:00">15:00</option>
-                      <option value="16:00">16:00</option>
-                      <option value="17:00">17:00</option>
-                      <option value="18:00">18:00</option>
+                      <option value="10:30">10:30</option>
                     </select>
                   </div>
 
