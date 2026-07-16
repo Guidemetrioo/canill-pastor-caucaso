@@ -329,11 +329,6 @@ export default function LandingPageClient() {
             }}
           >
             <div className="max-w-5xl space-y-6">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/60 border border-white/20 text-white">
-                <Shield className="w-3.5 h-3.5 text-white" />
-                <span>Criação Selecionada CBKC/FCI</span>
-              </span>
-
               <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight font-comfortaa text-white">
                 Canil <span style={{ color: t.accentHex }}>Vale da Kubera</span>
               </h1>
