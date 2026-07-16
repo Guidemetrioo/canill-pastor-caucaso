@@ -11,7 +11,7 @@ import { Shield, Check, Calendar, ArrowRight, Star, Heart, MapPin, Award, Messag
 type ThemeName = "eco-rustic" | "terracota-warmth" | "minimalista-organica";
 
 export default function LandingPageClient() {
-  const { filhotes, animals, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent, trackEvent } = useAura();
+  const { filhotes, animals, activeTheme, setActiveTheme, activeFont, setActiveFont, themes, addAgendaEvent, trackEvent, agendaEvents } = useAura();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const agendaWrapperRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -27,7 +27,22 @@ export default function LandingPageClient() {
   const [visitTime, setVisitTime] = useState("08:00");
   const [visitorName, setVisitorName] = useState("");
   const [visitorPhone, setVisitorPhone] = useState("");
+  const [visitIntention, setVisitIntention] = useState("");
   const [visitError, setVisitError] = useState("");
+
+  const todayStr = new Date().toISOString().split("T")[0];
+
+  const bookedDates = agendaEvents
+    ? agendaEvents
+        .filter((event) => event.type === "visita" && event.status !== "Cancelado")
+        .map((event) => {
+          const d = new Date(event.datetime);
+          const y = d.getFullYear();
+          const m = String(d.getMonth() + 1).padStart(2, "0");
+          const day = String(d.getDate()).padStart(2, "0");
+          return `${y}-${m}-${day}`;
+        })
+    : [];
 
   // Dynamic Scroll & Animation State
   const [scrollY, setScrollY] = useState(0);
@@ -128,13 +143,23 @@ export default function LandingPageClient() {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setVisitDate(val);
-    setVisitError("");
+    if (!val) return;
+    
+    if (bookedDates.includes(val)) {
+      setVisitError("Este dia já possui uma visita agendada. Por favor, escolha outra data.");
+    } else {
+      setVisitError("");
+    }
   };
 
   const handleScheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!visitDate) {
       setVisitError("Por favor, selecione uma data.");
+      return;
+    }
+    if (bookedDates.includes(visitDate)) {
+      setVisitError("Este dia já possui uma visita agendada. Por favor, escolha outra data.");
       return;
     }
     if (!visitorName.trim()) {
@@ -156,7 +181,7 @@ export default function LandingPageClient() {
       await addAgendaEvent({
         type: "visita",
         title: `Visita de ${visitorName.trim()}`,
-        description: `Agendado pelo site. Telefone: ${visitorPhone.trim()}`,
+        description: `Agendado pelo site. Telefone: ${visitorPhone.trim()}.${visitIntention.trim() ? ` Intenção: ${visitIntention.trim()}` : ""}`,
         datetime: eventDateTime,
         status: "Agendado"
       });
@@ -166,7 +191,7 @@ export default function LandingPageClient() {
     }
 
     // 2. Open WhatsApp link as fallback/instant notification
-    const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()} e meu telefone/WhatsApp é ${visitorPhone.trim()}.`;
+    const text = `Olá! Gostaria de agendar uma visita ao Canil Vale da Kubera no dia ${formattedDate} às ${visitTime}. Meu nome é ${visitorName.trim()} e meu telefone/WhatsApp é ${visitorPhone.trim()}.${visitIntention.trim() ? ` Intenção da visita: ${visitIntention.trim()}` : ""}`;
     const url = `https://wa.me/5511974992059?text=${encodeURIComponent(text)}`;
     trackEvent("whatsapp_click", "/");
     window.open(url, "_blank");
@@ -175,6 +200,7 @@ export default function LandingPageClient() {
     setVisitorName("");
     setVisitorPhone("");
     setVisitDate("");
+    setVisitIntention("");
   };
 
   // Static dog profiles — always shown regardless of backend status
@@ -517,7 +543,7 @@ export default function LandingPageClient() {
             <div className="text-center max-w-2xl mx-auto space-y-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 border border-white/20 text-white">
                 <Calendar className="w-3.5 h-3.5 text-white" />
-                <span>Visitas Presenciais</span>
+                <span>Venha os Visitar</span>
               </span>
               <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
               <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
@@ -587,6 +613,7 @@ export default function LandingPageClient() {
                         if (!e.currentTarget.value) e.currentTarget.type = "text";
                       }}
                       required
+                      min={todayStr}
                       value={visitDate}
                       onChange={handleDateChange}
                       className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans"
@@ -609,6 +636,18 @@ export default function LandingPageClient() {
                       <option value="10:00">10:00</option>
                       <option value="10:30">10:30</option>
                     </select>
+                  </div>
+
+                  <div className="space-y-1.5 text-left">
+                    <label htmlFor="visit-intention" className="text-xs font-semibold block text-gray-300">Intenção da Visita</label>
+                    <textarea
+                      id="visit-intention"
+                      placeholder="Qual o motivo ou intenção da visita? (Ex: conhecer filhotes, ver matrizes, etc.)"
+                      value={visitIntention}
+                      onChange={(e) => setVisitIntention(e.target.value)}
+                      rows={3}
+                      className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all font-sans resize-none"
+                    />
                   </div>
 
                   {visitError && (
@@ -640,24 +679,24 @@ export default function LandingPageClient() {
                 Conheça os exemplares importados e matrizes selecionadas de Pastor do Cáucaso do nosso canil.
               </p>
             </div>
-            <div className={`flex items-center gap-3 p-1.5 rounded-xl border self-start md:self-end ${t.cardBg}`} style={{ borderColor: borderHex }}>
+            <div className="flex items-center gap-3 p-1.5 rounded-xl border self-start md:self-end" style={{ backgroundColor: t.cardBgHex, borderColor: borderHex }}>
               <button
                 onClick={() => setActiveDogGender("fêmea")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                  activeDogGender === "fêmea"
-                    ? `${t.primaryAccent} active-tab-btn`
-                    : `${t.textMuted} hover:text-black`
-                }`}
+                className="px-4 py-2 rounded-lg text-xs font-bold transition-all"
+                style={{
+                  backgroundColor: activeDogGender === "fêmea" ? t.accentHex : "transparent",
+                  color: activeDogGender === "fêmea" ? "#FFFFFF" : t.accentHex,
+                }}
               >
                 Fêmeas (Matrizes)
               </button>
               <button
                 onClick={() => setActiveDogGender("macho")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                  activeDogGender === "macho"
-                    ? `${t.primaryAccent} active-tab-btn`
-                    : `${t.textMuted} hover:text-black`
-                }`}
+                className="px-4 py-2 rounded-lg text-xs font-bold transition-all"
+                style={{
+                  backgroundColor: activeDogGender === "macho" ? t.accentHex : "transparent",
+                  color: activeDogGender === "macho" ? "#FFFFFF" : t.accentHex,
+                }}
               >
                 Machos (Padreadores)
               </button>
@@ -669,11 +708,22 @@ export default function LandingPageClient() {
               Nenhum cão ou filhote disponível nesta categoria no momento.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {filteredDogs.map((dog) => (
-                <DogCard key={dog.id} dog={dog} theme={t} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                {filteredDogs.slice(0, 2).map((dog) => (
+                  <DogCard key={dog.id} dog={dog} theme={t} />
+                ))}
+              </div>
+              <div className="flex justify-center mt-10">
+                <Link
+                  href="/galeria"
+                  className="font-bold px-8 py-3.5 rounded-xl transition-all text-xs flex items-center justify-center gap-2 shadow-lg hover:opacity-90 active:scale-95 text-white"
+                  style={{ backgroundColor: t.accentHex }}
+                >
+                  Ver Plantel Completo
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </section>

@@ -31,7 +31,7 @@ export default function PublicNavbar() {
     { href: "/a-raca-pastor-do-caucaso", label: "A Raça" },
     { href: "/servicos/cobertura", label: "Coberturas" },
     { href: "/blog", label: "Blog" },
-    { href: "/galeria", label: "Galeria" },
+    { href: "/galeria", label: "Nossos Cães" },
     { href: "/contato", label: "Contato" },
   ];
 
@@ -179,11 +179,7 @@ export default function PublicNavbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain rounded-lg border border-white/20 shadow-md bg-black" />
-            <div>
-              <span className="font-megrim font-bold tracking-wider text-xl block leading-none text-white">VALE DA KUBERA</span>
-              <span className="text-[9px] tracking-widest font-comfortaa font-bold uppercase" style={{ color: t.accentHex }}>Canil de Pastor do Cáucaso</span>
-            </div>
+            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
           </Link>
 
           {/* Desktop Nav */}
@@ -204,13 +200,13 @@ export default function PublicNavbar() {
               Painel Admin
             </Link>
             <div className="border-l border-gray-700/30 pl-4 h-10 flex items-center">
-              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain rounded-lg shadow-md border border-gray-800" />
+              <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-10 h-10 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-3">
-            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-9 h-9 object-contain rounded-lg border border-gray-800" />
+            <img src="/logo.png" alt="Logo Canil Vale da Kubera" className="w-9 h-9 object-contain" style={{ filter: scrolled ? 'brightness(0)' : 'none' }} />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white hover:text-gray-300 transition-colors focus:outline-none"
