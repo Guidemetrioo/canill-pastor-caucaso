@@ -236,7 +236,7 @@ export default function RacaPage() {
               <li><strong className="text-gray-200">Cores:</strong> Tons de cinza (do claro ao carvão), avermelhado, palha, branco e manchado. Máscara preta é comum e valorizada.</li>
             </ul>
             <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-5 space-y-2">
-              <h4 className="text-sm font-bold text-white">⚖️ Peso Não É Sinônimo de Qualidade</h4>
+              <h4 className="text-sm font-bold text-white">Peso Não É Sinônimo de Qualidade</h4>
               <p className="text-xs text-gray-400 leading-relaxed">
                 No mundo do Cáucaso existe um equívoco perigoso: &ldquo;quanto maior e mais pesado, melhor&rdquo;. Isso aconteceu tragicamente com o Mastim Tibetano, onde a seleção exagerada resultou em cães letárgicos e sem saúde. Um Cáucaso de qualidade deve mostrar <strong className="text-white">vitalidade, movimentação equilibrada e saúde</strong> — não apenas massa. O padrão da raça estabelece margens; o que se avalia é o conjunto completo.
               </p>

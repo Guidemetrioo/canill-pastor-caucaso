@@ -119,32 +119,27 @@ export default function SobrePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             {[
               {
-                flag: "🇷🇺",
                 country: "Rússia",
                 description: "Linhagens com foco em temperamento equilibrado e estrutura robusta. Importamos de canis de exposição de alto nível, incluindo o renomado Canil Baraik Azskaz.",
                 highlight: "Afár, Symion, Vénus"
               },
               {
-                flag: "🇺🇦",
                 country: "Ucrânia",
                 description: "Cães com porte excepcional, ossatura massiva e temperamento explosivo. Preferidos por criadores que buscam tamanho e presença imponente.",
                 highlight: "Nero (40kg aos 4 meses)"
               },
               {
-                flag: "🇷🇴",
                 country: "Romênia",
                 description: "Casa do Goran — campeão europeu com dois títulos de Best in Show. O primeiro Pastor do Cáucaso com essa conquista a chegar ao Brasil.",
-                highlight: "🏆 Goran — 2x Best in Show Europa"
+                highlight: "Goran — 2x Best in Show Europa"
               },
               {
-                flag: "🇪🇸",
                 country: "Espanha",
                 description: "Cães mais altos, com estrutura elegante e caráter forte e explosivo. O Canil Nirvana (Espanha) é referência mundial para a raça.",
                 highlight: "Apolo (Canil Nirvana)"
               },
             ].map((item, idx) => (
               <div key={idx} className="flex gap-4 bg-[#0F0F0F] border border-[#2A2A2A] p-5 rounded-xl hover:border-[#D97457]/30 transition-colors">
-                <span className="text-3xl shrink-0">{item.flag}</span>
                 <div className="space-y-1.5">
                   <h4 className="font-bold text-white text-sm">{item.country}</h4>
                   <p className="text-gray-400 text-[11px] leading-relaxed">{item.description}</p>
