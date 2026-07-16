@@ -546,7 +546,11 @@ export default function LandingPageClient() {
               </span>
               <h2 className="text-3xl font-extrabold font-comfortaa text-white">Agende sua Visita</h2>
               <p className="text-xs sm:text-sm leading-relaxed max-w-xl mx-auto font-sans text-gray-300">
-                Venha conhecer de perto nossa estrutura de 20.000m² e o temperamento dos nossos reprodutores. As visitas            <div className="max-w-2xl w-full bg-black/35 border border-white/10 rounded-3xl p-5 sm:p-6 pb-6 sm:pb-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
+                Venha conhecer de perto nossa estrutura de 20.000m² e o temperamento dos nossos reprodutores. As visitas devem ser agendadas previamente de acordo com a nossa disponibilidade.
+              </p>
+            </div>
+
+            <div className="max-w-2xl w-full bg-black/35 border border-white/10 rounded-3xl p-5 sm:p-6 pb-6 sm:pb-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
               <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: `${accentHex}20` }} />
 
               <div className="space-y-4">
