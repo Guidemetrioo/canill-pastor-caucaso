@@ -1,89 +1,84 @@
-"use client";
+import type { Metadata } from "next";
+import BlogClientPage from "@/components/BlogClientPage";
+import { createClient } from "@/utils/supabase/client";
 
-import { useAura } from "@/context/AuraContext";
-import PublicNavbar from "@/components/PublicNavbar";
-import PublicFooter from "@/components/PublicFooter";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import Link from "next/link";
-import { BookOpen, ArrowRight, Tag } from "lucide-react";
+export const metadata: Metadata = {
+  title: "Blog & Notícias | Canil Vale da Kubera",
+  description: "Aprenda tudo sobre o adestramento, temperamento, alimentação e cuidados de saúde do Pastor do Cáucaso com especialistas na raça.",
+  keywords: [
+    "blog pastor do caucaso",
+    "dicas adestramento pastor do caucaso",
+    "alimentacao pastor do caucaso",
+    "cuidados pastor do caucaso",
+    "canil valedakubera blog"
+  ],
+  alternates: {
+    canonical: "https://canil-pastor-do-caucaso.vercel.app/blog",
+  },
+  openGraph: {
+    title: "Blog & Notícias | Canil Vale da Kubera",
+    description: "Aprenda tudo sobre o adestramento, temperamento, alimentação e cuidados de saúde do Pastor do Cáucaso com especialistas na raça.",
+    url: "https://canil-pastor-do-caucaso.vercel.app/blog",
+    siteName: "Canil Vale da Kubera",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400",
+        width: 400,
+        height: 300,
+        alt: "Artigos sobre Pastor do Cáucaso",
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
+};
 
-export default function BlogPage() {
-  const { blogPosts } = useAura();
+export default async function Page() {
+  let blogSchema: any = null;
+  try {
+    const supabase = createClient();
+    const { data: posts } = await supabase
+      .from("blog_posts")
+      .select("id, title, excerpt, created_at, slug, image_url")
+      .eq("published", true);
 
-  const publishedPosts = blogPosts.filter((post) => post.published);
+    if (posts && posts.length > 0) {
+      blogSchema = {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Blog do Canil Vale da Kubera",
+        "description": "Artigos informativos e notícias sobre a raça Pastor do Cáucaso (Kavkazskaya Ovcharka).",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Canil Vale da Kubera",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://canil-pastor-do-caucaso.vercel.app/logo.png"
+          }
+        },
+        "blogPost": posts.map((post) => ({
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "description": post.excerpt || "",
+          "datePublished": post.created_at,
+          "url": `https://canil-pastor-do-caucaso.vercel.app/blog/${post.slug}`,
+          "image": post.image_url || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"
+        }))
+      };
+    }
+  } catch (err) {
+    console.error("Error generating blog JSON-LD:", err);
+  }
 
   return (
-    <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans flex flex-col justify-between">
-      <PublicNavbar />
-
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 space-y-10">
-        
-        {/* Header */}
-        <div className="space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-xs font-bold uppercase tracking-wider">
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Artigos &amp; Notícias</span>
-          </span>
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Blog do <span className="text-[#D97457]">Canil Vale da Kubera</span>
-          </h1>
-          <p className="text-gray-400 text-sm max-w-xl leading-relaxed">
-            Dicas de adestramento, alimentação, cuidados com filhotes de grande porte e curiosidades sobre o Pastor do Cáucaso.
-          </p>
-        </div>
-
-        {/* Posts Grid */}
-        {publishedPosts.length === 0 ? (
-          <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-16 text-center text-gray-400 text-xs">
-            Nenhum artigo publicado no momento. Volte em breve!
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {publishedPosts.map((post) => (
-              <div
-                key={post.id}
-                className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#D97457]/50 transition-all flex flex-col justify-between group shadow-xl"
-              >
-                <div className="relative h-48 bg-gray-900 overflow-hidden">
-                  <img
-                    src={post.image_url || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-103"
-                  />
-                </div>
-
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap gap-1.5">
-                      {post.tags.map((tag, i) => (
-                        <span key={i} className="text-[9px] text-[#D97457] bg-[#D97457]/10 px-2 py-0.5 rounded font-semibold uppercase">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h3 className="text-base font-bold group-hover:text-[#D97457] transition-colors leading-tight">{post.title}</h3>
-                    <p className="text-gray-400 text-xs line-clamp-3 leading-relaxed">
-                      {post.excerpt || "Clique para ler o artigo completo sobre a raça Pastor do Cáucaso no blog do Canil Vale da Kubera."}
-                    </p>
-                  </div>
-
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D97457] hover:underline pt-4 group-hover:translate-x-1 transition-transform"
-                  >
-                    <span>Ler Artigo</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-      </main>
-
-      <PublicFooter />
-      <WhatsAppButton />
-    </div>
+    <>
+      {blogSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+        />
+      )}
+      <BlogClientPage />
+    </>
   );
 }

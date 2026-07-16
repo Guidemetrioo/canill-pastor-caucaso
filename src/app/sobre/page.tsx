@@ -19,10 +19,50 @@ export default function SobrePage() {
     { label: "Best in Show Europa", value: "² Títulos" },
   ];
 
+  const aboutPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Quem Somos | Canil Vale da Kubera",
+    "description": "Conheça a história do Canil Vale da Kubera, especializado na criação e seleção genética de cães de guarda Pastor do Cáucaso.",
+    "url": "https://canil-pastor-do-caucaso.vercel.app/sobre",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Canil Vale da Kubera",
+      "founder": [
+        {
+          "@type": "Person",
+          "name": "Rafael Avellar",
+          "jobTitle": "Criador & Estudante de Medicina Veterinária",
+          "description": "Estudante de medicina veterinária e criador dedicado do cão Pastor do Cáucaso, com foco em genética de exposição, saúde e temperamento equilibrado.",
+          "sameAs": "https://www.instagram.com/valedakubera/"
+        },
+        {
+          "@type": "Person",
+          "name": "Zé Carlos",
+          "jobTitle": "Co-fundador & Criador",
+          "description": "Colecionador apaixonado pela raça Pastor do Cáucaso e parceiro na seleção genética do plantel Vale da Kubera."
+        }
+      ],
+      "areaServed": "Brasil",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Itatiba",
+        "addressRegion": "SP",
+        "addressCountry": "BR"
+      }
+    }
+  };
+
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
       <TrafficTracker path="/sobre" />
+
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
+      />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         

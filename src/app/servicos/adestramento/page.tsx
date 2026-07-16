@@ -18,9 +18,40 @@ export default function AdestramentoPage() {
     { title: "Socialização Controlada", desc: "Inserção em diferentes ambientes e convívio com outros estímulos urbanos de forma tranquila e controlada." },
   ];
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Adestramento para Cães de Grande Porte",
+    "description": "Treinamento comportamental, socialização precoce, foco e obediência básica/avançada na guia para cães gigantes de guarda territorial.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Canil Vale da Kubera",
+      "telephone": "+5511974992059",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Itatiba",
+        "addressRegion": "SP",
+        "addressCountry": "BR"
+      }
+    },
+    "areaServed": "Itatiba e região de São Paulo",
+    "serviceType": "Dog Training Services",
+    "offers": {
+      "@type": "Offer",
+      "price": 1200.00,
+      "priceCurrency": "BRL"
+    }
+  };
+
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
+
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         

@@ -26,10 +26,34 @@ export default function RacaPage() {
       },
       {
         "@type": "Question",
-        "name": "Qual o tamanho e peso médio da raça?",
+        "name": "O Pastor do Cáucaso convive bem com outros animais?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Os machos medem a partir de 72 cm na cernelha e pesam acima de 50 kg (muitos chegam a 75 kg). As fêmeas medem a partir de 67 cm e pesam acima de 45 kg."
+          "text": "Se for socializado desde filhote, pode conviver pacificamente com outros cães da casa e animais de estimação. No entanto, costuma ser intolerante com cães estranhos do mesmo sexo que invadam seu território."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Qual a expectativa de vida média?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A expectativa de vida varia de 10 a 12 anos, o que é excelente para um cão de porte gigante. Exemplares saudáveis, sem displasia e com alimentação adequada, costumam ser ativos e saudáveis até idades avançadas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "É um cão fácil de adestrar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O Pastor do Cáucaso é muito inteligente, porém independente e obstinado. Ele necessita de um tutor firme, experiente e consistente. Não responde bem a métodos punitivos. O segredo está em estabelecer liderança com respeito e clareza — e entender que ele aprende o que quer, no seu próprio ritmo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Essa raça pode ser de exposição E de guarda ao mesmo tempo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim, e essa é a proposta de criadores sérios. Na Europa, criadores de renome não distinguem 'linha de trabalho' de 'linha de exposição' — um bom Cáucaso faz as duas coisas. A exposição prova estrutura, saúde e vitalidade; o instinto de guarda é genético e não se perde com o pedigree."
         }
       },
       {
@@ -163,8 +187,46 @@ export default function RacaPage() {
               <span>Porte Físico e Características</span>
             </h2>
             <p>
-              O Pastor do Cáucaso é classificado como uma raça gigante de cães de guarda. Seguem as características principais de porte:
+              O Pastor do Cáucaso é classificado como uma raça gigante de cães de guarda. Seguem as características principais de porte recomendadas pela FCI (Fédération Cynologique Internationale) padrão nº 328:
             </p>
+
+            <div className="overflow-x-auto my-6 border border-[#2A2A2A] rounded-xl bg-[#1A1A1A]">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-[#2A2A2A] bg-[#222]">
+                    <th className="p-3 font-bold text-white uppercase tracking-wider">Característica</th>
+                    <th className="p-3 font-bold text-[#D97457] uppercase tracking-wider">Macho (Adulto)</th>
+                    <th className="p-3 font-bold text-[#D97457] uppercase tracking-wider">Fêmea (Adulta)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#2A2A2A] text-gray-300">
+                  <tr>
+                    <td className="p-3 font-semibold text-white">Altura na Cernelha</td>
+                    <td className="p-3">Mínimo 72 cm (Ideal 75–82 cm)</td>
+                    <td className="p-3">Mínimo 67 cm (Ideal 70–75 cm)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-semibold text-white">Peso Corporal</td>
+                    <td className="p-3">Mínimo 50 kg (Até 75–90 kg)</td>
+                    <td className="p-3">Mínimo 45 kg (Até 60–75 kg)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-semibold text-white">Instinto de Guarda</td>
+                    <td className="p-3" colSpan={2}>
+                      <span className="text-[#D97457] font-semibold">Extremamente Ativo &amp; Territorial (Inato)</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-semibold text-white">Expectativa de Vida</td>
+                    <td className="p-3" colSpan={2}>10 a 12 anos (Excelente para porte gigante)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-semibold text-white">Controle de Displasia</td>
+                    <td className="p-3" colSpan={2}>Obrigatório laudo radiográfico (HD- ou grau A/B) para acasalamento</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <ul className="list-disc pl-5 space-y-2.5 text-xs text-gray-400">
               <li><strong className="text-gray-200">Machos:</strong> Altura mínima de 72 cm na cernelha (idealmente entre 75 e 82 cm) e peso mínimo de 50 kg, frequentemente ultrapassando os 75 kg quando adultos. Exemplares excepcionais atingem 100 kg no auge.</li>
               <li><strong className="text-gray-200">Fêmeas:</strong> Altura mínima de 67 cm (idealmente entre 70 e 75 cm) e peso mínimo de 45 kg.</li>

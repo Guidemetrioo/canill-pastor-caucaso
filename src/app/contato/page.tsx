@@ -12,9 +12,38 @@ export const metadata: Metadata = {
 };
 
 export default function ContatoPage() {
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contato e Agendamentos | Canil Vale da Kubera",
+    "description": "Fale com o criador do Canil Vale da Kubera. Agende uma visita guiada para ver os filhotes de Pastor do Cáucaso em Itatiba - SP.",
+    "url": "https://canil-pastor-do-caucaso.vercel.app/contato",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "Canil Vale da Kubera",
+      "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
+      "telephone": "+5511974992059",
+      "email": "canilvaledakubera@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Itatiba",
+        "addressLocality": "Itatiba",
+        "addressRegion": "SP",
+        "postalCode": "13250-000",
+        "addressCountry": "BR"
+      }
+    }
+  };
+
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
+
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+      />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         

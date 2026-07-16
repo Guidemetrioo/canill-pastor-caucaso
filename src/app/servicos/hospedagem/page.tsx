@@ -18,9 +18,42 @@ export default function HospedagemPage() {
     { title: "Alimentação de Elite", desc: "Manejo da ração trazida pelo tutor ou fornecimento de marcas premium conforme contrato." },
   ];
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Hospedagem & Creche Canina para Grande Porte",
+    "description": "Hotel canino e hospedagem com boxes higienizados, climatizados e piquetes gramados individuais de 150m² em chácara de 10.000m² em Itatiba - SP.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Canil Vale da Kubera",
+      "telephone": "+5511974992059",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Itatiba",
+        "addressRegion": "SP",
+        "postalCode": "13250-000",
+        "addressCountry": "BR"
+      }
+    },
+    "areaServed": "Estado de São Paulo",
+    "serviceType": "Pet Boarding Services",
+    "offers": {
+      "@type": "Offer",
+      "price": 80.00,
+      "priceCurrency": "BRL",
+      "description": "Preço da diária para hospedagem canina."
+    }
+  };
+
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
+
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         

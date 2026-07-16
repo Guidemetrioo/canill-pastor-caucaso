@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     "pastor do caucaso sp"
   ],
   alternates: {
-    canonical: "https://www.instagram.com/valedakubera/",
+    canonical: "https://canil-pastor-do-caucaso.vercel.app/",
   },
   openGraph: {
     title: "Canil Vale da Kubera | Pastor do Cáucaso",
     description:
       "Canil especializado em Pastor do Cáucaso com padrão de exposição. Genética importada da Rússia, Ucrânia, Romênia e Espanha. Estrutura e saúde comprovadas.",
-    url: "https://www.instagram.com/valedakubera/",
+    url: "https://canil-pastor-do-caucaso.vercel.app/",
     siteName: "Canil Vale da Kubera",
     images: [
       {
@@ -45,10 +45,11 @@ export default function Home() {
     "@type": "LocalBusiness",
     "name": "Canil Vale da Kubera",
     "description": "O Canil Vale da Kubera é especializado na criação do Pastor do Cáucaso (Kavkazskaya Ovcharka), com plantel formado por linhagens importadas da Rússia, Ucrânia, Romênia e Espanha. Nosso trabalho é guiado por três pilares: genética de qualidade, estrutura compatível com o padrão da raça e temperamento equilibrado.",
-    "knowsAbout": ["Pastor do Cáucaso", "Kavkazskaya Ovcharka", "Criação de Cães", "Cinofilia"],
+    "knowsAbout": ["Pastor do Cáucaso", "Kavkazskaya Ovcharka", "Criação de Cães", "Cinofilia", "Cão de Guarda", "CBKC", "FCI"],
     "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=800",
-    "@id": "https://www.instagram.com/valedakubera/#kennel",
-    "url": "https://www.instagram.com/valedakubera/",
+    "logo": "https://canil-pastor-do-caucaso.vercel.app/logo.png",
+    "@id": "https://canil-pastor-do-caucaso.vercel.app/#kennel",
+    "url": "https://canil-pastor-do-caucaso.vercel.app/",
     "telephone": "+5511974992059",
     "priceRange": "$$$",
     "address": {

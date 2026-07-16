@@ -20,9 +20,37 @@ export default function CoberturaPage() {
     }
   ];
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Serviço de Cobertura e Monta de Pastor do Cáucaso",
+    "description": "Serviço de reprodução, monta natural e inseminação artificial com padreadores importados de linhagem europeia selecionada no Canil Vale da Kubera em Itatiba - SP.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Canil Vale da Kubera",
+      "telephone": "+5511974992059",
+      "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Itatiba",
+        "addressRegion": "SP",
+        "addressCountry": "BR"
+      }
+    },
+    "areaServed": "BR",
+    "serviceType": "Dog Breeding Services"
+  };
+
   return (
     <div className="bg-[#0F0F0F] text-white min-h-screen pt-24 font-sans">
       <PublicNavbar />
+
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         
