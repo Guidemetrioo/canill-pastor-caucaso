@@ -24,7 +24,7 @@ export default function GaleriaClientPage() {
     { type: "caes", url: "/dogs/nero_3.jpg", title: "NERO - Posição" },
     { type: "caes", url: "/dogs/vasilisia_1.jpg", title: "VASILÍSIA - Fêmea Robusta (Rússia)" },
     { type: "caes", url: "/dogs/vasilisia_2.jpg", title: "VASILÍSIA - Sentada" },
-    { type: "caes", url: "/dogs/vasilisia_3.jpg", title: "VASILÍSIA - Posição" },
+    { type: "caes", url: "/dogs/vasilisia_3.jpg", title: "VASILÍSIA -" },
     { type: "caes", url: "/dogs/venus_1.jpg", title: "VENÛS - Fêmea Importada (Rússia)" },
     { type: "caes", url: "/dogs/venus_2.jpg", title: "VENÛS - Retrato" },
     { type: "canil", url: "/dogs/canil_1.jpg", title: "Canil Vale da Kubera - Instalações" },

@@ -86,41 +86,21 @@ export default function PlantelClientPage() {
         ? [dog.avatar_url] 
         : ["/logo.png"];
     
-    // Enrich with typical static details if missing from database
-    if (nameUpper.includes("VENÛS") || nameUpper.includes("VENUS")) {
-      return { 
-        ...dog, 
-        weight: dog.weight || "70kg", 
-        age: dog.age || "3 anos", 
-        origin: dog.origin || "Rússia", 
-        photos,
-        notes: dog.notes || "Fêmea importada da Rússia. Excelente temperamento de guarda com padrão de exposição.",
-        history: dog.history || "Fêmea importada de um dos melhores canis da Rússia. Laudos de quadril e cotovelos perfeitos."
-      };
+    // We only display origin for Buran, J-Ara, and Pandora
+    let finalOrigin = "";
+    if (nameUpper.includes("BURAN")) {
+      finalOrigin = "Rússia";
+    } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
+      finalOrigin = "Romênia";
+    } else if (nameUpper.includes("PANDORA")) {
+      finalOrigin = "Espanha";
     }
-    if (nameUpper.includes("NERO")) {
-      return { 
-        ...dog, 
-        weight: dog.weight || "85kg", 
-        age: dog.age || "4 anos", 
-        origin: dog.origin || "Ucrânia", 
-        photos,
-        notes: dog.notes || "Macho importado da Ucrânia. Cão de guarda de alto nível com temperamento extremamente explosivo.",
-        history: dog.history || "Macho importado da Ucrânia. Cão de guarda de alto nível com temperamento extremamente explosivo e focado."
-      };
-    }
-    if (nameUpper.includes("VASILÍSIA") || nameUpper.includes("VASILISIA")) {
-      return { 
-        ...dog, 
-        weight: dog.weight || "68kg", 
-        age: dog.age || "2 anos", 
-        origin: dog.origin || "Rússia", 
-        photos,
-        notes: dog.notes || "Fêmea robusta importada da Rússia. Temperamento equilibrado e excelente guardiã.",
-        history: dog.history || "Fêmea importada da Rússia de linhagem tradicional de trabalho. Estrutura forte."
-      };
-    }
-    return { ...dog, photos };
+
+    return { 
+      ...dog, 
+      origin: finalOrigin, 
+      photos 
+    };
   });
 
   const filteredDogs = allDogs.filter((dog) => dog.gender === activeGender);
@@ -271,21 +251,15 @@ export default function PlantelClientPage() {
 
                       <div className="grid grid-cols-2 gap-4 text-xs font-sans">
                         <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
-                          <p className="text-gray-400 text-[10px] uppercase font-bold">Idade</p>
-                          <p className="font-bold text-sm" style={{ color: t.textMain }}>{dog.age || "N/A"}</p>
+                          <p className="text-gray-400 text-[10px] uppercase font-bold">Sexo</p>
+                          <p className="font-bold text-sm capitalize" style={{ color: t.textMain }}>{dog.gender || "N/A"}</p>
                         </div>
-                        <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
-                          <p className="text-gray-400 text-[10px] uppercase font-bold">Peso aproximado</p>
-                          <p className="font-bold text-sm" style={{ color: t.textMain }}>{dog.weight || "N/A"}</p>
-                        </div>
-                        <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
-                          <p className="text-gray-400 text-[10px] uppercase font-bold">Raça</p>
-                          <p className="font-bold text-sm" style={{ color: t.textMain }}>{dog.breed || "Pastor do Cáucaso"}</p>
-                        </div>
-                        <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
-                          <p className="text-gray-400 text-[10px] uppercase font-bold">Registro / Pedigree</p>
-                          <p className="font-bold text-sm" style={{ color: t.textMain }}>{dog.registry || "CBKC / Export Pedigree"}</p>
-                        </div>
+                        {dog.origin && (
+                          <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
+                            <p className="text-gray-400 text-[10px] uppercase font-bold">Origem</p>
+                            <p className="font-bold text-sm" style={{ color: t.textMain }}>{dog.origin}</p>
+                          </div>
+                        )}
                       </div>
 
                       <div className="space-y-2">

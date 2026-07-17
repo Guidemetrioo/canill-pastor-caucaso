@@ -16,7 +16,23 @@ export default function FilhotesClientPage() {
     trackEvent("page_view", "/filhotes");
   }, [trackEvent]);
 
-  const availablePuppies = filhotes.filter(
+  const processedPuppies = filhotes.map(puppy => {
+    const nameUpper = puppy.name.toUpperCase();
+    let finalOrigin = "";
+    if (nameUpper.includes("BURAN")) {
+      finalOrigin = "Rússia";
+    } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
+      finalOrigin = "Romênia";
+    } else if (nameUpper.includes("PANDORA")) {
+      finalOrigin = "Espanha";
+    }
+    return {
+      ...puppy,
+      origin: finalOrigin
+    };
+  });
+
+  const availablePuppies = processedPuppies.filter(
     (f) => f.status === "Disponível" && (genderFilter === "todos" || f.gender === genderFilter)
   );
 
@@ -103,15 +119,17 @@ export default function FilhotesClientPage() {
                       {puppy.notes || "Excelente ninhada de Pastor do Cáucaso, com estrutura pesada, pelagem abundante e linhagem premiada."}
                     </p>
 
-                    <div className="space-y-1.5 pt-2 border-t border-[#2A2A2A]/50">
-                      <div className="flex items-center gap-2 text-[10px] text-gray-300">
-                        <Check className="w-3.5 h-3.5 text-[#D97457]" />
-                        <span>Pedigree CBKC Incluso</span>
+                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#2A2A2A]/50 text-xs">
+                      <div>
+                        <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Sexo</span>
+                        <span className="font-bold text-gray-200 capitalize">{puppy.gender || "—"}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-[10px] text-gray-300">
-                        <Check className="w-3.5 h-3.5 text-[#D97457]" />
-                        <span>Contrato de Garantia de Saúde</span>
-                      </div>
+                      {puppy.origin && (
+                        <div>
+                          <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Origem</span>
+                          <span className="font-bold text-gray-200">{puppy.origin}</span>
+                        </div>
+                      )}
                     </div>
 
                     <Link

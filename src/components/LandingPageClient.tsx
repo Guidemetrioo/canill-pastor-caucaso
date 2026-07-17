@@ -266,16 +266,21 @@ export default function LandingPageClient() {
   // Enrich data for known dogs to ensure fields (weight, age) are fully populated
   const allDogs = (baseDogs as any[]).map(dog => {
     const nameUpper = dog.name.toUpperCase();
-    if (nameUpper.includes("VENÛS") || nameUpper.includes("VENUS")) {
-      return { ...dog, weight: dog.weight || "70kg", age: dog.age || "3 anos" };
+    
+    // We only display origin for Buran, J-Ara, and Pandora
+    let finalOrigin = "";
+    if (nameUpper.includes("BURAN")) {
+      finalOrigin = "Rússia";
+    } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
+      finalOrigin = "Romênia";
+    } else if (nameUpper.includes("PANDORA")) {
+      finalOrigin = "Espanha";
     }
-    if (nameUpper.includes("NERO")) {
-      return { ...dog, weight: dog.weight || "85kg", age: dog.age || "4 anos" };
-    }
-    if (nameUpper.includes("VASILÍSIA") || nameUpper.includes("VASILISIA")) {
-      return { ...dog, weight: dog.weight || "68kg", age: dog.age || "2 anos" };
-    }
-    return dog;
+
+    return { 
+      ...dog, 
+      origin: finalOrigin 
+    };
   });
 
   // Filter dogs by selected gender tab
@@ -1090,21 +1095,15 @@ function DogCard({ dog, theme }: { dog: any; theme: any }) {
 
           <div className={`grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] sm:text-xs border p-4 rounded-xl font-sans ${theme.bgForm}`} style={{ borderColor: theme.borderHex }}>
             <div>
-              <span className="text-gray-400 block text-[9px] uppercase tracking-wider">Raça</span>
-              <span className="font-semibold">{dog.breed || "Pastor do Cáucaso"}</span>
+              <span className="text-gray-400 block text-[9px] uppercase tracking-wider">Sexo</span>
+              <span className="font-semibold capitalize">{dog.gender || "—"}</span>
             </div>
-            <div>
-              <span className="text-gray-400 block text-[9px] uppercase tracking-wider">Origem</span>
-              <span className="font-semibold">{dog.origin || "—"}</span>
-            </div>
-            <div>
-              <span className="text-gray-400 block text-[9px] uppercase tracking-wider">Peso</span>
-              <span className="font-semibold">{dog.weight || "—"}</span>
-            </div>
-            <div>
-              <span className="text-gray-400 block text-[9px] uppercase tracking-wider">Idade</span>
-              <span className="font-semibold">{dog.age || "—"}</span>
-            </div>
+            {dog.origin && (
+              <div>
+                <span className="text-gray-400 block text-[9px] uppercase tracking-wider">Origem</span>
+                <span className="font-semibold">{dog.origin}</span>
+              </div>
+            )}
           </div>
 
           <p className={`text-xs leading-relaxed min-h-[48px] font-sans ${theme.textMuted}`}>

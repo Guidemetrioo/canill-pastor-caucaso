@@ -20,10 +20,27 @@ interface Puppy {
   status: string;
   mother_name?: string;
   father_name?: string;
+  origin?: string;
 }
 
-export default function PuppyDetailClient({ puppy }: { puppy: Puppy }) {
+export default function PuppyDetailClient({ puppy: initialPuppy }: { puppy: Puppy }) {
   const [activeTab, setActiveTab] = useState<"saude" | "peso" | "genealogia">("saude");
+  
+  const nameUpper = initialPuppy.name.toUpperCase();
+  let finalOrigin = "";
+  if (nameUpper.includes("BURAN")) {
+    finalOrigin = "Rússia";
+  } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
+    finalOrigin = "Romênia";
+  } else if (nameUpper.includes("PANDORA")) {
+    finalOrigin = "Espanha";
+  }
+
+  const puppy = {
+    ...initialPuppy,
+    origin: finalOrigin
+  };
+
   const [activePhoto, setActivePhoto] = useState(puppy.avatar_url || puppy.photos[0] || "");
 
   const handleReserveClick = () => {
@@ -104,6 +121,11 @@ export default function PuppyDetailClient({ puppy }: { puppy: Puppy }) {
                   <span className="bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                     {puppy.gender === "macho" ? "Macho" : "Fêmea"}
                   </span>
+                  {puppy.origin && (
+                    <span className="bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                      Origem: {puppy.origin}
+                    </span>
+                  )}
                   <span className="bg-[#4CAF50]/10 border border-[#4CAF50]/20 text-[#4CAF50] text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                     Disponível
                   </span>

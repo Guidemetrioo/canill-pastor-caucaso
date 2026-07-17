@@ -408,7 +408,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/apolo_1.jpg", "/dogs/apolo_2.jpg", "/dogs/apolo_3.jpg", "/dogs/apolo_4.jpg", "/dogs/apolo_5.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "",
         weight: "",
         notes: "Macho imponente do plantel Vale da Kubera. Excelente conformação e instinto de guarda apurado.",
         history: "Apolo é um exemplar de destaque do plantel, com estrutura robusta e temperamento de guarda exemplar."
@@ -425,7 +425,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/orham_1.jpg", "/dogs/orham_2.jpg", "/dogs/orham_3.jpg", "/dogs/orham_4.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "",
         weight: "",
         notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.",
         history: "Orham representa a excelência genética do plantel Vale da Kubera, com conformação morfológica impecável."
@@ -442,7 +442,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/putin_1.jpg", "/dogs/putin_2.jpg", "/dogs/putin_3.jpg", "/dogs/putin_4.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "",
         weight: "",
         notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.",
         history: "Putin é um cão de guarda nato, com presença intimidante e lealdade absoluta com sua família."
@@ -476,7 +476,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/symeon_1.jpg", "/dogs/symeon_2.jpg", "/dogs/symeon_3.jpg", "/dogs/symeon_4.jpg", "/dogs/symeon_5.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Rússia",
+        origin: "",
         weight: "",
         notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor importado da Rússia.",
         history: "Symion é o patriarca do plantel, importado da Rússia com estrutura massiva e temperamento excelente."
@@ -493,7 +493,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/nero_new_4.jpg", "/dogs/nero_new_1.jpg", "/dogs/nero_new_2.jpg", "/dogs/nero_new_3.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "",
         weight: "",
         notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.",
         history: "Nero é um cão de guarda de alto nível com temperamento extremamente explosivo e focado, representando o melhor da raça."
@@ -544,7 +544,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/thara_1.jpg", "/dogs/thara_2.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "",
         weight: "",
         notes: "Fêmea robusta com temperamento equilibrado e instinto maternal impecável.",
         history: "Thara é uma matriz de excelente temperamento de proteção e instinto maternal, gerando ninhadas de alta qualidade."
@@ -561,7 +561,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         photos: ["/dogs/vasilisia_new_1.jpg", "/dogs/vasilisia_new_2.jpg", "/dogs/vasilisia_new_3.jpg", "/dogs/vasilisia_new_4.jpg"],
         breed: "Pastor do Cáucaso",
         age: "",
-        origin: "Brasil",
+        origin: "",
         weight: "",
         notes: "Fêmea de estrutura impressionante e presença marcante. Matriz de destaque do plantel Vale da Kubera.",
         history: "Vasilísia é uma fêmea de presença marcante, com estrutura robusta e temperamento domínio equilibrado."
