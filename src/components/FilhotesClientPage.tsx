@@ -122,6 +122,9 @@ function PuppyCard({ puppy }: { puppy: any }) {
   const genderSlug = puppy.gender === "macho" ? "macho" : "femea";
   const puppySlug = `filhote-${genderSlug}-pastor-do-caucaso-${puppy.id}`;
 
+  const nameUpper = puppy.name.toUpperCase();
+  const displayName = nameUpper.includes("VALE DA KUBERA") || nameUpper.includes("DA KUBERA") ? puppy.name : `${puppy.name} Vale da Kubera`;
+
   return (
     <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#D97457]/50 transition-all flex flex-col justify-between group shadow-xl">
       <div className="relative h-64 bg-gray-900 overflow-hidden select-none">
@@ -162,7 +165,7 @@ function PuppyCard({ puppy }: { puppy: any }) {
       <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
         <div className="space-y-4">
           <div className="flex justify-between items-start">
-            <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{puppy.name}</h3>
+            <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{displayName}</h3>
           </div>
           <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
             {puppy.notes || "Excelente ninhada de Pastor do Cáucaso, com estrutura pesada, pelagem abundante e linhagem premiada."}

@@ -87,12 +87,12 @@ export default function SobrePage() {
           <div className="relative h-96 rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-xl">
             <img
               src="/dogs/symion_about.jpg"
-              alt="Symion macho russia"
+              alt="Symion Vale da Kubera (Rússia)"
               className="w-full h-full object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
-              <p className="text-xs text-white font-semibold">Symion macho russia</p>
+              <p className="text-xs text-white font-semibold">Symion Vale da Kubera (Rússia)</p>
             </div>
           </div>
         </section>

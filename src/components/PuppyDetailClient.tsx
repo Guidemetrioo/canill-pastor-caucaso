@@ -36,8 +36,11 @@ export default function PuppyDetailClient({ puppy: initialPuppy }: { puppy: Pupp
     finalOrigin = "Espanha";
   }
 
+  const displayName = nameUpper.includes("VALE DA KUBERA") || nameUpper.includes("DA KUBERA") ? initialPuppy.name : `${initialPuppy.name} Vale da Kubera`;
+
   const puppy = {
     ...initialPuppy,
+    name: displayName,
     origin: finalOrigin
   };
 

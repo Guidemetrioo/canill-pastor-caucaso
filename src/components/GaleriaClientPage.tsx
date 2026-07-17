@@ -15,18 +15,18 @@ export default function GaleriaClientPage() {
 
   // Photo gallery media items
   const media = [
-    { type: "caes", url: "/dogs/nero_4.jpg", title: "NERO - Reprodutor (Ucrânia)" },
-    { type: "caes", url: "/dogs/nero_5.jpg", title: "NERO - Perfil (Ucrânia)" },
-    { type: "caes", url: "/dogs/nero_6.jpg", title: "NERO - Closeup (Ucrânia)" },
-    { type: "caes", url: "/dogs/nero_7.jpg", title: "NERO - Descansando" },
-    { type: "caes", url: "/dogs/nero_1.jpg", title: "NERO - Retrato" },
-    { type: "caes", url: "/dogs/nero_2.jpg", title: "NERO - Lateral" },
-    { type: "caes", url: "/dogs/nero_3.jpg", title: "NERO - Posição" },
-    { type: "caes", url: "/dogs/vasilisia_1.jpg", title: "VASILÍSIA - Fêmea Robusta (Rússia)" },
-    { type: "caes", url: "/dogs/vasilisia_2.jpg", title: "VASILÍSIA - Sentada" },
-    { type: "caes", url: "/dogs/vasilisia_3.jpg", title: "VASILÍSIA -" },
-    { type: "caes", url: "/dogs/venus_1.jpg", title: "VENÛS - Fêmea Importada (Rússia)" },
-    { type: "caes", url: "/dogs/venus_2.jpg", title: "VENÛS - Retrato" },
+    { type: "caes", url: "/dogs/nero_4.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_5.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_6.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_7.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_1.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_2.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/nero_3.jpg", title: "NERO Vale da Kubera (Ucrânia)" },
+    { type: "caes", url: "/dogs/vasilisia_1.jpg", title: "VASILÍSIA Vale da Kubera (Rússia)" },
+    { type: "caes", url: "/dogs/vasilisia_2.jpg", title: "VASILÍSIA Vale da Kubera (Rússia)" },
+    { type: "caes", url: "/dogs/vasilisia_3.jpg", title: "VASILÍSIA Vale da Kubera (Rússia)" },
+    { type: "caes", url: "/dogs/venus_1.jpg", title: "VENÛS Vale da Kubera (Rússia)" },
+    { type: "caes", url: "/dogs/venus_2.jpg", title: "VENÛS Vale da Kubera (Rússia)" },
     { type: "canil", url: "/dogs/canil_1.jpg", title: "Canil Vale da Kubera - Instalações" },
   ];
 

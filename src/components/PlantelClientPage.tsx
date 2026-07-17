@@ -170,9 +170,9 @@ export default function PlantelClientPage() {
         </div>
 
         {/* Profiles Roster */}
-        <div className="space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredDogs.length === 0 ? (
-            <div className="border rounded-3xl p-12 text-center text-xs" style={{ backgroundColor: t.cardBgHex, borderColor: t.borderHex, color: t.textMuted }}>
+            <div className="col-span-full border rounded-3xl p-12 text-center text-xs" style={{ backgroundColor: t.cardBgHex, borderColor: t.borderHex, color: t.textMuted }}>
               Nenhum cão cadastrado nesta categoria.
             </div>
           ) : (
@@ -180,108 +180,77 @@ export default function PlantelClientPage() {
               const photoIdx = carouselIndices[dog.id] || 0;
               const maxPhotos = dog.photos ? dog.photos.length : 1;
               const activePhoto = dog.photos ? dog.photos[photoIdx] : dog.avatar_url || "/logo.png";
+              
+              const nameUpper = dog.name.toUpperCase();
+              const displayName = nameUpper.includes("VALE DA KUBERA") || nameUpper.includes("DA KUBERA") ? dog.name : `${dog.name} Vale da Kubera`;
 
               return (
                 <div
                   key={dog.id}
-                  className="border rounded-3xl overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-8"
+                  className="border rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between group"
                   style={{ backgroundColor: t.cardBgHex, borderColor: t.borderHex }}
                 >
                   {/* Photo Gallery Column */}
-                  <div className="lg:col-span-5 space-y-3">
-                    <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden bg-black/40 border" style={{ borderColor: t.borderHex }}>
-                      <img
-                        src={activePhoto}
-                        alt={dog.name}
-                        className="w-full h-full object-cover"
-                      />
-                      {maxPhotos > 1 && (
-                        <>
-                          <button
-                            onClick={() => handlePrevPhoto(dog.id, maxPhotos)}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white transition-all focus:outline-none"
-                          >
-                            <ChevronLeft className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => handleNextPhoto(dog.id, maxPhotos)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white transition-all focus:outline-none"
-                          >
-                            <ChevronRight className="w-5 h-5" />
-                          </button>
-                          <div className="absolute bottom-3 right-3 bg-black/75 px-2.5 py-1 rounded-md text-[10px] font-bold text-white">
-                            {photoIdx + 1} / {maxPhotos}
-                          </div>
-                        </>
-                      )}
-                    </div>
-
-                    {/* Thumbnail Indicators */}
+                  <div className="relative h-64 bg-black/40 overflow-hidden select-none border-b" style={{ borderColor: t.borderHex }}>
+                    <img
+                      src={activePhoto}
+                      alt={dog.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    />
                     {maxPhotos > 1 && (
-                      <div className="flex gap-2 overflow-x-auto pb-1.5 no-scrollbar">
-                        {dog.photos.map((p: string, idx: number) => (
-                          <button
-                            key={idx}
-                            onClick={() => setCarouselIndices((prev) => ({ ...prev, [dog.id]: idx }))}
-                            className={`w-14 h-14 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
-                              photoIdx === idx ? "border-[#D97457] scale-102" : "border-transparent opacity-60 hover:opacity-100"
-                            }`}
-                          >
-                            <img src={p} alt="Thumbnail" className="w-full h-full object-cover" />
-                          </button>
-                        ))}
-                      </div>
+                      <>
+                        <button
+                          onClick={() => handlePrevPhoto(dog.id, maxPhotos)}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white transition-all focus:outline-none z-20"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleNextPhoto(dog.id, maxPhotos)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white transition-all focus:outline-none z-20"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                        <div className="absolute bottom-3 right-3 bg-black/75 px-2.5 py-1 rounded-md text-[10px] font-bold text-white z-20">
+                          {photoIdx + 1} / {maxPhotos}
+                        </div>
+                      </>
                     )}
                   </div>
 
                   {/* Dog Details Column */}
-                  <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+                  <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                     <div className="space-y-4">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h2 className="text-2xl sm:text-3xl font-extrabold font-comfortaa leading-none uppercase" style={{ color: t.accentHex }}>
-                          {dog.name}
-                        </h2>
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ backgroundColor: `${t.accentHex}10`, color: t.accentHex }}>
-                          {dog.origin}
-                        </span>
-                      </div>
+                      <h3 className="text-lg font-bold font-comfortaa uppercase tracking-tight" style={{ color: t.accentHex }}>
+                        {displayName}
+                      </h3>
 
-                      {/* Hip Displasia Certificate (Critical E-E-A-T criteria) */}
-                      <div className="flex items-center gap-2 p-3 rounded-xl border border-dashed text-xs" style={{ borderColor: `${t.accentHex}40`, backgroundColor: `${t.accentHex}05` }}>
-                        <Shield className="w-4 h-4 shrink-0" style={{ color: t.accentHex }} />
-                        <span>
-                          <strong>Laudo Clínico:</strong> Displasia Coxofemural (Hip Displasia) <strong>Grau A (Livre)</strong> com certificação veterinária internacional.
-                        </span>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4 text-xs font-sans">
-                        <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
-                          <p className="text-gray-400 text-[10px] uppercase font-bold">Sexo</p>
+                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#2A2A2A]/50 text-xs font-sans">
+                        <div className="p-3 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
+                          <p className="text-gray-400 text-[9px] uppercase font-bold">Sexo</p>
                           <p className="font-bold text-sm capitalize" style={{ color: t.textMain }}>{dog.gender || "N/A"}</p>
                         </div>
                         {dog.origin && (
-                          <div className="p-3.5 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
-                            <p className="text-gray-400 text-[10px] uppercase font-bold">Origem</p>
+                          <div className="p-3 rounded-xl border" style={{ backgroundColor: t.bgHex, borderColor: t.borderHex }}>
+                            <p className="text-gray-400 text-[9px] uppercase font-bold">Origem</p>
                             <p className="font-bold text-sm" style={{ color: t.textMain }}>{dog.origin}</p>
                           </div>
                         )}
                       </div>
 
-                      <div className="space-y-2">
-                        <h4 className="text-xs uppercase font-extrabold tracking-wider" style={{ color: t.accentHex }}>Histórico &amp; Linhagem</h4>
+                      {dog.notes && (
                         <p className="text-xs leading-relaxed" style={{ color: t.textMuted }}>
-                          {dog.history}
+                          {dog.notes}
                         </p>
-                      </div>
+                      )}
                     </div>
 
-                    {/* Highlight footer */}
-                    <div className="border-t pt-4 flex items-center justify-between text-xs" style={{ borderColor: t.borderHex }}>
+                    <div className="border-t pt-4 flex items-center justify-between text-[10px]" style={{ borderColor: t.borderHex }}>
                       <span className="flex items-center gap-1.5 font-bold" style={{ color: t.accentHex }}>
-                        <Check className="w-4 h-4" />
+                        <Check className="w-3.5 h-3.5" />
                         <span>Linhagem Oficial</span>
                       </span>
-                      <span className="text-[10px] text-gray-400 uppercase font-bold">Código Ref: #{dog.id}</span>
+                      <span className="text-gray-400 uppercase font-bold">Ref: #{dog.id}</span>
                     </div>
                   </div>
                 </div>

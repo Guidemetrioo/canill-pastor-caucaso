@@ -1049,6 +1049,9 @@ export default function LandingPageClient() {
 function DogCard({ dog, theme }: { dog: any; theme: any }) {
   const [activePhoto, setActivePhoto] = useState(dog.avatar_url || (dog.photos && dog.photos[0]) || "");
 
+  const nameUpper = dog.name.toUpperCase();
+  const displayName = nameUpper.includes("VALE DA KUBERA") || nameUpper.includes("DA KUBERA") ? dog.name : `${dog.name} Vale da Kubera`;
+
   return (
     <div className={`border rounded-2xl overflow-hidden transition-all flex flex-col justify-between group shadow-lg ${theme.cardBg} ${theme.cardBorder}`}>
       <div className="relative h-72 bg-gray-100 overflow-hidden select-none border-b" style={{ borderColor: theme.border.replace('border-[', '').replace(']', '') }}>
@@ -1095,7 +1098,7 @@ function DogCard({ dog, theme }: { dog: any; theme: any }) {
       <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
         <div className="space-y-4">
           <div className="flex justify-between items-start">
-            <h3 className="text-lg font-bold font-comfortaa transition-colors group-hover:text-opacity-80">{dog.name}</h3>
+            <h3 className="text-lg font-bold font-comfortaa transition-colors group-hover:text-opacity-80">{displayName}</h3>
             {dog.price > 0 && (
               <span className="font-extrabold text-sm" style={{ color: theme.accentHex }}>
                 R$ {dog.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
