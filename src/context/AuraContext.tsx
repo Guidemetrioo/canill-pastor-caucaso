@@ -386,7 +386,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
       { id: 3, name: "Apolo da Kubera", gender: "macho", birthdate: "2021-03-10", pedigree_url: "#", registry: "CBKC-22344", status: "disponível", breed_price: 3500.00, notes: "Macho imponente do plantel, com excelente conformação e instinto de guarda apurado.", avatar_url: "/dogs/apolo_1.jpg" },
       { id: 4, name: "Orham da Kubera", gender: "macho", birthdate: "2021-06-20", pedigree_url: "#", registry: "CBKC-22345", status: "disponível", breed_price: 3500.00, notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.", avatar_url: "/dogs/orham_1.jpg" },
       { id: 5, name: "Putin da Kubera", gender: "macho", birthdate: "2021-09-05", pedigree_url: "#", registry: "CBKC-22346", status: "disponível", breed_price: 3500.00, notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.", avatar_url: "/dogs/putin_1.jpg" },
-      { id: 6, name: "Buran da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", breed_price: 3500.00, notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/buran_1.jpg" }
+      { id: 6, name: "Burham Vale da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", breed_price: 3500.00, notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/buran_1.jpg" }
     ]);
 
     // 4. Ninhadas
@@ -449,7 +449,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
       },
       {
         id: 4,
-        name: "BURAN",
+        name: "BURHAM",
         gender: "macho",
         status: "Disponível",
         price: 0,

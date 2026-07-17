@@ -274,7 +274,7 @@ export default function LandingPageClient() {
         ? [dog.avatar_url] 
         : ["/logo.png"];
 
-    // We only display origin for Buran, J-Ara, and Pandora, and enrich their photos carousels
+    // We only display origin for Buran, J-Ara, and Pandora, and enrich all photos carousels
     let finalOrigin = "";
     if (nameUpper.includes("BURAN")) {
       finalOrigin = "Rússia";
@@ -285,6 +285,24 @@ export default function LandingPageClient() {
     } else if (nameUpper.includes("PANDORA")) {
       finalOrigin = "Espanha";
       photos = ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"];
+    } else if (nameUpper.includes("APOLO")) {
+      photos = ["/dogs/apolo_1.jpg", "/dogs/apolo_2.jpg", "/dogs/apolo_3.jpg", "/dogs/apolo_4.jpg", "/dogs/apolo_5.jpg"];
+    } else if (nameUpper.includes("BURHAM")) {
+      photos = ["/dogs/burham_1.jpg", "/dogs/burham_2.jpg", "/dogs/burham_3.jpg", "/dogs/burham_4.jpg", "/dogs/burham_5.jpg", "/dogs/burham_6.jpg"];
+    } else if (nameUpper.includes("ORHAM")) {
+      photos = ["/dogs/orham_1.jpg", "/dogs/orham_2.jpg", "/dogs/orham_3.jpg", "/dogs/orham_4.jpg"];
+    } else if (nameUpper.includes("PUTIN")) {
+      photos = ["/dogs/putin_1.jpg", "/dogs/putin_2.jpg", "/dogs/putin_3.jpg", "/dogs/putin_4.jpg"];
+    } else if (nameUpper.includes("SYMION") || nameUpper.includes("SYMEON")) {
+      photos = ["/dogs/symeon_1.jpg", "/dogs/symeon_2.jpg", "/dogs/symeon_3.jpg", "/dogs/symeon_4.jpg", "/dogs/symeon_5.jpg"];
+    } else if (nameUpper.includes("THARA")) {
+      photos = ["/dogs/thara_1.jpg", "/dogs/thara_2.jpg"];
+    } else if (nameUpper.includes("VASILÍSIA") || nameUpper.includes("VASILISIA")) {
+      photos = ["/dogs/vasilisia_new_1.jpg", "/dogs/vasilisia_new_2.jpg", "/dogs/vasilisia_new_3.jpg", "/dogs/vasilisia_new_4.jpg"];
+    } else if (nameUpper.includes("VENÛS") || nameUpper.includes("VENUS")) {
+      photos = ["/dogs/venus_1.jpg", "/dogs/venus_2.jpg", "/dogs/venus_3.jpg"];
+    } else if (nameUpper.includes("NERO")) {
+      photos = ["/dogs/nero_new_4.jpg", "/dogs/nero_new_1.jpg", "/dogs/nero_new_2.jpg", "/dogs/nero_new_3.jpg"];
     }
 
     return { 

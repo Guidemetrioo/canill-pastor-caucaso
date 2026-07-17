@@ -156,18 +156,6 @@ async function runSeed() {
       avatar_url: "/dogs/putin_1.jpg"
     },
     {
-      id: 10,
-      name: "Burham Vale da Kubera",
-      gender: "macho",
-      birthdate: "2022-01-15",
-      pedigree_url: "#",
-      registry: "CBKC-22347",
-      status: "disponível",
-      breed_price: 3500.00,
-      notes: "Macho jovem de excelente potencial.",
-      avatar_url: "/dogs/burham_1.jpg"
-    },
-    {
       id: 11,
       name: "J-Ara Vale da Kubera",
       gender: "fêmea",
@@ -193,7 +181,7 @@ async function runSeed() {
     },
     {
       id: 13,
-      name: "Buran Vale da Kubera",
+      name: "Burham Vale da Kubera",
       gender: "macho",
       birthdate: "2022-06-15",
       pedigree_url: "#",
@@ -238,7 +226,7 @@ async function runSeed() {
     {
       id: 1,
       litter_id: 1,
-      name: "Buran Vale da Kubera",
+      name: "Burham Vale da Kubera",
       gender: "macho",
       status: "Disponível",
       price: 6000.00,
@@ -291,17 +279,6 @@ async function runSeed() {
       price: 6000.00,
       avatar_url: "/dogs/putin_1.jpg",
       photos: ["/dogs/putin_1.jpg", "/dogs/putin_2.jpg", "/dogs/putin_3.jpg", "/dogs/putin_4.jpg"],
-      health_records: [],
-      weight_history: []
-    },
-    {
-      id: 6,
-      name: "Burham Vale da Kubera",
-      gender: "macho",
-      status: "Disponível",
-      price: 6000.00,
-      avatar_url: "/dogs/burham_1.jpg",
-      photos: ["/dogs/burham_1.jpg", "/dogs/burham_2.jpg", "/dogs/burham_3.jpg", "/dogs/burham_4.jpg", "/dogs/burham_5.jpg", "/dogs/burham_6.jpg"],
       health_records: [],
       weight_history: []
     },
