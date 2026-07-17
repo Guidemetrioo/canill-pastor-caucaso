@@ -17,6 +17,7 @@ import {
   LogOut,
   X,
   BarChart3,
+  Heart,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -29,9 +30,8 @@ export const sidebarItems = [
   { href: "/dashboard/leads", label: "Central de Leads", icon: MessageSquare },
   { href: "/dashboard/ninhadas", label: "Ninhadas & Filhotes", icon: Network },
   { href: "/dashboard/animais", label: "Matrizes & Machos", icon: Shield },
-  { href: "/dashboard/agenda", label: "Agenda Canina", icon: CalendarDays },
-  { href: "/dashboard/hospedagem", label: "Hospedagem / Creche", icon: Home },
-  { href: "/dashboard/adestramento", label: "Adestramento", icon: Award },
+  { href: "/dashboard/agenda-canina", label: "Agenda Canina", icon: Heart },
+  { href: "/dashboard/agenda", label: "Agenda de Visitas", icon: CalendarDays },
   { href: "/dashboard/clientes", label: "Clientes / Tutores", icon: Users },
   { href: "/dashboard/financeiro", label: "Financeiro", icon: DollarSign },
   { href: "/dashboard/trafego", label: "Controle de Tráfego", icon: BarChart3 },

@@ -34,8 +34,6 @@ export default function DashboardPage() {
     ninhadas,
     filhotes,
     agendaEvents,
-    hospedagens,
-    adestramentos,
     financialEntries,
   } = useAura();
 
@@ -56,10 +54,8 @@ export default function DashboardPage() {
     (lead) => lead.status === "Novo" || lead.status === "Qualificando"
   ).length;
 
-  // Active boarding dogs
-  const activeBoardersCount = hospedagens.filter(
-    (h) => h.status === "Hospedado"
-  ).length;
+  // Active dogs count
+  const activeDogsCount = animals.length;
 
   // Available puppies
   const availablePuppiesCount = filhotes.filter(
@@ -76,13 +72,11 @@ export default function DashboardPage() {
   const chartData = [
     { name: "Filhotes", faturamento: getRevenueByCategory("Venda Filhote") || 6000 },
     { name: "Cobertura", faturamento: getRevenueByCategory("Cobertura") || 3500 },
-    { name: "Hospedagem", faturamento: getRevenueByCategory("Hospedagem") || 560 },
-    { name: "Adestramento", faturamento: getRevenueByCategory("Adestramento") || 1200 },
   ];
 
-  // 3. Upcoming events (next 5 days)
+  // 3. Upcoming events (next 5 days) - only visits
   const upcomingEvents = [...agendaEvents]
-    .filter((e) => e.status !== "Concluído" && e.status !== "Cancelado")
+    .filter((e) => e.type === "visita" && e.status !== "Concluído" && e.status !== "Cancelado")
     .sort((a, b) => a.datetime.localeCompare(b.datetime))
     .slice(0, 5);
 
@@ -151,15 +145,15 @@ export default function DashboardPage() {
         <div className="bg-salon-surface border border-salon-border rounded-salon p-6 flex justify-between items-center">
           <div className="space-y-2">
             <span className="text-xs text-salon-text-secondary font-medium uppercase tracking-wider">
-              Hóspedes Ativos
+              Cães do Plantel
             </span>
             <h3 className="text-2xl font-bold text-salon-text-primary">
-              {activeBoardersCount}
+              {activeDogsCount}
             </h3>
-            <p className="text-[10px] text-salon-text-secondary">Cães atualmente no hotel/creche</p>
+            <p className="text-[10px] text-salon-text-secondary">Matrizes e Padreadores ativos</p>
           </div>
           <div className="w-12 h-12 rounded-xl bg-salon-success/10 border border-salon-success/20 flex items-center justify-center text-salon-success">
-            <Home className="w-6 h-6" />
+            <Shield className="w-6 h-6" />
           </div>
         </div>
 

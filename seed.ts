@@ -97,18 +97,6 @@ async function runSeed() {
       avatar_url: "/dogs/thara_1.jpg"
     },
     {
-      id: 5,
-      name: "Ozzy Vale da Kubera",
-      gender: "macho",
-      birthdate: "2022-05-19",
-      pedigree_url: "#",
-      registry: "CBKC-22343",
-      status: "disponível",
-      breed_price: 3500.00,
-      notes: "Importado da Espanha. Reprodutor jovem de excelente movimentação e estrutura compacta.",
-      avatar_url: "/dogs/orham_1.jpg"
-    },
-    {
       id: 6,
       name: "Vênus Vale da Kubera",
       gender: "fêmea",
