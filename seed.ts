@@ -52,7 +52,7 @@ async function runSeed() {
   const { data: dogs, error: dogsErr } = await supabase.from("matrizes_machos").insert([
     {
       id: 1,
-      name: "Symion da Kubera",
+      name: "Symion Vale da Kubera",
       gender: "macho",
       birthdate: "2021-04-12",
       pedigree_url: "#",
@@ -60,22 +60,22 @@ async function runSeed() {
       status: "disponível",
       breed_price: 3500.00,
       notes: "Importado da Rússia (Canil Baraik Azskaz). Gigante de 100kg com excelente estrutura e guarda implacável.",
-      avatar_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=400"
+      avatar_url: "/dogs/symion_about.jpg"
     },
     {
       id: 2,
-      name: "Vasilísia da Kubera",
+      name: "Vasilísia Vale da Kubera",
       gender: "fêmea",
       birthdate: "2022-01-20",
       pedigree_url: "#",
       registry: "CBKC-54321",
       status: "disponível",
       notes: "Importada da Rússia. Fêmea de temperamento explosivo, excelente guardiã e dominante.",
-      avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400"
+      avatar_url: "/dogs/vasilisia_new_1.jpg"
     },
     {
       id: 3,
-      name: "Nero da Kubera",
+      name: "Nero Vale da Kubera",
       gender: "macho",
       birthdate: "2020-08-15",
       pedigree_url: "#",
@@ -83,22 +83,22 @@ async function runSeed() {
       status: "disponível",
       breed_price: 3500.00,
       notes: "Importado da Ucrânia. Reprodutor de grande porte, temperamento equilibrado e excelente pigmentação.",
-      avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"
+      avatar_url: "/dogs/nero_new_4.jpg"
     },
     {
       id: 4,
-      name: "Thara da Kubera",
+      name: "Thara Vale da Kubera",
       gender: "fêmea",
       birthdate: "2021-11-03",
       pedigree_url: "#",
       registry: "CBKC-22342",
       status: "disponível",
       notes: "Importada da Romênia. Matriz de excelente temperamento de proteção e instinto maternal impecável.",
-      avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"
+      avatar_url: "/dogs/thara_1.jpg"
     },
     {
       id: 5,
-      name: "Ozzy da Kubera",
+      name: "Ozzy Vale da Kubera",
       gender: "macho",
       birthdate: "2022-05-19",
       pedigree_url: "#",
@@ -106,18 +106,102 @@ async function runSeed() {
       status: "disponível",
       breed_price: 3500.00,
       notes: "Importado da Espanha. Reprodutor jovem de excelente movimentação e estrutura compacta.",
-      avatar_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400"
+      avatar_url: "/dogs/orham_1.jpg"
     },
     {
       id: 6,
-      name: "Vênus da Kubera",
+      name: "Vênus Vale da Kubera",
       gender: "fêmea",
       birthdate: "2022-09-12",
       pedigree_url: "#",
       registry: "CBKC-22344",
       status: "disponível",
       notes: "Importada da Rússia. Fêmea de altíssima qualidade genética e excelente ossatura.",
-      avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"
+      avatar_url: "/dogs/venus_1.jpg"
+    },
+    {
+      id: 7,
+      name: "Apolo Vale da Kubera",
+      gender: "macho",
+      birthdate: "2021-06-10",
+      pedigree_url: "#",
+      registry: "CBKC-22340",
+      status: "disponível",
+      breed_price: 3500.00,
+      notes: "Macho de grande porte, temperamento equilibrado e excelente pigmentação.",
+      avatar_url: "/dogs/apolo_1.jpg"
+    },
+    {
+      id: 8,
+      name: "Orham Vale da Kubera",
+      gender: "macho",
+      birthdate: "2021-12-05",
+      pedigree_url: "#",
+      registry: "CBKC-22345",
+      status: "disponível",
+      breed_price: 3500.00,
+      notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa.",
+      avatar_url: "/dogs/orham_1.jpg"
+    },
+    {
+      id: 9,
+      name: "Putin Vale da Kubera",
+      gender: "macho",
+      birthdate: "2021-09-05",
+      pedigree_url: "#",
+      registry: "CBKC-22346",
+      status: "disponível",
+      breed_price: 3500.00,
+      notes: "Macho de temperamento forte e presença imponente.",
+      avatar_url: "/dogs/putin_1.jpg"
+    },
+    {
+      id: 10,
+      name: "Burham Vale da Kubera",
+      gender: "macho",
+      birthdate: "2022-01-15",
+      pedigree_url: "#",
+      registry: "CBKC-22347",
+      status: "disponível",
+      breed_price: 3500.00,
+      notes: "Macho jovem de excelente potencial.",
+      avatar_url: "/dogs/burham_1.jpg"
+    },
+    {
+      id: 11,
+      name: "J-Ara Vale da Kubera",
+      gender: "fêmea",
+      birthdate: "2022-03-22",
+      pedigree_url: "#",
+      registry: "CBKC-22348",
+      status: "disponível",
+      breed_price: null,
+      notes: "Fêmea do plantel Vale da Kubera. Romênia.",
+      avatar_url: "/dogs/jara_1.jpg"
+    },
+    {
+      id: 12,
+      name: "Pandora Vale da Kubera",
+      gender: "fêmea",
+      birthdate: "2022-07-14",
+      pedigree_url: "#",
+      registry: "CBKC-22349",
+      status: "disponível",
+      breed_price: null,
+      notes: "Fêmea de excelente conformação morfológica. Espanha.",
+      avatar_url: "/dogs/pandora_1.jpg"
+    },
+    {
+      id: 13,
+      name: "Buran Vale da Kubera",
+      gender: "macho",
+      birthdate: "2022-06-15",
+      pedigree_url: "#",
+      registry: "CBKC-22350",
+      status: "disponível",
+      breed_price: 3500.00,
+      notes: "Macho importado da Rússia. Excelente estrutura óssea e temperamento de guarda.",
+      avatar_url: "/dogs/buran_1.jpg"
     }
   ]).select();
 
@@ -154,28 +238,149 @@ async function runSeed() {
     {
       id: 1,
       litter_id: 1,
-      name: "Buran da Kubera",
+      name: "Buran Vale da Kubera",
       gender: "macho",
       status: "Disponível",
       price: 6000.00,
       notes: "Filhote cinza imponente, ativo e com excelente instinto de atenção.",
-      avatar_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400",
-      photos: ["https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"],
+      avatar_url: "/dogs/buran_1.jpg",
+      photos: ["/dogs/buran_1.jpg", "/dogs/buran_2.jpg", "/dogs/buran_3.jpg", "/dogs/buran_4.jpg", "/dogs/buran_5.jpg", "/dogs/buran_6.jpg", "/dogs/buran_7.jpg"],
       health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }],
       weight_history: [{ date: "2026-04-15", weight: 0.8 }, { date: "2026-05-15", weight: 4.2 }]
     },
     {
       id: 2,
       litter_id: 1,
-      name: "Aurora da Kubera",
+      name: "Aurora Vale da Kubera",
       gender: "fêmea",
       status: "Disponível",
       price: 6500.00,
       notes: "Fêmea cinza carvão, extremamente esperta e ativa no ambiente.",
-      avatar_url: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400",
-      photos: ["https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?q=80&w=400"],
+      avatar_url: "/dogs/pandora_1.jpg",
+      photos: ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"],
       health_records: [{ type: "vacina", name: "1ª Dose V10", date: "2026-05-30", status: "Aplicado" }],
       weight_history: [{ date: "2026-04-15", weight: 0.75 }, { date: "2026-05-15", weight: 3.9 }]
+    },
+    {
+      id: 3,
+      name: "Apolo Vale da Kubera",
+      gender: "macho",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/apolo_1.jpg",
+      photos: ["/dogs/apolo_1.jpg", "/dogs/apolo_2.jpg", "/dogs/apolo_3.jpg", "/dogs/apolo_4.jpg", "/dogs/apolo_5.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 4,
+      name: "Orham Vale da Kubera",
+      gender: "macho",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/orham_1.jpg",
+      photos: ["/dogs/orham_1.jpg", "/dogs/orham_2.jpg", "/dogs/orham_3.jpg", "/dogs/orham_4.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 5,
+      name: "Putin Vale da Kubera",
+      gender: "macho",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/putin_1.jpg",
+      photos: ["/dogs/putin_1.jpg", "/dogs/putin_2.jpg", "/dogs/putin_3.jpg", "/dogs/putin_4.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 6,
+      name: "Burham Vale da Kubera",
+      gender: "macho",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/burham_1.jpg",
+      photos: ["/dogs/burham_1.jpg", "/dogs/burham_2.jpg", "/dogs/burham_3.jpg", "/dogs/burham_4.jpg", "/dogs/burham_5.jpg", "/dogs/burham_6.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 7,
+      name: "Symeon Vale da Kubera",
+      gender: "macho",
+      status: "Disponível",
+      price: 6500.00,
+      avatar_url: "/dogs/symeon_1.jpg",
+      photos: ["/dogs/symeon_1.jpg", "/dogs/symeon_2.jpg", "/dogs/symeon_3.jpg", "/dogs/symeon_4.jpg", "/dogs/symeon_5.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 8,
+      name: "Nero Vale da Kubera",
+      gender: "macho",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/nero_new_4.jpg",
+      photos: ["/dogs/nero_new_4.jpg", "/dogs/nero_new_1.jpg", "/dogs/nero_new_2.jpg", "/dogs/nero_new_3.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 9,
+      name: "J-Ara Vale da Kubera",
+      gender: "fêmea",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/jara_1.jpg",
+      photos: ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg", "/dogs/jara_3.jpg", "/dogs/jara_4.jpg", "/dogs/jara_5.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 10,
+      name: "Pandora Vale da Kubera",
+      gender: "fêmea",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/pandora_1.jpg",
+      photos: ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 11,
+      name: "Thara Vale da Kubera",
+      gender: "fêmea",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/thara_1.jpg",
+      photos: ["/dogs/thara_1.jpg", "/dogs/thara_2.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 12,
+      name: "Vasilísia Vale da Kubera",
+      gender: "fêmea",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/vasilisia_new_1.jpg",
+      photos: ["/dogs/vasilisia_new_1.jpg", "/dogs/vasilisia_new_2.jpg", "/dogs/vasilisia_new_3.jpg", "/dogs/vasilisia_new_4.jpg"],
+      health_records: [],
+      weight_history: []
+    },
+    {
+      id: 13,
+      name: "Vênus Vale da Kubera",
+      gender: "fêmea",
+      status: "Disponível",
+      price: 6000.00,
+      avatar_url: "/dogs/venus_1.jpg",
+      photos: ["/dogs/venus_1.jpg", "/dogs/venus_2.jpg"],
+      health_records: [],
+      weight_history: []
     }
   ]).select();
 
@@ -190,7 +395,7 @@ async function runSeed() {
   const { data: services, error: servicesErr } = await supabase.from("services").insert([
     {
       id: 1,
-      name: "Serviço de Monta (Symion da Kubera)",
+      name: "Serviço de Monta (Symion Vale da Kubera)",
       category: "cobertura",
       price: 3500.00,
       description: "Cobertura artificial ou natural assistida com nosso reprodutor russo Symion."
