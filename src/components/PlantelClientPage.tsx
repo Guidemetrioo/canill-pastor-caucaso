@@ -80,20 +80,25 @@ export default function PlantelClientPage() {
   const baseDogs = animals.length > 0 ? animals : staticDogs;
   const allDogs = (baseDogs as any[]).map(dog => {
     const nameUpper = dog.name.toUpperCase();
-    const photos = dog.photos && dog.photos.length > 0 
+    
+    // Default photos setup
+    let photos = dog.photos && dog.photos.length > 0 
       ? dog.photos 
       : dog.avatar_url 
         ? [dog.avatar_url] 
         : ["/logo.png"];
     
-    // We only display origin for Buran, J-Ara, and Pandora
+    // We only display origin for Buran, J-Ara, and Pandora, and enrich their photos carousels
     let finalOrigin = "";
     if (nameUpper.includes("BURAN")) {
       finalOrigin = "Rússia";
+      photos = ["/dogs/buran_1.jpg", "/dogs/buran_2.jpg", "/dogs/buran_3.jpg", "/dogs/buran_4.jpg", "/dogs/buran_5.jpg", "/dogs/buran_6.jpg", "/dogs/buran_7.jpg"];
     } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
       finalOrigin = "Romênia";
+      photos = ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg", "/dogs/jara_3.jpg", "/dogs/jara_4.jpg", "/dogs/jara_5.jpg"];
     } else if (nameUpper.includes("PANDORA")) {
       finalOrigin = "Espanha";
+      photos = ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"];
     }
 
     return { 

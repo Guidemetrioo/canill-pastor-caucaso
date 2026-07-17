@@ -18,17 +18,29 @@ export default function FilhotesClientPage() {
 
   const processedPuppies = filhotes.map(puppy => {
     const nameUpper = puppy.name.toUpperCase();
+    
+    // Default photos setup
+    let photos = puppy.photos && puppy.photos.length > 0 
+      ? puppy.photos 
+      : puppy.avatar_url 
+        ? [puppy.avatar_url] 
+        : ["/logo.png"];
+
     let finalOrigin = "";
     if (nameUpper.includes("BURAN")) {
       finalOrigin = "Rússia";
+      photos = ["/dogs/buran_1.jpg", "/dogs/buran_2.jpg", "/dogs/buran_3.jpg", "/dogs/buran_4.jpg", "/dogs/buran_5.jpg", "/dogs/buran_6.jpg", "/dogs/buran_7.jpg"];
     } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
       finalOrigin = "Romênia";
+      photos = ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg", "/dogs/jara_3.jpg", "/dogs/jara_4.jpg", "/dogs/jara_5.jpg"];
     } else if (nameUpper.includes("PANDORA")) {
       finalOrigin = "Espanha";
+      photos = ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"];
     }
     return {
       ...puppy,
-      origin: finalOrigin
+      origin: finalOrigin,
+      photos
     };
   });
 
@@ -91,57 +103,9 @@ export default function FilhotesClientPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {availablePuppies.map((puppy) => {
-              const genderSlug = puppy.gender === "macho" ? "macho" : "femea";
-              const puppySlug = `filhote-${genderSlug}-pastor-do-caucaso-${puppy.id}`;
-
-              return (
-                <div
-                  key={puppy.id}
-                  className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#D97457]/50 transition-all flex flex-col justify-between group shadow-xl"
-                >
-                  <div className="relative h-64 bg-gray-900 overflow-hidden">
-                    <img
-                      src={puppy.avatar_url || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"}
-                      alt={puppy.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-103"
-                    />
-                    <span className="absolute top-4 right-4 bg-[#0F0F0F]/85 border border-[#2A2A2A] text-white text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full tracking-wider">
-                      {puppy.gender === "macho" ? "Macho" : "Fêmea"}
-                    </span>
-                  </div>
-
-                  <div className="p-6 space-y-4">
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{puppy.name}</h3>
-                    </div>
-                    <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
-                      {puppy.notes || "Excelente ninhada de Pastor do Cáucaso, com estrutura pesada, pelagem abundante e linhagem premiada."}
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#2A2A2A]/50 text-xs">
-                      <div>
-                        <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Sexo</span>
-                        <span className="font-bold text-gray-200 capitalize">{puppy.gender || "—"}</span>
-                      </div>
-                      {puppy.origin && (
-                        <div>
-                          <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Origem</span>
-                          <span className="font-bold text-gray-200">{puppy.origin}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <Link
-                      href={`/filhotes/${puppySlug}`}
-                      className="w-full mt-4 bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] hover:bg-[#D97457] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
-                    >
-                      Ver Detalhes do Filhote
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
+            {availablePuppies.map((puppy) => (
+              <PuppyCard key={puppy.id} puppy={puppy} />
+            ))}
           </div>
         )}
 
@@ -149,6 +113,82 @@ export default function FilhotesClientPage() {
 
       <PublicFooter />
       <WhatsAppButton />
+    </div>
+  );
+}
+
+function PuppyCard({ puppy }: { puppy: any }) {
+  const [activePhoto, setActivePhoto] = useState(puppy.avatar_url || (puppy.photos && puppy.photos[0]) || "/logo.png");
+  const genderSlug = puppy.gender === "macho" ? "macho" : "femea";
+  const puppySlug = `filhote-${genderSlug}-pastor-do-caucaso-${puppy.id}`;
+
+  return (
+    <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden hover:border-[#D97457]/50 transition-all flex flex-col justify-between group shadow-xl">
+      <div className="relative h-64 bg-gray-900 overflow-hidden select-none">
+        <img
+          src={activePhoto}
+          alt={puppy.name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-103"
+        />
+        <span className="absolute top-4 right-4 bg-[#0F0F0F]/85 border border-[#2A2A2A] text-white text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full tracking-wider z-20">
+          {puppy.gender === "macho" ? "Macho" : "Fêmea"}
+        </span>
+
+        {puppy.photos && puppy.photos.length > 1 && (
+          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20">
+            <div className="flex gap-2 bg-black/60 px-3 py-1.5 rounded-full backdrop-blur-sm">
+              {puppy.photos.map((photo: string, i: number) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActivePhoto(photo);
+                  }}
+                  className={`w-5 h-5 rounded border transition-all flex items-center justify-center text-[9px] font-bold ${
+                    activePhoto === photo 
+                      ? "bg-[#D97457] text-[#0F0F0F] border-[#D97457] scale-110" 
+                      : "bg-black/60 text-gray-300 border-gray-600 hover:bg-black hover:text-white"
+                  }`}
+                  title={`Foto ${i + 1}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+        <div className="space-y-4">
+          <div className="flex justify-between items-start">
+            <h3 className="text-lg font-bold group-hover:text-[#D97457] transition-colors">{puppy.name}</h3>
+          </div>
+          <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
+            {puppy.notes || "Excelente ninhada de Pastor do Cáucaso, com estrutura pesada, pelagem abundante e linhagem premiada."}
+          </p>
+
+          <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#2A2A2A]/50 text-xs">
+            <div>
+              <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Sexo</span>
+              <span className="font-bold text-gray-200 capitalize">{puppy.gender || "—"}</span>
+            </div>
+            {puppy.origin && (
+              <div>
+                <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Origem</span>
+                <span className="font-bold text-gray-200">{puppy.origin}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <Link
+          href={`/filhotes/${puppySlug}`}
+          className="w-full mt-6 bg-[#D97457]/10 border border-[#D97457]/20 text-[#D97457] hover:bg-[#D97457] hover:text-[#0F0F0F] py-2.5 rounded-lg text-xs font-bold transition-all text-center block"
+        >
+          Ver Detalhes do Filhote
+        </Link>
+      </div>
     </div>
   );
 }

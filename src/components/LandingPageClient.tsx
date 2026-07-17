@@ -267,19 +267,30 @@ export default function LandingPageClient() {
   const allDogs = (baseDogs as any[]).map(dog => {
     const nameUpper = dog.name.toUpperCase();
     
-    // We only display origin for Buran, J-Ara, and Pandora
+    // Default photos setup
+    let photos = dog.photos && dog.photos.length > 0 
+      ? dog.photos 
+      : dog.avatar_url 
+        ? [dog.avatar_url] 
+        : ["/logo.png"];
+
+    // We only display origin for Buran, J-Ara, and Pandora, and enrich their photos carousels
     let finalOrigin = "";
     if (nameUpper.includes("BURAN")) {
       finalOrigin = "Rússia";
+      photos = ["/dogs/buran_1.jpg", "/dogs/buran_2.jpg", "/dogs/buran_3.jpg", "/dogs/buran_4.jpg", "/dogs/buran_5.jpg", "/dogs/buran_6.jpg", "/dogs/buran_7.jpg"];
     } else if (nameUpper.includes("J-ARA") || nameUpper.includes("JARA")) {
       finalOrigin = "Romênia";
+      photos = ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg", "/dogs/jara_3.jpg", "/dogs/jara_4.jpg", "/dogs/jara_5.jpg"];
     } else if (nameUpper.includes("PANDORA")) {
       finalOrigin = "Espanha";
+      photos = ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"];
     }
 
     return { 
       ...dog, 
-      origin: finalOrigin 
+      origin: finalOrigin,
+      photos 
     };
   });
 
@@ -389,14 +400,13 @@ export default function LandingPageClient() {
             </div>
             <div className="lg:col-span-5 relative h-72 sm:h-96 rounded-2xl overflow-hidden shadow-xl border" style={{ borderColor: borderHex }}>
               <img
-                src="/dogs/canil_1.jpg"
-                alt="Estrutura Canil Vale da Kubera"
+                src="/dogs/symion_about.jpg"
+                alt="Symion macho russia"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/10 text-white">
-                <p className="text-xs font-bold" style={{ color: "#E5A880" }}>20.000m² de Área Verde</p>
-                <p className="text-[10px] text-gray-300">Estrutura projetada para o bem-estar animal</p>
+                <p className="text-xs font-bold" style={{ color: "#E5A880" }}>Symion macho russia</p>
               </div>
             </div>
           </div>
