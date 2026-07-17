@@ -402,7 +402,7 @@ export default function LandingPageClient() {
               <img
                 src="/dogs/symion_about.jpg"
                 alt="Symion macho russia"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/10 text-white">
