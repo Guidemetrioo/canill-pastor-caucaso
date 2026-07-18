@@ -261,6 +261,27 @@ export default function RacaPage() {
 
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-[#D97457]" />
+              <span>Vídeo de Referência: Análise da Raça na Prática</span>
+            </h2>
+            <p>
+              Assista abaixo ao vídeo explicativo detalhado sobre o temperamento, a história e as características do Pastor do Cáucaso. O material serve como referência fundamental para entender o comportamento de guarda e as necessidades dessa raça extraordinária:
+            </p>
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl bg-black/40">
+              <iframe
+                title="Vídeo Explicativo Pastor do Cáucaso"
+                src="https://www.youtube.com/embed/LNFTv6pZqEk"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-[#D97457]" />
               <span>Cuidados e Saúde Essenciais</span>
             </h2>
