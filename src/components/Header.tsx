@@ -112,7 +112,7 @@ export default function Header({ onMenuOpen }: HeaderProps) {
           />
         </Link>
 
-        <h1 className="text-base md:text-lg font-semibold tracking-wide capitalize text-white">{pageTitle}</h1>
+        <h1 className="text-base md:text-lg font-semibold tracking-wide capitalize text-white header-title">{pageTitle}</h1>
       </div>
 
       <div className="flex items-center gap-4">
@@ -184,9 +184,9 @@ export default function Header({ onMenuOpen }: HeaderProps) {
               setShowProfileMenu(!showProfileMenu);
               setShowNotifications(false);
             }}
-            className="flex items-center gap-2 hover:text-primary transition-colors focus:outline-none text-xs font-bold font-comfortaa uppercase tracking-wider text-white"
+            className="flex items-center gap-2 hover:text-primary transition-colors focus:outline-none text-xs font-bold font-comfortaa uppercase tracking-wider text-white header-user-btn"
           >
-            <span>Administrador</span>
+            <span className="header-user-text">Administrador</span>
           </button>
 
           {/* Profile Dropdown */}

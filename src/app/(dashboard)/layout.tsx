@@ -114,14 +114,10 @@ export default function DashboardLayout({
           color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
         }
 
-        /* Force Admin Header Text and Icons to be White for Contrast */
-        header, 
-        header *:not(.bell-icon):not(.bell-btn), 
-        header span:not(.bell-icon), 
-        header h1, 
-        header p, 
-        header button:not(.bell-btn),
-        header a {
+        /* Force specific Admin Header elements to white for contrast */
+        .header-title,
+        .header-user-btn,
+        .header-user-text {
           color: #ffffff !important;
         }
 
@@ -130,8 +126,24 @@ export default function DashboardLayout({
           background-color: #ffffff !important;
           border-color: #e5e7eb !important;
         }
-        .bell-icon {
+        .bell-btn .bell-icon,
+        .bell-btn .bell-icon path {
           color: #111827 !important;
+          stroke: #111827 !important;
+        }
+
+        /* Notification and profile dropdown styling - force readable dark text on white bg */
+        header .bg-salon-surface,
+        header .bg-salon-surface * {
+          color: #1f2937 !important;
+        }
+        header .bg-salon-surface span.text-primary,
+        header .bg-salon-surface p.text-primary {
+          color: ${t.accentHex} !important;
+        }
+        header .bg-salon-surface button:hover,
+        header .bg-salon-surface a:hover {
+          background-color: #f3f4f6 !important;
         }
       `}} />
 
