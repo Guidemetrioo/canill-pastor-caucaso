@@ -404,14 +404,31 @@ export default function NinhadasPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-gray-400 font-medium">URL da Foto Principal (Storage/Unsplash)</label>
-                <input
-                  type="text"
-                  value={puppyForm.avatar_url}
-                  onChange={(e) => setPuppyForm(prev => ({ ...prev, avatar_url: e.target.value }))}
-                  className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
-                  placeholder="https://images.unsplash.com/..."
-                />
+                <label className="text-gray-400 font-medium">Foto do Filhote (Upload ou URL)</label>
+                <div className="flex flex-col gap-1.5">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setPuppyForm(prev => ({ ...prev, avatar_url: reader.result as string }));
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className="w-full bg-salon-bg border border-salon-border p-1.5 rounded-lg text-white text-xs file:bg-primary file:text-salon-bg file:border-none file:px-2 file:py-1 file:rounded file:cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={puppyForm.avatar_url}
+                    onChange={(e) => setPuppyForm(prev => ({ ...prev, avatar_url: e.target.value }))}
+                    className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white text-[10px]"
+                    placeholder="Ou cole a URL da foto..."
+                  />
+                </div>
               </div>
 
               <div className="space-y-1">

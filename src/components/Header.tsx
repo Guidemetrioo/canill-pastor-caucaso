@@ -103,7 +103,7 @@ export default function Header({ onMenuOpen }: HeaderProps) {
         </button>
 
         {/* Mobile brand logo */}
-        <Link href="/dashboard" className="md:hidden flex items-center shrink-0">
+        <Link href="/dashboard" className="flex items-center shrink-0">
           <img 
             src="/logo.png" 
             alt="Logo Vale da Kubera" 
@@ -112,7 +112,7 @@ export default function Header({ onMenuOpen }: HeaderProps) {
           />
         </Link>
 
-        <h1 className="text-base md:text-lg font-semibold tracking-wide capitalize">{pageTitle}</h1>
+        <h1 className="text-base md:text-lg font-semibold tracking-wide capitalize text-white">{pageTitle}</h1>
       </div>
 
       <div className="flex items-center gap-4">
@@ -184,7 +184,7 @@ export default function Header({ onMenuOpen }: HeaderProps) {
               setShowProfileMenu(!showProfileMenu);
               setShowNotifications(false);
             }}
-            className="flex items-center gap-2 hover:text-primary transition-colors focus:outline-none text-xs font-bold font-comfortaa uppercase tracking-wider text-salon-text-primary"
+            className="flex items-center gap-2 hover:text-primary transition-colors focus:outline-none text-xs font-bold font-comfortaa uppercase tracking-wider text-white"
           >
             <span>Administrador</span>
           </button>

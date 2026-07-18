@@ -5,7 +5,7 @@ import { useAura } from "@/context/AuraContext";
 import { CalendarDays, Plus, Clock, User, BookOpen } from "lucide-react";
 
 export default function AgendaPage() {
-  const { agendaEvents, clients, leads, addAgendaEvent, updateAgendaEventStatus } = useAura();
+  const { agendaEvents, clients, leads, addAgendaEvent, updateAgendaEventStatus, addClient } = useAura();
   const [showAddModal, setShowAddModal] = useState(false);
 
   const [form, setForm] = useState({
@@ -14,21 +14,38 @@ export default function AgendaPage() {
     datetime: "",
     client_id: "",
     lead_id: "",
-    assigned_to: ""
+    assigned_to: "",
+    visitor_name: "",
+    visitor_phone: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    let targetClientId: number | undefined = form.client_id ? parseInt(form.client_id) : undefined;
+    
+    // Auto register client if visitor name is provided
+    if (!targetClientId && form.visitor_name) {
+      targetClientId = await addClient({
+        name: form.visitor_name,
+        phone: form.visitor_phone || "(Não informado)",
+        email: "",
+        city: "Itatiba - SP",
+        notes: `Cadastrado automaticamente via agendamento de visita.`
+      });
+    }
+
     await addAgendaEvent({
       type: "visita",
-      title: form.title,
+      title: form.title || `Visita de ${form.visitor_name || "Cliente"}`,
       description: form.description || undefined,
       datetime: new Date(form.datetime).toISOString(),
-      client_id: form.client_id ? parseInt(form.client_id) : undefined,
+      client_id: targetClientId,
       lead_id: form.lead_id ? parseInt(form.lead_id) : undefined,
       assigned_to: form.assigned_to || undefined,
       status: "Agendado"
     });
+
     setShowAddModal(false);
     setForm({
       title: "",
@@ -36,7 +53,9 @@ export default function AgendaPage() {
       datetime: "",
       client_id: "",
       lead_id: "",
-      assigned_to: ""
+      assigned_to: "",
+      visitor_name: "",
+      visitor_phone: ""
     });
   };
 
@@ -184,7 +203,7 @@ export default function AgendaPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-gray-400 font-medium">Vincular Cliente</label>
+                  <label className="text-gray-400 font-medium">Vincular Cliente Existente</label>
                   <select
                     value={form.client_id}
                     onChange={(e) => setForm(prev => ({ ...prev, client_id: e.target.value }))}
@@ -205,6 +224,33 @@ export default function AgendaPage() {
                     {leads.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
                   </select>
                 </div>
+              </div>
+
+              <div className="border-t border-[#2A2A2A] my-3 pt-3 space-y-3">
+                <h4 className="text-[10px] font-bold text-[#D97457] uppercase tracking-wider">Novo Visitante (Cadastro Automático)</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-gray-400 font-medium">Nome do Visitante</label>
+                    <input
+                      type="text"
+                      value={form.visitor_name}
+                      onChange={(e) => setForm(prev => ({ ...prev, visitor_name: e.target.value }))}
+                      className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
+                      placeholder="Ex: João da Silva"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-gray-400 font-medium">Telefone/WhatsApp</label>
+                    <input
+                      type="text"
+                      value={form.visitor_phone}
+                      onChange={(e) => setForm(prev => ({ ...prev, visitor_phone: e.target.value }))}
+                      className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
+                      placeholder="Ex: (11) 99999-9999"
+                    />
+                  </div>
+                </div>
+                <p className="text-[9px] text-gray-500 italic">Preencha estes campos se for um novo visitante para cadastrar como cliente automaticamente.</p>
               </div>
 
               <div className="space-y-1">

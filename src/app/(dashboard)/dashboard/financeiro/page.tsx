@@ -170,7 +170,7 @@ export default function FinanceiroPage() {
                     onChange={(e) => setForm(prev => ({
                       ...prev,
                       type: e.target.value as any,
-                      category: e.target.value === "Entrada" ? "Venda Filhote" : "Ração"
+                      category: e.target.value === "Entrada" ? "Venda Filhote" : "Manutenção"
                     }))}
                     className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
                   >
@@ -186,10 +186,7 @@ export default function FinanceiroPage() {
                       onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value as any }))}
                       className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
                     >
-                      <option value="Venda Filhote">Venda de Filhote</option>
-                      <option value="Cobertura">Cobertura / Monta</option>
-                      <option value="Hospedagem">Hospedagem / Creche</option>
-                      <option value="Adestramento">Adestramento</option>
+                      <option value="Venda Filhote">Venda de Filhotes</option>
                       <option value="Outro">Outro</option>
                     </select>
                   ) : (
@@ -198,11 +195,7 @@ export default function FinanceiroPage() {
                       onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value as any }))}
                       className="w-full bg-salon-bg border border-salon-border p-2.5 rounded-lg text-white"
                     >
-                      <option value="Ração">Ração / Alimentação</option>
-                      <option value="Veterinário">Veterinário / Clínica</option>
-                      <option value="Vacinas">Vacinas / Vermífugos</option>
-                      <option value="Manutenção">Manutenção Canil</option>
-                      <option value="Marketing">Marketing / Instagram</option>
+                      <option value="Manutenção">Despesas</option>
                       <option value="Outro">Outro</option>
                     </select>
                   )}

@@ -41,7 +41,7 @@ export default function ClientesPage() {
     <div className="space-y-6 animate-in fade-in duration-300">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Gestão de Clientes / Tutores</h2>
+          <h2 className="text-2xl font-bold tracking-tight">Gestão de Clientes</h2>
           <p className="text-salon-text-secondary text-sm">
             Mantenha a ficha dos compradores de filhotes e contratantes de serviços organizada.
           </p>
@@ -51,7 +51,7 @@ export default function ClientesPage() {
           className="bg-primary hover:bg-primary-hover text-salon-bg font-bold px-4 py-2 rounded-salon text-xs flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(201,169,110,0.15)]"
         >
           <Plus className="w-4.5 h-4.5" />
-          <span>Cadastrar Tutor</span>
+          <span>Cadastrar Cliente</span>
         </button>
       </div>
 
@@ -84,7 +84,7 @@ export default function ClientesPage() {
             <div className="space-y-6 animate-in fade-in duration-200">
               <div className="border-b border-salon-border/60 pb-4">
                 <h3 className="text-base font-bold">{selectedClient.name}</h3>
-                <span className="text-[10px] text-[#D97457] font-semibold">Tutor Cadastrado</span>
+                <span className="text-[10px] text-[#D97457] font-semibold">Cliente Cadastrado</span>
               </div>
 
               {/* Personal Details */}
@@ -155,7 +155,7 @@ export default function ClientesPage() {
           ) : (
             <div className="h-full flex flex-col justify-center items-center text-center p-6 text-salon-text-secondary space-y-3">
               <Users className="w-8 h-8 opacity-50" />
-              <p className="text-xs">Selecione um tutor na barra lateral para carregar a ficha cadastral e histórico.</p>
+              <p className="text-xs">Selecione um cliente na barra lateral para carregar a ficha cadastral e histórico.</p>
             </div>
           )}
         </div>
@@ -165,7 +165,7 @@ export default function ClientesPage() {
       {showAddModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-salon-surface border border-salon-border rounded-salon p-6 w-full max-w-md space-y-4">
-            <h3 className="text-base font-bold">Cadastrar Novo Tutor / Cliente</h3>
+            <h3 className="text-base font-bold">Cadastrar Novo Cliente</h3>
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div className="space-y-1">
                 <label className="text-gray-400 font-medium">Nome Completo</label>

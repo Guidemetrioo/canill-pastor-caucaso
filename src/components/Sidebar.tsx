@@ -32,7 +32,7 @@ export const sidebarItems = [
   { href: "/dashboard/animais", label: "Matrizes & Machos", icon: Shield },
   { href: "/dashboard/agenda-canina", label: "Agenda Canina", icon: Heart },
   { href: "/dashboard/agenda", label: "Agenda de Visitas", icon: CalendarDays },
-  { href: "/dashboard/clientes", label: "Clientes / Tutores", icon: Users },
+  { href: "/dashboard/clientes", label: "Clientes", icon: Users },
   { href: "/dashboard/financeiro", label: "Financeiro", icon: DollarSign },
   { href: "/dashboard/trafego", label: "Controle de Tráfego", icon: BarChart3 },
   { href: "/dashboard/configuracoes", label: "Configurações Bot", icon: Settings },
