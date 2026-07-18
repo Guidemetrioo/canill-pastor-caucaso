@@ -73,7 +73,6 @@ export default function PublicFooter() {
 
         <div className="mt-8 pt-8 border-t border-[#E2E8F0] text-center text-[10px] text-[#555E54] space-y-2 flex flex-col items-center">
           <p>&copy; {currentYear} Canil Vale da Kubera Pastor do Cáucaso. Todos os direitos reservados. Registrado no CBKC / FCI.</p>
-          <p className="opacity-75">Desenvolvido com foco em SEO técnico e performance.</p>
           <Link
             href="/login"
             className="mt-2 bg-[#B24F18]/10 hover:bg-[#B24F18]/25 text-[#B24F18] border border-[#B24F18]/30 px-3 py-1.5 rounded-md text-[10px] font-comfortaa font-bold transition-all shadow-sm"
