@@ -60,23 +60,23 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, onToggleCo
   const content = (
     <div className={`h-full flex flex-col bg-salon-surface border-r border-salon-border/80 ${collapsed ? "w-20" : "w-64"} text-salon-text-primary p-4 transition-all duration-300 relative`}>
       {/* Brand Logo */}
-      <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"} mb-8`}>
-        <Link href="/dashboard" className="flex items-center gap-3 shrink-0" onClick={onClose}>
-          <img 
-            src="/logo.png" 
-            alt="Logo Vale da Kubera" 
-            className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm shrink-0"
-            style={{ filter: "invert(1)" }}
-          />
-          {!collapsed && (
+      <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"} mb-8 min-h-[40px]`}>
+        {!collapsed ? (
+          <Link href="/dashboard" className="flex items-center gap-3 shrink-0" onClick={onClose}>
+            <img 
+              src="/logo.png" 
+              alt="Logo Vale da Kubera" 
+              className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm shrink-0"
+              style={{ filter: "invert(1)" }}
+            />
             <div className="animate-in fade-in duration-200">
               <h2 className="font-bold tracking-wider text-xs leading-none font-comfortaa">VALE DA KUBERA</h2>
               <p className="text-[8px] tracking-widest text-[#D97457] font-semibold uppercase mt-1">
                 Canil Pastor do Cáucaso
               </p>
             </div>
-          )}
-        </Link>
+          </Link>
+        ) : null}
         {!collapsed && onToggleCollapsed && (
           <button
             onClick={onToggleCollapsed}
@@ -89,7 +89,7 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, onToggleCo
         {collapsed && onToggleCollapsed && (
           <button
             onClick={onToggleCollapsed}
-            className="hidden md:block text-salon-text-secondary hover:text-salon-text-primary transition-colors p-1 rounded hover:bg-salon-bg absolute left-14 top-6 bg-salon-surface border border-salon-border rounded-full shadow"
+            className="hidden md:block text-salon-text-secondary hover:text-salon-text-primary transition-colors p-2 rounded-full hover:bg-salon-bg border border-salon-border bg-salon-surface shadow"
             title="Expandir Menu"
           >
             <ChevronLeft className="w-4 h-4 rotate-180" />
