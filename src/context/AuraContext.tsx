@@ -316,6 +316,7 @@ interface AuraContextProps {
   updateService: (id: number, service: Partial<Service>) => Promise<void>;
   addAgendaEvent: (event: Omit<AgendaEvent, "id" | "reminder_sent">) => Promise<void>;
   updateAgendaEventStatus: (id: number, status: AgendaEvent["status"]) => Promise<void>;
+  deleteAgendaEvent: (id: number) => Promise<void>;
   addHospedagem: (hospedagem: Omit<Hospedagem, "id">) => Promise<void>;
   updateHospedagemStatus: (id: number, status: Hospedagem["status"]) => Promise<void>;
   addAdestramento: (adestramento: Omit<Adestramento, "id">) => Promise<void>;
@@ -695,6 +696,17 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const deleteAgendaEvent = async (id: number) => {
+    if (!isSupabaseConfigured()) {
+      setAgendaEvents(prev => prev.filter(e => e.id !== id));
+      return;
+    }
+    const { error } = await supabase.from("agenda").delete().eq("id", id);
+    if (!error) {
+      setAgendaEvents(prev => prev.filter(e => e.id !== id));
+    }
+  };
+
   const addHospedagem = async (hospedagem: Omit<Hospedagem, "id">) => {
     if (!isSupabaseConfigured()) {
       const newId = hospedagens.length > 0 ? Math.max(...hospedagens.map(h => h.id)) + 1 : 1;
@@ -937,6 +949,7 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
         updateService,
         addAgendaEvent,
         updateAgendaEventStatus,
+        deleteAgendaEvent,
         addHospedagem,
         updateHospedagemStatus,
         addAdestramento,
