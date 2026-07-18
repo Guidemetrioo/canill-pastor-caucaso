@@ -70,8 +70,8 @@ export default function DashboardPage() {
   };
 
   const chartData = [
-    { name: "Filhotes", faturamento: getRevenueByCategory("Venda Filhote") || 6000 },
-    { name: "Cobertura", faturamento: getRevenueByCategory("Cobertura") || 3500 },
+    { name: "Filhotes", faturamento: getRevenueByCategory("Venda Filhote") },
+    { name: "Outros", faturamento: getRevenueByCategory("Outro") },
   ];
 
   // 3. Upcoming events (next 5 days) - only visits
@@ -93,7 +93,7 @@ export default function DashboardPage() {
   );
 
   // C. Low stock alert simulation (e.g. feed inventory low - simulated)
-  const feedStockLow = true;
+  const feedStockLow = false;
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">

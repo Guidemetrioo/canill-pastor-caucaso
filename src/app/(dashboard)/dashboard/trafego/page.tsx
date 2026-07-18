@@ -446,7 +446,7 @@ export default function TrafficDashboardPage() {
                   </div>
                 </>
               ) : (
-                <div className="text-xs text-salon-text-secondary">Carregando gráfico...</div>
+                <div className="text-xs text-salon-text-secondary">Aguardando primeiro acesso...</div>
               )}
             </div>
 
