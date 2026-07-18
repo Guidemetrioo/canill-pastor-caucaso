@@ -18,11 +18,14 @@ import {
   X,
   BarChart3,
   Heart,
+  ChevronLeft,
 } from "lucide-react";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  collapsed?: boolean;
+  onToggleCollapsed?: () => void;
 }
 
 export const sidebarItems = [
@@ -38,7 +41,7 @@ export const sidebarItems = [
   { href: "/dashboard/configuracoes", label: "Configurações Bot", icon: Settings },
 ];
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, collapsed = false, onToggleCollapsed }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
@@ -55,24 +58,43 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   };
 
   const content = (
-    <div className="h-full flex flex-col bg-salon-surface border-r border-salon-border/80 w-64 text-salon-text-primary p-6">
+    <div className={`h-full flex flex-col bg-salon-surface border-r border-salon-border/80 ${collapsed ? "w-20" : "w-64"} text-salon-text-primary p-4 transition-all duration-300 relative`}>
       {/* Brand Logo */}
-      <div className="flex items-center justify-between mb-8">
-        <Link href="/dashboard" className="flex items-center gap-3" onClick={onClose}>
+      <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"} mb-8`}>
+        <Link href="/dashboard" className="flex items-center gap-3 shrink-0" onClick={onClose}>
           <img 
             src="/logo.png" 
             alt="Logo Vale da Kubera" 
-            className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm"
+            className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm shrink-0"
             style={{ filter: "invert(1)" }}
           />
-          <div>
-            <h2 className="font-bold tracking-wider text-xs leading-none font-comfortaa">VALE DA KUBERA</h2>
-            <p className="text-[8px] tracking-widest text-[#D97457] font-semibold uppercase mt-1">
-              Canil Pastor do Cáucaso
-            </p>
-          </div>
+          {!collapsed && (
+            <div className="animate-in fade-in duration-200">
+              <h2 className="font-bold tracking-wider text-xs leading-none font-comfortaa">VALE DA KUBERA</h2>
+              <p className="text-[8px] tracking-widest text-[#D97457] font-semibold uppercase mt-1">
+                Canil Pastor do Cáucaso
+              </p>
+            </div>
+          )}
         </Link>
-        {/* Mobile close button */}
+        {!collapsed && onToggleCollapsed && (
+          <button
+            onClick={onToggleCollapsed}
+            className="hidden md:block text-salon-text-secondary hover:text-salon-text-primary transition-colors p-1 rounded hover:bg-salon-bg"
+            title="Recolher Menu"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+        )}
+        {collapsed && onToggleCollapsed && (
+          <button
+            onClick={onToggleCollapsed}
+            className="hidden md:block text-salon-text-secondary hover:text-salon-text-primary transition-colors p-1 rounded hover:bg-salon-bg absolute left-14 top-6 bg-salon-surface border border-salon-border rounded-full shadow"
+            title="Expandir Menu"
+          >
+            <ChevronLeft className="w-4 h-4 rotate-180" />
+          </button>
+        )}
         <button
           onClick={onClose}
           className="md:hidden text-salon-text-secondary hover:text-salon-text-primary transition-colors"
@@ -92,18 +114,19 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className={`flex items-center gap-3 px-4 py-3 rounded-salon text-sm font-medium transition-all group ${
+              className={`flex items-center ${collapsed ? "justify-center" : "gap-3"} px-4 py-3 rounded-salon text-sm font-medium transition-all group ${
                 isActive
                   ? "bg-primary text-salon-bg shadow-[0_4px_12px_rgba(201,169,110,0.15)] font-semibold"
                   : "text-salon-text-secondary hover:text-salon-text-primary hover:bg-salon-bg"
               }`}
+              title={collapsed ? item.label : undefined}
             >
               <Icon
-                className={`w-5 h-5 transition-transform group-hover:scale-105 ${
+                className={`w-5 h-5 transition-transform group-hover:scale-105 shrink-0 ${
                   isActive ? "text-salon-bg" : "text-salon-text-secondary group-hover:text-primary"
                 }`}
               />
-              <span>{item.label}</span>
+              {!collapsed && <span className="animate-in fade-in duration-200">{item.label}</span>}
             </Link>
           );
         })}
@@ -113,10 +136,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <div className="pt-6 border-t border-salon-border/50">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-salon text-sm font-medium text-salon-text-secondary hover:text-salon-error hover:bg-salon-error/10 transition-all group"
+          className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3"} px-4 py-3 rounded-salon text-sm font-medium text-salon-text-secondary hover:text-salon-error hover:bg-salon-error/10 transition-all group`}
+          title={collapsed ? "Sair da Conta" : undefined}
         >
-          <LogOut className="w-5 h-5 text-salon-text-secondary group-hover:text-salon-error transition-colors" />
-          <span>Sair da Conta</span>
+          <LogOut className="w-5 h-5 text-salon-text-secondary group-hover:text-salon-error transition-colors shrink-0" />
+          {!collapsed && <span className="animate-in fade-in duration-200">Sair da Conta</span>}
         </button>
       </div>
     </div>
@@ -124,8 +148,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Desktop Sidebar (Permanent) */}
-      <aside className="hidden md:block fixed inset-y-0 left-0 z-20 w-64 h-full">
+      {/* Desktop Sidebar (Permanent/Collapsible) */}
+      <aside className={`hidden md:block fixed inset-y-0 left-0 z-20 h-full ${collapsed ? "w-20" : "w-64"} transition-all duration-300`}>
         {content}
       </aside>
 
@@ -146,7 +170,71 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          {content}
+          {/* For mobile we always show full content */}
+          <div className="h-full flex flex-col bg-salon-surface border-r border-salon-border/80 w-64 text-salon-text-primary p-6">
+            {/* Brand Logo */}
+            <div className="flex items-center justify-between mb-8">
+              <Link href="/dashboard" className="flex items-center gap-3 shrink-0" onClick={onClose}>
+                <img 
+                  src="/logo.png" 
+                  alt="Logo Vale da Kubera" 
+                  className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm shrink-0"
+                  style={{ filter: "invert(1)" }}
+                />
+                <div>
+                  <h2 className="font-bold tracking-wider text-xs leading-none font-comfortaa">VALE DA KUBERA</h2>
+                  <p className="text-[8px] tracking-widest text-[#D97457] font-semibold uppercase mt-1">
+                    Canil Pastor do Cáucaso
+                  </p>
+                </div>
+              </Link>
+              <button
+                onClick={onClose}
+                className="text-salon-text-secondary hover:text-salon-text-primary transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Nav Items */}
+            <nav className="flex-1 space-y-1 overflow-y-auto pr-1 -mr-2">
+              {sidebarItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onClose}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-salon text-sm font-medium transition-all group ${
+                      isActive
+                        ? "bg-primary text-salon-bg shadow-[0_4px_12px_rgba(201,169,110,0.15)] font-semibold"
+                        : "text-salon-text-secondary hover:text-salon-text-primary hover:bg-salon-bg"
+                    }`}
+                  >
+                    <Icon
+                      className={`w-5 h-5 transition-transform group-hover:scale-105 shrink-0 ${
+                        isActive ? "text-salon-bg" : "text-salon-text-secondary group-hover:text-primary"
+                      }`}
+                    />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Logout button */}
+            <div className="pt-6 border-t border-salon-border/50">
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-salon text-sm font-medium text-salon-text-secondary hover:text-salon-error hover:bg-salon-error/10 transition-all group"
+              >
+                <LogOut className="w-5 h-5 text-salon-text-secondary group-hover:text-salon-error transition-colors shrink-0" />
+                <span>Sair da Conta</span>
+              </button>
+            </div>
+          </div>
         </aside>
       </div>
     </>

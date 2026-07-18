@@ -351,8 +351,8 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
   const [trafficEvents, setTrafficEvents] = useState<TrafficEvent[]>([]);
 
   // Dynamic Theme & Font Selection States
-  const [activeTheme, setActiveTheme] = useState<ThemeName>("eco-rustic");
-  const [activeFont, setActiveFont] = useState<"megrim" | "comfortaa">("megrim");
+  const [activeTheme, setActiveTheme] = useState<ThemeName>("minimalista-organica");
+  const [activeFont, setActiveFont] = useState<"megrim" | "comfortaa">("comfortaa");
 
   const isSupabaseConfigured = () => {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

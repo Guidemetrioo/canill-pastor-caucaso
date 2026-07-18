@@ -13,8 +13,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
-  const { activeTheme, setActiveTheme, activeFont, setActiveFont, themes } = useAura();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const { activeTheme, activeFont, themes } = useAura();
   const t = themes[activeTheme];
 
   return (
@@ -113,14 +113,30 @@ export default function DashboardLayout({
           border-color: ${t.borderHex} !important;
           color: ${t.textMain.replace('text-[', '').replace(']', '')} !important;
         }
+
+        /* Force Admin Header Text and Icons to be White for Contrast */
+        header, 
+        header *, 
+        header span, 
+        header h1, 
+        header p, 
+        header button,
+        header a {
+          color: #ffffff !important;
+        }
       `}} />
 
       <div className="min-h-screen bg-salon-bg flex">
         {/* Navigation sidebar */}
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          onClose={() => setSidebarOpen(false)} 
+          collapsed={isSidebarCollapsed}
+          onToggleCollapsed={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        />
 
         {/* Main content viewport */}
-        <div className="flex-1 md:pl-64 flex flex-col min-w-0">
+        <div className={`flex-1 ${isSidebarCollapsed ? "md:pl-20" : "md:pl-64"} flex flex-col min-w-0 transition-all duration-300`}>
           <Header onMenuOpen={() => setSidebarOpen(true)} />
           <main className="flex-1 p-6 pb-24 md:pb-6 overflow-y-auto">
             {children}
@@ -129,103 +145,6 @@ export default function DashboardLayout({
 
         {/* Bottom navigation for mobile devices */}
         <BottomNavigation onMenuOpen={() => setSidebarOpen(true)} />
-      </div>
-
-      {/* Floating Theme Selector (same interface as main site) */}
-      <div className="fixed bottom-20 md:bottom-6 left-6 z-50 font-sans">
-        <button
-          onClick={() => setIsSelectorOpen(!isSelectorOpen)}
-          className="flex items-center gap-2 px-4 py-3 rounded-full shadow-2xl transition-all border text-white font-bold hover:scale-105 active:scale-95"
-          style={{ backgroundColor: t.accentHex, borderColor: t.borderHex }}
-        >
-          <Palette className="w-5 h-5 text-white" />
-          <span className="text-xs hidden sm:inline">Paletas de Cores</span>
-        </button>
-
-        {isSelectorOpen && (
-          <div className="absolute bottom-16 left-0 w-72 bg-white border border-gray-200 shadow-2xl rounded-2xl p-4 space-y-4 text-black animate-in fade-in slide-in-from-bottom-4 duration-200">
-            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <h4 className="text-xs font-bold font-comfortaa uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
-                <Palette className="w-4 h-4 text-gray-500" />
-                <span>Escolher Paleta</span>
-              </h4>
-              <button 
-                onClick={() => setIsSelectorOpen(false)}
-                className="text-gray-400 hover:text-black text-xs font-bold px-1"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="space-y-2">
-              {(Object.keys(themes) as ThemeName[]).map((key) => {
-                const themeItem = themes[key];
-                const isSelected = activeTheme === key;
-
-                return (
-                  <button
-                    key={key}
-                    onClick={() => {
-                      setActiveTheme(key);
-                      if (window.innerWidth < 640) setIsSelectorOpen(false);
-                    }}
-                    className={`w-full text-left p-2.5 rounded-xl border text-xs transition-all flex flex-col gap-1.5 ${
-                      isSelected 
-                        ? "border-black bg-gray-50 font-bold" 
-                        : "border-gray-200 hover:border-gray-400"
-                    }`}
-                  >
-                    <div className="flex justify-between items-center w-full">
-                      <span className="text-[11px]">{themeItem.name}</span>
-                      {isSelected && <span className="text-[10px] text-green-600">✔</span>}
-                    </div>
-
-                    <div className="flex gap-1.5 items-center">
-                      <span className="w-4 h-4 rounded-full border border-gray-200" style={{ backgroundColor: themeItem.bgHex }} title="Fundo" />
-                      <span className="w-4 h-4 rounded-full" style={{ backgroundColor: themeItem.accentHex }} title="Destaque Principal" />
-                      <span className="w-4 h-4 rounded-full" style={{ backgroundColor: themeItem.secondaryAccentHex }} title="Destaque Secundário" />
-                      <span className="w-4 h-4 rounded-full" style={{ backgroundColor: themeItem.cardBgHex }} title="Cards" />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="space-y-2 border-t border-gray-100 pt-3">
-              <h4 className="text-[10px] font-bold font-comfortaa uppercase tracking-wider text-gray-500">
-                Fonte dos Títulos
-              </h4>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => setActiveFont("megrim")}
-                  className={`py-1.5 rounded-lg border text-[10px] font-bold transition-all ${
-                    activeFont === "megrim"
-                      ? "border-black bg-gray-50 text-black"
-                      : "border-gray-200 text-gray-500 hover:border-gray-400"
-                  }`}
-                  style={{ fontFamily: "'Megrim', cursive" }}
-                >
-                  Megrim
-                </button>
-                <button
-                  onClick={() => setActiveFont("comfortaa")}
-                  className={`py-1.5 rounded-lg border text-[10px] font-bold transition-all ${
-                    activeFont === "comfortaa"
-                      ? "border-black bg-gray-50 text-black"
-                      : "border-gray-200 text-gray-500 hover:border-gray-400"
-                  }`}
-                  style={{ fontFamily: "'Comfortaa', sans-serif" }}
-                >
-                  Comfortaa
-                </button>
-              </div>
-            </div>
-
-            <p className="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-gray-100">
-              * Escolha uma opção para alternar as cores ou fontes do painel em tempo real!
-            </p>
-          </div>
-        )}
       </div>
     </>
   );
