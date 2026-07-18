@@ -101,7 +101,18 @@ export default function Header({ onMenuOpen }: HeaderProps) {
         >
           <Menu className="w-6 h-6" />
         </button>
-        <h1 className="text-lg font-semibold tracking-wide capitalize">{pageTitle}</h1>
+
+        {/* Mobile brand logo */}
+        <Link href="/dashboard" className="md:hidden flex items-center shrink-0">
+          <img 
+            src="/logo.png" 
+            alt="Logo Vale da Kubera" 
+            className="w-8 h-8 object-contain rounded-md border border-gray-200/50 shadow-sm"
+            style={{ filter: "invert(1)" }}
+          />
+        </Link>
+
+        <h1 className="text-base md:text-lg font-semibold tracking-wide capitalize">{pageTitle}</h1>
       </div>
 
       <div className="flex items-center gap-4">
@@ -173,27 +184,9 @@ export default function Header({ onMenuOpen }: HeaderProps) {
               setShowProfileMenu(!showProfileMenu);
               setShowNotifications(false);
             }}
-            className="flex items-center gap-3 hover:opacity-95 transition-opacity focus:outline-none"
+            className="flex items-center gap-2 hover:text-primary transition-colors focus:outline-none text-xs font-bold font-comfortaa uppercase tracking-wider text-salon-text-primary"
           >
-            <div className="hidden text-right md:block">
-              <p className="text-sm font-semibold">{profile?.name || "Carregando..."}</p>
-              <span className="text-[10px] text-primary uppercase tracking-wider font-semibold flex items-center justify-end gap-1">
-                {profile?.role === "admin" && <ShieldAlert className="w-3.5 h-3.5" />}
-                {profile?.role === "admin" ? "Administrador" : "Profissional"}
-              </span>
-            </div>
-
-            {profile?.avatar_url ? (
-              <img
-                src={profile.avatar_url}
-                alt={profile.name}
-                className="w-10 h-10 rounded-full border border-primary/20 object-cover"
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm">
-                {profile ? getUserInitials(profile.name) : <User className="w-5 h-5" />}
-              </div>
-            )}
+            <span>Administrador</span>
           </button>
 
           {/* Profile Dropdown */}

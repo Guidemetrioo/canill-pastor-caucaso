@@ -23,7 +23,7 @@ export default function PublicFooter() {
             <h4 className="text-sm font-semibold text-[#222521] uppercase tracking-wider mb-4 font-comfortaa">Links Rápidos</h4>
             <ul className="space-y-2 text-xs text-[#555E54]">
               <li><Link href="/sobre" className="hover:text-[#0F6B2E] transition-colors">O Canil</Link></li>
-              <li><Link href="/filhotes" className="hover:text-[#0F6B2E] transition-colors">Filhotes Disponíveis</Link></li>
+              <li><Link href="/plantel" className="hover:text-[#0F6B2E] transition-colors">Nossos Cães</Link></li>
               <li><Link href="/a-raca-pastor-do-caucaso" className="hover:text-[#0F6B2E] transition-colors">A Raça</Link></li>
               <li><Link href="/galeria" className="hover:text-[#0F6B2E] transition-colors">Galeria de Fotos</Link></li>
               <li><Link href="/blog" className="hover:text-[#0F6B2E] transition-colors">Blog &amp; Dicas</Link></li>

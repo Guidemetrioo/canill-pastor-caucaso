@@ -106,7 +106,7 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {/* KPI 1: Faturamento */}
         <div className="bg-salon-surface border border-salon-border rounded-salon p-6 flex justify-between items-center">
           <div className="space-y-2">
@@ -154,22 +154,6 @@ export default function DashboardPage() {
           </div>
           <div className="w-12 h-12 rounded-xl bg-salon-success/10 border border-salon-success/20 flex items-center justify-center text-salon-success">
             <Shield className="w-6 h-6" />
-          </div>
-        </div>
-
-        {/* KPI 4: Available Puppies */}
-        <div className="bg-salon-surface border border-salon-border rounded-salon p-6 flex justify-between items-center">
-          <div className="space-y-2">
-            <span className="text-xs text-salon-text-secondary font-medium uppercase tracking-wider">
-              Filhotes Disponíveis
-            </span>
-            <h3 className="text-2xl font-bold text-salon-text-primary">
-              {availablePuppiesCount}
-            </h3>
-            <p className="text-[10px] text-salon-text-secondary">Prontos para comercialização</p>
-          </div>
-          <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-            <Sparkles className="w-6 h-6" />
           </div>
         </div>
       </div>

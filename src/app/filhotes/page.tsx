@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import FilhotesClientPage from "@/components/FilhotesClientPage";
-import { createClient } from "@/utils/supabase/client";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Filhotes de Pastor do Cáucaso à Venda | Canil Vale da Kubera",
@@ -35,47 +34,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  let itemListSchema: any = null;
-  try {
-    const supabase = createClient();
-    const { data: filhotes } = await supabase
-      .from("filhotes")
-      .select("id, name, gender, notes, avatar_url")
-      .eq("status", "Disponível");
-
-    if (filhotes && filhotes.length > 0) {
-      itemListSchema = {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Filhotes de Pastor do Cáucaso Disponíveis - Canil Vale da Kubera",
-        "description": "Lista de filhotes de Pastor do Cáucaso (Kavkazskaya Ovcharka) atualmente disponíveis para reserva e venda.",
-        "numberOfItems": filhotes.length,
-        "itemListElement": filhotes.map((puppy, index) => {
-          const genderSlug = puppy.gender === "macho" ? "macho" : "femea";
-          return {
-            "@type": "ListItem",
-            "position": index + 1,
-            "url": `https://canil-pastor-do-caucaso.vercel.app/filhotes/filhote-${genderSlug}-pastor-do-caucaso-${puppy.id}`,
-            "name": puppy.name,
-            "description": puppy.notes || `Filhote de Pastor do Cáucaso (${puppy.gender === "macho" ? "Macho" : "Fêmea"}) disponível no Canil Vale da Kubera.`,
-            "image": puppy.avatar_url || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400"
-          };
-        })
-      };
-    }
-  } catch (err) {
-    console.error("Error generating filhotes JSON-LD:", err);
-  }
-
-  return (
-    <>
-      {itemListSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
-        />
-      )}
-      <FilhotesClientPage />
-    </>
-  );
+  redirect("/plantel");
 }
