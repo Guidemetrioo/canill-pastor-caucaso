@@ -206,7 +206,7 @@ export default function NinhadasPage() {
                           <div className="flex gap-2 text-[8px] uppercase font-bold tracking-wider mt-1 text-gray-400">
                             <span className={pup.gender === "macho" ? "text-blue-400" : "text-pink-400"}>{pup.gender}</span>
                             <span>&bull;</span>
-                            <span>R$ {pup.price.toLocaleString("pt-BR")}</span>
+                            <span>{pup.price ? `R$ ${pup.price.toLocaleString("pt-BR")}` : "Sem valor"}</span>
                           </div>
                         </div>
                       </div>

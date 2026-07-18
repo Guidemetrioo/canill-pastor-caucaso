@@ -106,7 +106,7 @@ export default function AdestramentoPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-[#D97457]" />
-                <span><strong>Valor do Investimento:</strong> R$ 1.200,00 por pacote</span>
+                <span><strong>Valor do Investimento:</strong> Sob consulta</span>
               </div>
             </div>
 

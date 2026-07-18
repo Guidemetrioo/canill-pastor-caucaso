@@ -110,7 +110,7 @@ export default function AnimaisPage() {
                   </div>
                   <div className="border-t border-[#2A2A2A] pt-2 text-[10px] text-gray-400 flex justify-between">
                     <span>Status: {a.status}</span>
-                    {a.gender === "macho" && <span>Cobertura: R$ {a.breed_price}</span>}
+                    {a.gender === "macho" && a.breed_price ? <span>Cobertura: R$ {a.breed_price}</span> : null}
                   </div>
                 </button>
               );
@@ -166,7 +166,7 @@ export default function AnimaisPage() {
                     {activeAnimal.gender === "macho" && (
                       <div className="flex justify-between">
                         <span>Valor do Serviço Monta:</span>
-                        <span className="text-primary">R$ {activeAnimal.breed_price?.toLocaleString("pt-BR")}</span>
+                        <span className="text-primary">{activeAnimal.breed_price ? `R$ ${activeAnimal.breed_price.toLocaleString("pt-BR")}` : "Sob consulta"}</span>
                       </div>
                     )}
                   </div>

@@ -93,7 +93,7 @@ export default function HospedagemPage() {
             <div className="space-y-3.5 text-xs text-gray-300">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-[#D97457]" />
-                <span><strong>Valor da Diária:</strong> R$ 80,00 (Descontos para estadias longas)</span>
+                <span><strong>Valor da Diária:</strong> Sob consulta (Descontos para estadias longas)</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-[#D97457]" />

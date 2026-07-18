@@ -281,7 +281,7 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
         const query = body.toLowerCase();
         if (query.includes("preço") || query.includes("preco") || query.includes("valor") || query.includes("quanto custa")) {
           await msg.reply(
-            "Nossos filhotes de Pastor do Cáucaso têm preços a partir de R$ 6.000,00 (machos) e R$ 6.500,00 (fêmeas), com pedigree CBKC e vacinação inclusa. O serviço de monta custa R$ 3.500,00 e a hospedagem R$ 80/diária."
+            "Para informações sobre valores dos nossos cães, serviços de monta e hospedagem, fale diretamente com o criador. O atendimento é personalizado."
           );
         } else if (query.includes("localizacao") || query.includes("onde fica") || query.includes("endereço") || query.includes("endereco") || query.includes("cidade")) {
           await msg.reply(
@@ -406,7 +406,7 @@ Essa raça possui um subpelo que regula a temperatura corporal, o protegendo tan
 
       if (query.includes("preço") || query.includes("preco") || query.includes("valor") || query.includes("quanto custa")) {
         await msg.reply(
-          "Nossos filhotes de Pastor do Cáucaso têm preços a partir de R$ 6.000,00 (machos) e R$ 6.500,00 (fêmeas), com pedigree CBKC e vacinação inclusa. O serviço de monta custa R$ 3.500,00 e a hospedagem R$ 80/diária."
+          "Para informações sobre valores dos nossos cães, serviços de monta e hospedagem, fale diretamente com o criador. O atendimento é personalizado."
         );
       } else if (query.includes("localizacao") || query.includes("onde fica") || query.includes("endereço") || query.includes("endereco") || query.includes("cidade")) {
         await msg.reply(

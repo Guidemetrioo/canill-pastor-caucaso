@@ -110,10 +110,10 @@ export default function Home() {
       },
       {
         "@type": "Question",
-        "name": "Qual é o valor médio de um filhote de Pastor do Cáucaso?",
+        "name": "Como funciona a aquisição de um filhote de Pastor do Cáucaso?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Os valores dos filhotes variam de acordo com a seleção e linhagem. Machos começam a partir de R$ 6.000,00 e fêmeas a partir de R$ 6.500,00, inclusos pedigree, microchip, vacinas V10 importadas e vermifugação."
+          "text": "A aquisição dos nossos filhotes é feita sob reserva e análise de perfil do tutor. Os interessados entram em contato para consultar a disponibilidade das ninhadas planejadas, com pedigree CBKC e exames inclusos."
         }
       }
     ]

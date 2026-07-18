@@ -368,256 +368,53 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
 
   const loadLocalMockData = () => {
     // 1. Clients
-    setClients([
-      { id: 1, name: "Bruno Souza", phone: "(11) 98765-4321", email: "bruno.souza@gmail.com", city: "Itatiba - SP", notes: "Comprador do filhote Buran. Já possui experiência com cães gigantes." },
-      { id: 2, name: "Carlos Eduardo Santos", phone: "(11) 97654-3210", email: "cadu.santos@outlook.com", city: "Itatiba - SP", notes: "Utiliza hospedagem mensal para adestramento de guarda." }
-    ]);
+    setClients([]);
 
     // 2. Leads
-    setLeads([
-      { id: 1, name: "Guilherme Mota", phone: "(11) 99999-8888", email: "gui@mota.com", status: "Visita Agendada", origin: "Instagram", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Macho", puppy_purpose: "Guarda", dog_experience: "Sim, de porte grande", lead_city: "Itatiba - SP" }, current_step: "MENU", auto_respond: true, tags: ["cliente sério"], notes: "Quer visitar no sábado às 14h para ver os filhotes de Vasilísia.", created_at: new Date().toISOString() },
-      { id: 2, name: "Aline Silva", phone: "(11) 98888-7777", status: "Novo", origin: "WhatsApp", data_qualificado: { service_type: "Compra de Filhote", puppy_gender: "Fêmea", puppy_purpose: "Companhia", dog_experience: "Não", lead_city: "Itatiba - SP" }, current_step: "MENU", auto_respond: true, tags: ["pesquisando"], notes: "Preocupada com temperamento e convivência com outros pets.", created_at: new Date().toISOString() }
-    ]);
+    setLeads([]);
 
-    // 3. Animals
+    // 3. Animals (Real plantel of Vale da Kubera without breed prices)
     setAnimals([
-      { id: 1, name: "Symion da Kubera", gender: "macho", birthdate: "2020-01-01", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", breed_price: 3500.00, notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor do plantel Vale da Kubera.", avatar_url: "/dogs/symeon_1.jpg" },
-      { id: 2, name: "Nero da Kubera", gender: "macho", birthdate: "2020-08-15", pedigree_url: "#", registry: "CBKC-22341", status: "disponível", breed_price: 3500.00, notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.", avatar_url: "/dogs/nero_new_1.jpg" },
-      { id: 3, name: "Apolo da Kubera", gender: "macho", birthdate: "2021-03-10", pedigree_url: "#", registry: "CBKC-22344", status: "disponível", breed_price: 3500.00, notes: "Macho imponente do plantel, com excelente conformação e instinto de guarda apurado.", avatar_url: "/dogs/apolo_1.jpg" },
-      { id: 4, name: "Orham da Kubera", gender: "macho", birthdate: "2021-06-20", pedigree_url: "#", registry: "CBKC-22345", status: "disponível", breed_price: 3500.00, notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.", avatar_url: "/dogs/orham_1.jpg" },
-      { id: 5, name: "Putin da Kubera", gender: "macho", birthdate: "2021-09-05", pedigree_url: "#", registry: "CBKC-22346", status: "disponível", breed_price: 3500.00, notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.", avatar_url: "/dogs/putin_1.jpg" },
-      { id: 6, name: "Burham Vale da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", breed_price: 3500.00, notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/buran_1.jpg" }
+      { id: 1, name: "Symion da Kubera", gender: "macho", birthdate: "2020-01-01", pedigree_url: "#", registry: "CBKC-12345", status: "disponível", notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor do plantel Vale da Kubera.", avatar_url: "/dogs/symeon_1.jpg" },
+      { id: 2, name: "Nero da Kubera", gender: "macho", birthdate: "2020-08-15", pedigree_url: "#", registry: "CBKC-22341", status: "disponível", notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.", avatar_url: "/dogs/nero_new_1.jpg" },
+      { id: 3, name: "Apolo da Kubera", gender: "macho", birthdate: "2021-03-10", pedigree_url: "#", registry: "CBKC-22344", status: "disponível", notes: "Macho imponente do plantel, com excelente conformação e instinto de guarda apurado.", avatar_url: "/dogs/apolo_1.jpg" },
+      { id: 4, name: "Orham da Kubera", gender: "macho", birthdate: "2021-06-20", pedigree_url: "#", registry: "CBKC-22345", status: "disponível", notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.", avatar_url: "/dogs/orham_1.jpg" },
+      { id: 5, name: "Putin da Kubera", gender: "macho", birthdate: "2021-09-05", pedigree_url: "#", registry: "CBKC-22346", status: "disponível", notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.", avatar_url: "/dogs/putin_1.jpg" },
+      { id: 6, name: "Burham Vale da Kubera", gender: "macho", birthdate: "2022-01-15", pedigree_url: "#", registry: "CBKC-22347", status: "disponível", notes: "Macho jovem de excelente potencial, com estrutura sólida e movimento harmônico.", avatar_url: "/dogs/buran_1.jpg" }
     ]);
 
     // 4. Ninhadas
-    setNinhadas([
-      { id: 1, mother_id: 2, father_id: 1, birth_date: "2026-04-15", puppy_count_male: 3, puppy_count_female: 4, status: "Nascida", notes: "Ninhada excelente. Todos os filhotes fortes e amamentando." }
-    ]);
+    setNinhadas([]);
 
     // 5. Filhotes / Cães do Plantel
-    setFilhotes([
-      {
-        id: 1,
-        name: "APOLO",
-        gender: "macho",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/apolo_1.jpg",
-        photos: ["/dogs/apolo_1.jpg", "/dogs/apolo_2.jpg", "/dogs/apolo_3.jpg", "/dogs/apolo_4.jpg", "/dogs/apolo_5.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Macho imponente do plantel Vale da Kubera. Excelente conformação e instinto de guarda apurado.",
-        history: "Apolo é um exemplar de destaque do plantel, com estrutura robusta e temperamento de guarda exemplar."
-      },
-      {
-        id: 2,
-        name: "ORHAM",
-        gender: "macho",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/orham_1.jpg",
-        photos: ["/dogs/orham_1.jpg", "/dogs/orham_2.jpg", "/dogs/orham_3.jpg", "/dogs/orham_4.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Macho de linhagem selecionada, estrutura compacta e pelagem densa característica da raça.",
-        history: "Orham representa a excelência genética do plantel Vale da Kubera, com conformação morfológica impecável."
-      },
-      {
-        id: 3,
-        name: "PUTIN",
-        gender: "macho",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/putin_1.jpg",
-        photos: ["/dogs/putin_1.jpg", "/dogs/putin_2.jpg", "/dogs/putin_3.jpg", "/dogs/putin_4.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Macho de temperamento forte e presença imponente. Representante da linhagem de guarda do canil.",
-        history: "Putin é um cão de guarda nato, com presença intimidante e lealdade absoluta com sua família."
-      },
-      {
-        id: 4,
-        name: "BURHAM",
-        gender: "macho",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/buran_1.jpg",
-        photos: ["/dogs/buran_1.jpg", "/dogs/buran_2.jpg", "/dogs/buran_3.jpg", "/dogs/buran_4.jpg", "/dogs/buran_5.jpg", "/dogs/buran_6.jpg", "/dogs/buran_7.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "Rússia",
-        weight: "",
-        notes: "Macho importado da Rússia. Excelente estrutura óssea e temperamento de guarda.",
-        history: "Buran é um macho jovem importado da Rússia, com excelente linhagem e temperamento vigilante."
-      },
-      {
-        id: 5,
-        name: "SYMION",
-        gender: "macho",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/symeon_1.jpg",
-        photos: ["/dogs/symeon_1.jpg", "/dogs/symeon_2.jpg", "/dogs/symeon_3.jpg", "/dogs/symeon_4.jpg", "/dogs/symeon_5.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Macho de grande estrutura e temperamento exemplar. Reprodutor importado da Rússia.",
-        history: "Symion é o patriarca do plantel, importado da Rússia com estrutura massiva e temperamento excelente."
-      },
-      {
-        id: 6,
-        name: "NERO",
-        gender: "macho",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/nero_new_4.jpg",
-        photos: ["/dogs/nero_new_4.jpg", "/dogs/nero_new_1.jpg", "/dogs/nero_new_2.jpg", "/dogs/nero_new_3.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Macho de grande porte com temperamento explosivo e ossatura extremamente robusta.",
-        history: "Nero é um cão de guarda de alto nível com temperamento extremamente explosivo e focado, representando o melhor da raça."
-      },
-      {
-        id: 7,
-        name: "J-ARA",
-        gender: "fêmea",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/jara_1.jpg",
-        photos: ["/dogs/jara_1.jpg", "/dogs/jara_2.jpg", "/dogs/jara_3.jpg", "/dogs/jara_4.jpg", "/dogs/jara_5.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "Romênia",
-        weight: "",
-        notes: "Fêmea importada da Romênia. Temperamento dócil com a família e instinto de guarda apurado.",
-        history: "J-Ara é uma fêmea importada da Romênia, destacando-se pela excelente conformação e instinto de guarda."
-      },
-      {
-        id: 8,
-        name: "PANDORA",
-        gender: "fêmea",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/pandora_1.jpg",
-        photos: ["/dogs/pandora_1.jpg", "/dogs/pandora_2.jpg", "/dogs/pandora_3.jpg", "/dogs/pandora_4.jpg", "/dogs/pandora_5.jpg", "/dogs/pandora_6.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "Espanha",
-        weight: "",
-        notes: "Fêmea importada da Espanha. Excelente conformação morfológica e pelagem densa característica da raça.",
-        history: "Pandora é uma fêmea importada da Espanha, com estrutura morfológica impecável e temperamento exemplar."
-      },
-      {
-        id: 9,
-        name: "THARA",
-        gender: "fêmea",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/thara_1.jpg",
-        photos: ["/dogs/thara_1.jpg", "/dogs/thara_2.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Fêmea robusta com temperamento equilibrado e instinto maternal impecável.",
-        history: "Thara é uma matriz de excelente temperamento de proteção e instinto maternal, gerando ninhadas de alta qualidade."
-      },
-      {
-        id: 10,
-        name: "VASILÍSIA",
-        gender: "fêmea",
-        status: "Reservado",
-        price: 0,
-        health_records: [],
-        weight_history: [],
-        avatar_url: "/dogs/vasilisia_new_1.jpg",
-        photos: ["/dogs/vasilisia_new_1.jpg", "/dogs/vasilisia_new_2.jpg", "/dogs/vasilisia_new_3.jpg", "/dogs/vasilisia_new_4.jpg"],
-        breed: "Pastor do Cáucaso",
-        age: "",
-        origin: "",
-        weight: "",
-        notes: "Fêmea de estrutura impressionante e presença marcante. Matriz de destaque do plantel Vale da Kubera.",
-        history: "Vasilísia é uma fêmea de presença marcante, com estrutura robusta e temperamento domínio equilibrado."
-      }
-    ]);
+    setFilhotes([]);
 
-    // 6. Services
+    // 6. Services (with 0 price)
     setServices([
-      { id: 1, name: "Serviço de Monta (Symion da Kubera)", category: "cobertura", price: 3500.00, description: "Serviço de monta com contrato e garantia de gestação." },
-      { id: 2, name: "Hospedagem Canina Diária", category: "hospedagem", price: 80.00, description: "Hospedagem com recreação, alimentação inclusa ou trazida pelo tutor." },
-      { id: 3, name: "Pacote de Adestramento Básico", category: "adestramento", price: 1200.00, description: "Treinamento de obediência urbana (10 sessões)." }
+      { id: 1, name: "Serviço de Monta (Symion da Kubera)", category: "cobertura", price: 0, description: "Serviço de monta com contrato e garantia de gestação." },
+      { id: 2, name: "Hospedagem Canina Diária", category: "hospedagem", price: 0, description: "Hospedagem com recreação, alimentação inclusa ou trazida pelo tutor." },
+      { id: 3, name: "Pacote de Adestramento Básico", category: "adestramento", price: 0, description: "Treinamento de obediência urbana (10 sessões)." }
     ]);
 
     // 7. AgendaEvents
-    const today = new Date();
-    setAgendaEvents([
-      { id: 1, type: "visita", title: "Visita de Guilherme Mota", description: "Ver filhotes cinzas", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 14, 0).toISOString(), lead_id: 1, status: "Agendado", reminder_sent: false },
-      { id: 2, type: "adestramento", title: "Treino do cão Marley (Carlos)", description: "Treino de obediência e socialização", datetime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 16, 0).toISOString(), client_id: 2, assigned_to: "Criador Rafael", status: "Confirmado", reminder_sent: false }
-    ]);
+    setAgendaEvents([]);
 
     // 8. Hospedagens
-    setHospedagens([
-      { id: 1, client_id: 2, dog_name: "Marley", entry_date: new Date(today.setDate(today.getDate() - 2)).toISOString(), exit_date: new Date(today.setDate(today.getDate() + 5)).toISOString(), daily_rate: 80, total_amount: 560, status: "Hospedado", notes: "Alimentação especial 2x ao dia. Muito brincalhão." }
-    ]);
+    setHospedagens([]);
 
     // 9. Adestramentos
-    setAdestramentos([
-      { id: 1, client_id: 2, dog_name: "Marley", plan_name: "Adestramento Básico", sessions_total: 10, sessions_completed: 4, status: "Ativo", notes: "Já aprendeu os comandos senta e deita. Evoluindo bem." }
-    ]);
+    setAdestramentos([]);
 
     // 10. Financial Entries
-    setFinancialEntries([
-      { id: 1, type: "Entrada", category: "Venda Filhote", amount: 6000.00, description: "Venda Filhote Buran - Bruno Souza", date: new Date().toISOString(), payment_method: "Pix" },
-      { id: 2, type: "Saída", category: "Ração", amount: 450.00, description: "Compra de Ração Super Premium 15kg", date: new Date().toISOString() }
-    ]);
+    setFinancialEntries([]);
 
     // 11. Blog Posts
-    setBlogPosts([
-      { id: 1, title: "Quanto custa um Pastor do Cáucaso?", slug: "quanto-custa-um-pastor-do-caucaso", excerpt: "Saiba tudo sobre o preço e custos de manutenção da raça.", content: "Conteúdo substancial de mais de 800 palavras sobre custos de alimentação, vacinação, veterinário e pedigree CBKC para Pastor do Cáucaso.", tags: ["preço", "custos", "filhote"], published: true, image_url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400" },
-      { id: 2, title: "Pastor do Cáucaso é bom para apartamento?", slug: "pastor-do-caucaso-apartamento", excerpt: "Entenda por que essa raça gigante precisa de espaço.", content: "Explicação extensa sobre o porte físico, temperamento territorial, e necessidade de pátio grande para cães de guarda como o Pastor do Cáucaso.", tags: ["guia", "raça", "temperamento"], published: true, image_url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400" },
-      {
-        id: 3,
-        title: "A Filosofia de Criação do Canil Vale da Kubera: Unindo Beleza e Guarda",
-        slug: "filosofia-criacao-canil-vale-da-kubera",
-        excerpt: "Entenda a nossa busca constante pelo equilíbrio perfeito entre a conformação física de pista de exposição e o autêntico temperamento de guarda.",
-        content: "No Canil Vale da Kubera, estruturamos nossa filosofia de criação a partir da busca constante pela unificação de dois polos fundamentais: a beleza morfológica de pista e o temperamento de guarda real.\n\nO grande diferencial do nosso canil é entender que a cinofilia europeia tradicional enxerga o Pastor do Cáucaso como um cão completo. Rejeitamos a divisão polarizada: um cão bonito de pista de exposição também deve possuir o temperamento de guarda territorial intacto e funcional. Se o cão possui a estrutura anatômica correta, ele terá saúde, movimentação leve e a funcionalidade ideal para realizar o trabalho de proteção.\n\n### Os Três Pilares do Pastor do Cáucaso\nPara nós, um exemplar ideal da raça precisa combinar perfeitamente três requisitos inegociáveis:\n1. **Temperamento:** Cães territorialistas e destemidos com estranhos, mas extremamente equilibrados, dóceis e apegados com a sua família.\n2. **Qualidade Genética:** Seleção rígida com controle radiográfico para evitar problemas como a displasia coxofemoral e cotovelos.\n3. **Estrutura:** Anatomia vigorosa, ossatura maciça e movimentação correta.\n\n### Equilíbrio contra os Extremos (Peso e Tamanho)\nEvitamos o extremismo na criação. Ao contrário de outras raças gigantes que sofreram com a busca exagerada por peso excessivo (gerando cães letárgicos e doentes), o Pastor do Cáucaso deve manter sua agilidade e rusticidade. No auge, reprodutores como o romeno **Boran** chegam perto de 100 kg, mas mantêm movimentação leve, olhos limpos (sem pálpebras pendentes) e vitalidade extrema.\n\n### Destaques do Nosso Plantel\nNosso plantel conta com exemplares importados das principais linhagens de trabalho e exposição da Europa:\n- **Boran (Importado da Romênia):** Um exemplar com estrutura maravilhosa, vencedor de 2 *Best in Shows* na Europa antes de chegar ao Brasil.\n- **Afar (Importado da Rússia):** Cão de linhagem 100% funcional de trabalho, filho do lendário campeão russo Taras.\n- **Apolo (Importado da Espanha):** Um macho alto, ágil e com um instinto de ataque e proteção espetaculares.\n- **Putin e Nero:** Os reprodutores que representam a renovação constante da nossa genética.\n\n### Maturidade Tardia da Raça\nDiferentemente de raças de trabalho esportivo como o Pastor Belga Malinois (que com poucos meses já persegue brinquedos de forma ativa), o Pastor do Cáucaso tem uma maturação tardia. Um filhote de 3 a 4 meses pode parecer calmo e dócil. O cão atingirá sua maturidade física e mental de guarda de fato apenas após os 2 anos de idade.\n\nPara conferir essas informações em formato de vídeo e ver nosso plantel real em ação, assista ao documentário gravado em nosso canil em parceria com o canal Cinofilia Digital, disponível na seção de documentários do nosso site.",
-        tags: ["criação", "exposição", "guarda", "linhagem"],
-        published: true,
-        image_url: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=600"
-      }
-    ]);
+    setBlogPosts([]);
 
     // 12. WhatsApp Config
     setWhatsappConfig({
       id: 1,
-      status: "connected",
+      status: "disconnected",
       phone: "+5511974992059",
       reminder_hours: 24,
       enable_reminders: true,
@@ -634,87 +431,11 @@ export function AuraProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    setNotifications([
-      { id: 1, type: "sistema", message: "Sistema do Canil Vale da Kubera iniciado em modo local.", read: false, created_at: new Date().toISOString() }
-    ]);
-
-    generateMockTraffic();
+    setNotifications([]);
   };
 
   const generateMockTraffic = () => {
-    const mockEvents: TrafficEvent[] = [];
-    const paths = ["/", "/sobre", "/filhotes", "/a-raca-pastor-do-caucaso"];
-    const devices = ["desktop", "mobile", "tablet"];
-    const referrers = ["instagram.com", "google.com", "facebook.com", "direct"];
-    
-    let eventId = 1;
-    for (let d = 15; d >= 0; d--) {
-      const date = new Date();
-      date.setDate(date.getDate() - d);
-      const dateStr = date.toISOString().split("T")[0];
-      
-      const dailyViews = 40 + Math.floor(Math.random() * 40);
-      for (let i = 0; i < dailyViews; i++) {
-        const sessionNum = Math.floor(i * 0.7);
-        const session_id = `sess_${dateStr}_${sessionNum}`;
-        const path = paths[Math.floor(Math.random() * paths.length)];
-        const device = devices[Math.random() < 0.75 ? 1 : (Math.random() < 0.95 ? 0 : 2)];
-        const referrer = referrers[Math.floor(Math.random() * referrers.length)];
-        
-        mockEvents.push({
-          id: eventId++,
-          event_type: "page_view",
-          page_path: path,
-          session_id,
-          device_type: device,
-          referrer,
-          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
-        });
-      }
-      
-      const dailyWpp = 3 + Math.floor(Math.random() * 8);
-      for (let i = 0; i < dailyWpp; i++) {
-        const session_id = `sess_${dateStr}_${Math.floor(Math.random() * dailyViews * 0.7)}`;
-        mockEvents.push({
-          id: eventId++,
-          event_type: "whatsapp_click",
-          page_path: "/",
-          session_id,
-          device_type: devices[Math.random() < 0.75 ? 1 : 0],
-          referrer: referrers[Math.floor(Math.random() * referrers.length)],
-          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
-        });
-      }
-
-      const dailySocial = 2 + Math.floor(Math.random() * 5);
-      for (let i = 0; i < dailySocial; i++) {
-        const session_id = `sess_${dateStr}_${Math.floor(Math.random() * dailyViews * 0.7)}`;
-        mockEvents.push({
-          id: eventId++,
-          event_type: Math.random() > 0.5 ? "instagram_click" : "youtube_click",
-          page_path: "/",
-          session_id,
-          device_type: devices[Math.random() < 0.75 ? 1 : 0],
-          referrer: referrers[Math.floor(Math.random() * referrers.length)],
-          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
-        });
-      }
-      
-      const dailyBooking = Math.random() > 0.5 ? 1 + Math.floor(Math.random() * 2) : 0;
-      for (let i = 0; i < dailyBooking; i++) {
-        const session_id = `sess_${dateStr}_${Math.floor(Math.random() * dailyViews * 0.7)}`;
-        mockEvents.push({
-          id: eventId++,
-          event_type: "booking_click",
-          page_path: "/",
-          session_id,
-          device_type: devices[Math.random() < 0.75 ? 1 : 0],
-          referrer: referrers[Math.floor(Math.random() * referrers.length)],
-          created_at: new Date(date.getTime() + Math.random() * 86400000).toISOString()
-        });
-      }
-    }
-    setTrafficEvents(mockEvents);
+    setTrafficEvents([]);
   };
 
   const fetchAllData = async () => {
