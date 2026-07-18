@@ -62,14 +62,8 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, onToggleCo
       {/* Brand Logo */}
       <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"} mb-8 min-h-[40px]`}>
         {!collapsed ? (
-          <Link href="/dashboard" className="flex items-center gap-3 shrink-0" onClick={onClose}>
-            <img 
-              src="/logo.png" 
-              alt="Logo Vale da Kubera" 
-              className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm shrink-0"
-              style={{ filter: "invert(1)" }}
-            />
-            <div className="animate-in fade-in duration-200">
+          <Link href="/dashboard" className="flex items-center gap-3 shrink-0 animate-in fade-in duration-200" onClick={onClose}>
+            <div>
               <h2 className="font-bold tracking-wider text-xs leading-none font-comfortaa">VALE DA KUBERA</h2>
               <p className="text-[8px] tracking-widest text-[#D97457] font-semibold uppercase mt-1">
                 Canil Pastor do Cáucaso
@@ -175,12 +169,6 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, onToggleCo
             {/* Brand Logo */}
             <div className="flex items-center justify-between mb-8">
               <Link href="/dashboard" className="flex items-center gap-3 shrink-0" onClick={onClose}>
-                <img 
-                  src="/logo.png" 
-                  alt="Logo Vale da Kubera" 
-                  className="w-10 h-10 object-contain rounded-lg border border-gray-200/50 shadow-sm shrink-0"
-                  style={{ filter: "invert(1)" }}
-                />
                 <div>
                   <h2 className="font-bold tracking-wider text-xs leading-none font-comfortaa">VALE DA KUBERA</h2>
                   <p className="text-[8px] tracking-widest text-[#D97457] font-semibold uppercase mt-1">
