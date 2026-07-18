@@ -107,6 +107,28 @@ export default function SobrePage() {
           ))}
         </section>
 
+        {/* Vídeo Institucional / O Canil */}
+        <section className="space-y-6 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 md:p-10">
+          <div className="text-center max-w-lg mx-auto space-y-2">
+            <span className="text-xs text-[#D97457] font-bold uppercase tracking-wider">Apresentação Oficial</span>
+            <h2 className="text-2xl md:text-3xl font-bold">Conheça o Nosso Canil</h2>
+            <p className="text-gray-400 text-xs leading-relaxed">
+              Assista ao vídeo institucional para conhecer a estrutura do Canil Vale da Kubera em Itatiba - SP, o manejo diário e a nossa dedicação aos cães:
+            </p>
+          </div>
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl bg-black/40">
+            <iframe
+              title="Vídeo Institucional Canil Vale da Kubera"
+              src="https://www.youtube.com/embed/UgnjXPSdQTY"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
         {/* Plantel Internacional */}
         <section className="space-y-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 md:p-10">
           <div className="text-center max-w-lg mx-auto space-y-2">
