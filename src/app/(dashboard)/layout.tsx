@@ -116,13 +116,22 @@ export default function DashboardLayout({
 
         /* Force Admin Header Text and Icons to be White for Contrast */
         header, 
-        header *, 
-        header span, 
+        header *:not(.bell-icon):not(.bell-btn), 
+        header span:not(.bell-icon), 
         header h1, 
         header p, 
-        header button,
+        header button:not(.bell-btn),
         header a {
           color: #ffffff !important;
+        }
+
+        /* Bell button should have a white background with a dark bell icon */
+        .bell-btn {
+          background-color: #ffffff !important;
+          border-color: #e5e7eb !important;
+        }
+        .bell-icon {
+          color: #111827 !important;
         }
       `}} />
 

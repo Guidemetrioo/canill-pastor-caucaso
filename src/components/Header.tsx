@@ -123,9 +123,9 @@ export default function Header({ onMenuOpen }: HeaderProps) {
               setShowNotifications(!showNotifications);
               setShowProfileMenu(false);
             }}
-            className="w-10 h-10 rounded-full bg-salon-bg border border-salon-border flex items-center justify-center text-salon-text-secondary hover:text-primary transition-all relative"
+            className="w-10 h-10 rounded-full bg-salon-bg border border-salon-border flex items-center justify-center text-salon-text-secondary hover:text-primary transition-all relative bell-btn"
           >
-            <Bell className="w-5 h-5" />
+            <Bell className="w-5 h-5 bell-icon" />
             {unreadCount > 0 && (
               <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-salon-bg rounded-full flex items-center justify-center font-bold text-[9px] border-2 border-salon-surface animate-pulse">
                 {unreadCount}
